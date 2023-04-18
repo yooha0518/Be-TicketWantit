@@ -13,23 +13,29 @@ const userService = {
 		return createdUser;
 	},
 	// 사용자 정보 조회
-	async getUser(id) {
-		const user = await User.findOne(id);
+	async getUser(shortId) {
+		const user = await User.findOne({ shortId });
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(id, { name, password, address, number }) {
-		const updatedUser = await User.updateOne(id, {
-			name,
-			password,
-			address,
-			number,
-		});
-		return updatedUser;
+	async updateUser(shortId, { name, password, address, number }) {
+		const result = await User.updateOne(
+			{ shortId },
+			{
+				name,
+				password,
+				address,
+				number,
+			}
+		);
+		if(result.modifiedCount === 0){
+			console.log('shortID 값이 잘못되었습니다.');
+		}
+		return result; //성공여부, 조건에 맞는 문서의 수, 새로 생성된 문서의 수, 새로 생성된 문서의 id값이 들어있음
 	},
 	// 사용자 삭제 (회원탈퇴)
-	async deleteUser(id) {
-		const deletedUser = await User.deleteOne(id);
+	async deleteUser(shortId) {
+		const deletedUser = await User.deleteOne({ shortId });
 		return deletedUser;
 	},
 };

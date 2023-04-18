@@ -1,8 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const loginRequired = require('../middlewares/index');
+const userRouter = require('./user');
+const loginRouter = require('./login');
 
-const userRouter = require('./userRouter');
+router.use('/user', userRouter);
+router.use('/login', loginRouter);
+// router.use('/결제', (req, res) => {
+// 	if (req.user) {
+// 		res.redirect('/결제완료'); // 로그인 된 경우 /posts로
+// 		return;
+// 	}
+// 	res.redirect('/login'); // 로그인 되지 않은 경우 /login 으로
+// });
 
-router.use('./user',userRouter);
-
-module.exports = {router};
+module.exports = router;
