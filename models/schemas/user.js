@@ -3,22 +3,22 @@ const shortId = require('./types/short-id');
 const UserSchema = new Schema(
 	{
 		shortId,
-		userName: {
+		name: {
 			type: String,
 			required: true,
 		},
-		userEmail: {
+		email: {
 			type: String,
 			required: true,
 		},
-		userPassword: {
+		password: {
 			type: String,
 			required: true,
 		},
-		userNumber: {
+		Number: {
 			type: Number,
 		},
-		userAddress: {
+		Address: {
 			type: String,
 		},
 		isAdmin: {
