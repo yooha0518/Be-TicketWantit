@@ -8,7 +8,7 @@ const env = require('./.env')
 
 // const indexRouter = require('./routes');
 // const postsRouter = require('./routes/posts');
-
+const apiRouter = require('./routers');
 
 
 // 1. mongoose.connect()를 사용해서 mongodb 데이터베이스를 연결하세요.
@@ -29,6 +29,10 @@ const app = express();
 
 // app.use('/', indexRouter);
 // app.use('/posts', postsRouter);
+
+app.use('/api',apiRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
