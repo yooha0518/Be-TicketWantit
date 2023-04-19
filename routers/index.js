@@ -7,15 +7,11 @@ const orderRouter = require('./order');
 const productRouter = require('./product');
 
 router.get('/', (req, res) => {
-<<<<<<< HEAD
   res.send('this is homepage');
-=======
-	res.send('this is homepage');
->>>>>>> 9c81ae9f57c3560f78399a085a28b9464cd8c454
 });
 router.use('/user', userRouter);
 //로그인 페이지 랜더링
-// router.get('/login', (req, res, next) => { 
+// router.get('/login', (req, res, next) => {
 // 	res.render('login');
 // });
 router.use('/auth', authRouter);
@@ -31,6 +27,5 @@ router.use('/product', productRouter);
 // });
 
 router.use('./user', userRouter);
-router.use('./product', productRouter);
 
 module.exports = router;

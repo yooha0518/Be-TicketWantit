@@ -3,43 +3,19 @@ const router = Router();
 const { Product } = require('../models');
 const { productController } = require('../controller');
 
-// router.post('/', productController.postProduct);
+//상품 전체
+router.get('/', productController.getProduct);
+//상품 카테고리별
+router.get('/category', productController.getCategory);
+//상품 상세
+router.get('/detail', productController.getDetail);
+//thumbnail
+// router.get('/thumbnail', productController);
+//NEW ARRIVALS
+router.get('/new_arrivals', productController.getNewArrivals);
 
-const bodyParser = require('body-parser');
-
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-
-router.get('/', async (req, res) => {
-  const products = await Product.find({});
-  res.send('succeess!' + products);
-});
-
-router.post('/', async (req, res, next) => {
-  const {
-    category,
-    thumbnail,
-    productName,
-    price,
-    place,
-    speciesAge,
-    desciption,
-  } = req.body;
-  console.log(req.body);
-  try {
-    const products = await Product.create({
-      category,
-      thumbnail,
-      productName,
-      price,
-      place,
-      speciesAge,
-      desciption,
-    });
-    res.send(products);
-  } catch (err) {
-    next(err);
-  }
-});
+//------------------------ADMIN------------------
+//ADMIN 상품 추가
+router.post('/', productController.postProduct);
 
 module.exports = router;
