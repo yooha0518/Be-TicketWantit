@@ -2,11 +2,23 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const orderId = require('./types/short-id');
 
-const orderSchema = new Schema({
+const orderSchema = new Schema({ 
     orderId,
+    customerId:{
+        type:Schema.Types.ObjectId,
+        ref:'User',
+    },
     customerName: {//고객명
         type: String,
         required: true
+    },
+    customerAddress:{ //고객주소
+        type: String,
+        required: true
+    },
+    customerPhoneNum:{ //고객 연락처 
+        type: String,
+        require: true
     },
     items: [{ //상품
         name: {
@@ -22,16 +34,13 @@ const orderSchema = new Schema({
         required: true
     }
     }],
-	customerAddress:{
-        type:String,
-        required:true
-    },
     total: { //합계
         type: Number,
         required: true
     },
     orderStatus:{
-        type:String,
+        type:Number,
+        default:1,
         required: true
     },
     date: { //구매날짜
@@ -39,3 +48,5 @@ const orderSchema = new Schema({
         default: Date.now
     }
 })
+
+module.exports = orderSchema;
