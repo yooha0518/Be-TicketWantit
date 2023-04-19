@@ -1,5 +1,6 @@
-const mongoose = rquire('mongoose');
+const mongoose = require('mongoose');
 const {Schema} = mongoose;
+const orderId = require('./types/short-id')
 
 const orderSchema = new Schema({
     orderId,
@@ -38,3 +39,5 @@ const orderSchema = new Schema({
         default: Date.now
     }
 })
+
+module.exports = orderSchema;
