@@ -1,15 +1,19 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
 const loginRequired = require('../middlewares/index');
 const userRouter = require('./user');
-const loginRouter = require('./login');
+const authRouter = require('./auth');
 const orderRouter = require('./order');
 
-router.get('/',(req,res)=>{
-    res.send('this is homepage');
-})
+router.get('/', (req, res) => {
+	res.send('this is homepage');
+});
 router.use('/user', userRouter);
-router.use('/login', loginRouter);
+//로그인 페이지 랜더링
+// router.get('/login', (req, res, next) => { 
+// 	res.render('login');
+// });
+router.use('/auth', authRouter);
 router.use('/orders', orderRouter);
 
 // router.use('/결제', (req, res) => {
