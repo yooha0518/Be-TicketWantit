@@ -13,4 +13,20 @@ router.post('/', passport.authenticate('local'), (req, res, next) => {
 	//res.redirect('/');
 });
 
+// router.get('/logout', (req, res) => {
+// 	console.log('로그아웃 시도');
+// 	// 세션 파괴
+// 	req.logout();
+// 	// 로그아웃 후 리다이렉트할 URL 지정
+// 	res.send('로그아웃 되었습니다.');
+// 	console.log('로그아웃 되었습니다.');
+// });
+
+router.get('/logout', (req, res) => {
+	req.logout();
+	req.session.save(function (err) {
+		if (err) throw err;
+		res.redirect('/');
+	});
+});
 module.exports = router;
