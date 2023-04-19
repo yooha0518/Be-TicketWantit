@@ -5,6 +5,7 @@ const Order = models.Order;
 const User = models.User;
 //모든 요청에 로그인정보 확인해야함! 비회원은 안됨!
 
+
 //주문추가 - 결제버튼을 누르면 결제창에 있는 상품들로 주문 할 수 있다
 router.post('/', async(req,res)=>{
     // if(req.user.shortId){ //세션값 받아와지는거 확인하기 

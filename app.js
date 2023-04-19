@@ -6,9 +6,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
+<<<<<<< HEAD
 const env = require('./.env');
 const app = express();
 
+=======
+const MongoStore = require('connect-mongo');
+const env = require('./.env');
+const app = express();
+>>>>>>> 9c81ae9f57c3560f78399a085a28b9464cd8c454
 
 //routers
 const apiRouter = require('./routers');
@@ -20,14 +26,18 @@ mongoose.connection.on('connected', () => {
     console.log('MongoDB Connected');
 });
 
-mongoose.connection.on('disconnected',(err)=>{
-    if(err){
-        console.log(`MongoDB 연결중 에러 발생: ` +err)
-    }
-    console.log('MongoDB disconnected')
-    console.log('byebye')
-}); 
+mongoose.connection.on('disconnected', (err) => {
+	if (err) {
+		console.log(`MongoDB 연결중 에러 발생: ` + err);
+	}
+	console.log('MongoDB disconnected');
+	console.log('byebye');
+});
 
+<<<<<<< HEAD
+=======
+require('./passport')();
+>>>>>>> 9c81ae9f57c3560f78399a085a28b9464cd8c454
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
@@ -43,6 +53,16 @@ app.use(
         resave: false,
         saveUninitialized: true,
     })
+);
+app.use(
+	session({
+		secret: 'elice',
+		resave: false,
+		saveUninitialized: true,
+		store: MongoStore.create({
+			mongoUrl: env.MONGO_URI,
+		}),
+	})
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -67,9 +87,18 @@ app.use((err, req, res, next) => {
 
 //서버연결
 app.listen(env.PORT, (err) => {
+<<<<<<< HEAD
     if(err){ 
         console.log(`서버 연결 실패 : ${err}`);
     }else{
         console.log(`서버 연결 성공`);
     }
 })
+=======
+	if (err) {
+		console.log(`서버 연결 실패 : ${err}`);
+	} else {
+		console.log(`서버 연결 성공`);
+	}
+});
+>>>>>>> 9c81ae9f57c3560f78399a085a28b9464cd8c454

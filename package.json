@@ -22,8 +22,10 @@
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^6.3.1",
 		"nanoid": "^3.0.0",
-		"nodemon": "^2.0.15",
 		"passport": "^0.6.0",
 		"passport-local": "^1.0.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.22"
 	}
 }
