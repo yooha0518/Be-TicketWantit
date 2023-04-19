@@ -3,12 +3,15 @@ const router = Router();
 const loginRequired = require('../middlewares/index');
 const userRouter = require('./user');
 const loginRouter = require('./login');
+const orderRouter = require('./order');
 
 router.get('/',(req,res)=>{
     res.send('this is homepage');
 })
 router.use('/user', userRouter);
 router.use('/login', loginRouter);
+router.use('/orders', orderRouter);
+
 // router.use('/결제', (req, res) => {
 // 	if (req.user) {
 // 		res.redirect('/결제완료'); // 로그인 된 경우 /posts로

@@ -40,9 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//routes
-app.use('/', indexRouter);
-app.use('/orders', orderRouter);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -66,6 +64,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//routes
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
