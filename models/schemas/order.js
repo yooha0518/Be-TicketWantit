@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
+<<<<<<< HEAD
 const orderId = require('./types/short-id')
+=======
+const orderId = require('./types/short-id');
+>>>>>>> 9c81ae9f57c3560f78399a085a28b9464cd8c454
 
 const orderSchema = new Schema({
     orderId,
