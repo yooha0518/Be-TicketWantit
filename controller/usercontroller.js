@@ -13,8 +13,7 @@ const userController = {
 	},
 	async getUser(req, res, next) {
 		try {
-			const { shortId } = req.params;
-			console.log('hello');
+			const shortId = req.user.shortId;
 			const user = await userService.getUser(shortId);
 			res.json(user);
 		} catch (error) {
@@ -23,7 +22,8 @@ const userController = {
 	},
 	async putUser(req, res, next) {
 		try {
-			const { shortId } = req.params;
+			const shortId = req.user.shortId;
+			console.log(shortId);
 			const { name, password, address, number } = req.body;
 			const user = await userService.updateUser(shortId, {
 				name,
@@ -38,7 +38,7 @@ const userController = {
 	},
 	async deleteUser(req, res, next) {
 		try {
-			const { shortId } = req.params;
+			const shortId = req.user.shortId;
 			const user = await userService.deleteUser(shortId);
 			res.json(user);
 		} catch (error) {
