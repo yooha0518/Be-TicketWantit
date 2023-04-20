@@ -8,7 +8,7 @@ const orderSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'User',
     },
-    customerName: {//고객명
+    customerName: {//고객명 -> 이걸 참고..?
         type: String,
         required: true
     },
