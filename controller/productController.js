@@ -3,10 +3,11 @@ const { productService } = require('../services');
 //메인 페이지 상품 매핑
 function productMapping(items) {
   const content = items.map(
-    ({ category, productName, price, imageUrl, productId }) => ({
-      category,
+    ({ productName, price, startDate, endDate, imageUrl, productId }) => ({
       productName,
       price,
+      startDate,
+      endDate,
       imageUrl,
       productId,
     })
@@ -46,14 +47,27 @@ const productController = {
       next(err);
     }
   },
+  //NEW_ARRIVAlS
   async getNewArrivals(req, res, next) {
     try {
-      const content = 'success!';
+      const products = await productService.readNewArrivals();
+      const content = productMapping(products);
       res.json(content);
     } catch (err) {
       next(err);
     }
   },
+  //MD
+  async getMDPick(req, res, next) {
+    try {
+      const products = await productService.readMDPick();
+      const content = productMapping(products);
+      res.json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
+  //----------------------------------------- ADMIN----------------------------
   //ADMIN 상품 추가
   async postProduct(req, res, next) {
     try {
@@ -62,6 +76,8 @@ const productController = {
         imageUrl,
         productName,
         price,
+        startDate,
+        endDate,
         place,
         speciesAge,
         desciption,
@@ -71,11 +87,32 @@ const productController = {
         imageUrl,
         productName,
         price,
+        startDate,
+        endDate,
         place,
         speciesAge,
         desciption,
       });
       res.json(product);
+    } catch (err) {
+      next(err);
+    }
+  },
+  //ADMIN 상품 삭제
+  async delProduct(req, res, next) {
+    try {
+      const { productId } = req.query;
+      const content = await productService.deleteProduct(productId);
+      res.json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
+  //ADMIN 상품 전체 삭제
+  async delAllProduct(req, res, next) {
+    try {
+      const content = await productService.deleteAllProduct();
+      res.json(content);
     } catch (err) {
       next(err);
     }
