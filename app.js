@@ -18,19 +18,26 @@ const apiRouter = require('./routers');
 mongoose.connect(env.MONGO_URI);
 
 mongoose.connection.on('connected', () => {
+<<<<<<< HEAD
+  console.log('MongoDB Connected');
+=======
 	console.log(`MongoDB Connected :${env.MONGO_URI}`);
+>>>>>>> d0bc6d8e38b3f1b9af9c68bbd429cb13ba71ed6b
 });
 
 mongoose.connection.on('disconnected', (err) => {
-	if (err) {
-		console.log(`MongoDB 연결중 에러 발생: ` + err);
-	}
-	console.log('MongoDB disconnected');
-	console.log('byebye');
+  if (err) {
+    console.log(`MongoDB 연결중 에러 발생: ` + err);
+  }
+  console.log('MongoDB disconnected');
+  console.log('byebye');
 });
 
 require('./passport')();
+<<<<<<< HEAD
+=======
 
+>>>>>>> d0bc6d8e38b3f1b9af9c68bbd429cb13ba71ed6b
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
@@ -40,6 +47,37 @@ app.use(express.static('public')); // 정적 파일 서비스
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
+<<<<<<< HEAD
+=======
+// app.use(
+// 	session({
+// 		secret: 'secret',
+// 		resave: false,
+// 		saveUninitialized: true,
+// 	})
+// );
+
+<<<<<<< HEAD
+app.use(
+  session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(
+  session({
+    secret: 'elice',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: env.MONGO_URI,
+    }),
+  })
+);
+=======
+>>>>>>> d0bc6d8e38b3f1b9af9c68bbd429cb13ba71ed6b
+>>>>>>> 74e6d260244485f763dbbb449dbe2c547ec6e263
 app.use(passport.initialize());
 app.use(getUserFromJwt); // jwt 로그인 미들웨어 추가
 
@@ -47,11 +85,24 @@ app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
+<<<<<<< HEAD
+  next(createError(404));
+=======
 	next(createError(404));
+>>>>>>> d0bc6d8e38b3f1b9af9c68bbd429cb13ba71ed6b
 });
 
 // error handler
 app.use((err, req, res, next) => {
+<<<<<<< HEAD
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+=======
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -59,6 +110,7 @@ app.use((err, req, res, next) => {
 	// render the error page
 	res.status(err.status || 500);
 	res.render('error');
+>>>>>>> d0bc6d8e38b3f1b9af9c68bbd429cb13ba71ed6b
 });
 
 app.get('/', (req, res) => {
@@ -67,9 +119,17 @@ app.get('/', (req, res) => {
 
 //서버연결
 app.listen(env.PORT, (err) => {
+<<<<<<< HEAD
+  if (err) {
+    console.log(`서버 연결 실패 : ${err}`);
+  } else {
+    console.log(`서버 연결 성공`);
+  }
+=======
 	if (err) {
 		console.log(`서버 연결 실패 : ${err}`);
 	} else {
 		console.log(`${env.PORT}서버 연결 성공`);
 	}
+>>>>>>> d0bc6d8e38b3f1b9af9c68bbd429cb13ba71ed6b
 });

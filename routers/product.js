@@ -3,43 +3,28 @@ const router = Router();
 const { Product } = require('../models');
 const { productController } = require('../controller');
 
-// router.post('/', productController.postProduct);
+//상품 전체
+router.get('/', productController.getProduct);
+//상품 카테고리별
+router.get('/category', productController.getCategory);
+//상품 상세
+router.get('/detail', productController.getDetail);
 
-const bodyParser = require('body-parser');
+//thumbnail
+// router.get('/thumbnail', productController);
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+//NEW ARRIVALS
+router.get('/new_arrivals', productController.getNewArrivals);
 
-router.get('/', async (req, res) => {
-  const products = await Product.find({});
-  res.send('succeess!' + products);
-});
+//MD추천
+router.get('/MD_Pick', productController.getMDPick);
 
-router.post('/', async (req, res, next) => {
-  const {
-    category,
-    thumbnail,
-    productName,
-    price,
-    place,
-    speciesAge,
-    desciption,
-  } = req.body;
-  console.log(req.body);
-  try {
-    const products = await Product.create({
-      category,
-      thumbnail,
-      productName,
-      price,
-      place,
-      speciesAge,
-      desciption,
-    });
-    res.send(products);
-  } catch (err) {
-    next(err);
-  }
-});
+//------------------------ADMIN------------------
+//ADMIN 상품 추가
+router.post('/admin/add', productController.postProduct);
+//ADMIN 상품 삭제
+router.delete('/admin/delete', productController.delProduct);
+//ADMIN 상품 전체 삭제
+router.delete('/admin/delete/all', productController.delAllProduct);
 
 module.exports = router;
