@@ -12,17 +12,21 @@ const local = new LocalStrategy(config, async (email, password, done) => {
 		console.log('로그인 시도');
 		const user = await User.findOne({ email });
 		if (!user) {
+			console.log('회원을 찾을 수 없습니다.');
 			throw new Error('회원을 찾을 수 없습니다.');
 		}
 		// 검색 한 유저의 비밀번호와 요청된 비밀번호의 해쉬값이 일치하는지 확인
 		if (user.password !== hashPassword(password)) {
+			console.log('비밀번호가 일치하지 않습니다.');
 			throw new Error('비밀번호가 일치하지 않습니다.');
 		}
-
+		console.log('로그인 완료');
+		console.log(user);
 		done(null, {
 			shortId: user.shortId,
 			email: user.email,
 			name: user.name,
+			isAdmin: user.isAdmin,
 		});
 	} catch (err) {
 		done(err, null);

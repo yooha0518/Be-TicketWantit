@@ -27,6 +27,5 @@ router.use('/admin', adminRouter);
 // 	res.redirect('/login'); // 로그인 되지 않은 경우 /login 으로
 // });
 
-router.use('./user', userRouter);
 
 module.exports = router;

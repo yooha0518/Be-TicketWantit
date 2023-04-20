@@ -14,6 +14,8 @@ const userController = {
 	async getUser(req, res, next) {
 		try {
 			const shortId = req.user.shortId;
+			const isAdmin = req.user.isAdmin;
+			console.log(isAdmin);
 			const user = await userService.getUser(shortId);
 			res.json(user);
 		} catch (error) {
