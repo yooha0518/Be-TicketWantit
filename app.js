@@ -40,14 +40,6 @@ app.use(express.static('public')); // 정적 파일 서비스
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(
-// 	session({
-// 		secret: 'secret',
-// 		resave: false,
-// 		saveUninitialized: true,
-// 	})
-// );
-
 app.use(passport.initialize());
 app.use(getUserFromJwt); // jwt 로그인 미들웨어 추가
 
@@ -67,6 +59,10 @@ app.use((err, req, res, next) => {
 	// render the error page
 	res.status(err.status || 500);
 	res.render('error');
+});
+
+app.get('/', (req, res) => {
+	res.send('this is HOME PAGE');
 });
 
 //서버연결
