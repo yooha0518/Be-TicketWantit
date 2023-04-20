@@ -47,7 +47,6 @@ app.use(cookieParser());
 // 	})
 // );
 
->>>>>>> 74e6d260244485f763dbbb449dbe2c547ec6e263
 app.use(passport.initialize());
 app.use(getUserFromJwt); // jwt 로그인 미들웨어 추가
 
