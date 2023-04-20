@@ -8,10 +8,10 @@ const orderSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'User',
     },
-    customerName: {//고객명 -> 이걸 참고..?
-        type: String,
-        required: true
-    },
+    // customerName: {//고객명 -> 이걸 참고..?
+    //     type: String,
+    //     required: true
+    // },
     customerAddress:{ //고객주소
         type: String,
         required: true
@@ -34,7 +34,7 @@ const orderSchema = new Schema({
         required: true
     }
     }],
-    total: { //합계
+    totalPrice: { //합계
         type: Number,
         required: true
     },

@@ -17,7 +17,7 @@ const UserSchema = new Schema(
 			required: true,
 		},
 		Number: {
-			type: Number,
+			type: String,
 		},
 		Address: {
 			type: String,
