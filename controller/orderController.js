@@ -16,7 +16,7 @@ const orderController = {
             res.status(200).json({mesage:'data saved',orderId:order.orderId});
         }catch (error) {
             console.log('데이터를 db에 저장하는 것에 실패했습니다.' + error);
-            res.status(500).send({mesage:'data saved'})
+            res.status(500).send({mesage:'data save failed'})
             next(error);
         }
     },
@@ -32,7 +32,7 @@ const orderController = {
             next(error);
         }
     },
-    async deleteOrder(req,res,next){
+    async deleteOrder(req,res,next){ //orderId req.body로 받아오는걸로 수정!
         const shortId = req.user.shortId;
         const orderId = req.params.orderId;
         try{

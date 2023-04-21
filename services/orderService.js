@@ -2,7 +2,7 @@ const {Order} = require('../models');
 const {User} = require('../models');
 const orderService = {
     // 주문 추가 (주문하기)
-    async createOrder({shortId,customerPhoneNum,customerAddress,items,totalPrice}){
+    async createOrder({shortId,customerPhoneNum,customerAddress,items,totalPrice}){//중괄호의 역할이 뭐야
         const user = await User.findOne({shortId});
         const createdOrder = await Order.create({
             customerId:user._id,
