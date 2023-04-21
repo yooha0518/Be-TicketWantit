@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const router = Router();
-const { Product } = require('../models');
+// const { Product } = require('../models');
 const { productController } = require('../controller');
 
 //상품 전체
 router.get('/', productController.getProduct);
+
 //상품 카테고리별
 router.get('/category', productController.getCategory);
+
 //상품 상세
 router.get('/detail', productController.getDetail);
 
@@ -22,9 +24,14 @@ router.get('/MD_Pick', productController.getMDPick);
 //------------------------ADMIN------------------
 //ADMIN 상품 추가
 router.post('/admin/add', productController.postProduct);
+
 //ADMIN 상품 삭제
 router.delete('/admin/delete', productController.delProduct);
+
 //ADMIN 상품 전체 삭제
 router.delete('/admin/delete/all', productController.delAllProduct);
+
+//ADMIN 상품 수정
+router.put('/admin/edit', productController.putProduct);
 
 module.exports = router;

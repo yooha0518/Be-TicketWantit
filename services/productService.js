@@ -58,12 +58,17 @@ const productService = {
   async deleteProduct(id) {
     await Product.deleteOne({ productId: id });
 
-    return `productId: '${id}' DELETE SUCCESS!`;
+    return `productId: [${id}] DELETE SUCCESS!`;
   },
   //상품 전체 삭제
   async deleteAllProduct() {
     await Product.deleteMany({});
     return 'COMPLETE DELECTION OF ALL!';
+  },
+  //상품 수정
+  async updateProduct(id, updateData) {
+    await Product.updateOne({ productId: id }, { $set: updateData });
+    return `productId: [${id}] UPDATE SUCCESS!`;
   },
 };
 module.exports = productService;

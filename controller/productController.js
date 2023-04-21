@@ -117,6 +117,17 @@ const productController = {
       next(err);
     }
   },
+  //ADMIN 상품 수정
+  async putProduct(req, res, next) {
+    try {
+      const { productId } = req.query;
+      const updateData = req.body;
+      const content = await productService.updateProduct(productId, updateData);
+      res.json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 module.exports = productController;
