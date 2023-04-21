@@ -16,10 +16,10 @@ const UserSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		phoneNum: {
+		Number: {
 			type: String,
 		},
-		address: {
+		Address: {
 			type: String,
 		},
 		isAdmin: {

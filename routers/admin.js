@@ -26,6 +26,7 @@ router.patch('/:orderId/:orderStatus', async(req,res,next)=>{
         }
     }catch(err){
         console.log('배송상태 변경 중 에러발생' + err);
+        res.status(404).send('주문 상태 변경에 실패했습니다')
         next(err);
     }
 
@@ -40,6 +41,7 @@ router.get('/', async(req,res,next)=>{
             res.status(200).send(orderList) 
         }catch(err){
             console.log('전체주문 조회 실패' + err);
+            res.status(404).send('data inquery failed')
             next(err);
         }
 })
@@ -52,6 +54,7 @@ router.delete('/:orderId', async(req,res,next)=>{
         res.status(200).send('data delete success');
     }catch(err){
         console.log('관리자 주문 삭제')
+        res.status(404).send('data delete failed');
         next(err);
     }
 })

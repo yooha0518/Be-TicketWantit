@@ -7,7 +7,7 @@ const orderRouter = require('./order');
 const productRouter = require('./product');
 const adminRouter = require('./admin');
 router.get('/', (req, res) => {
-	res.send('this is homepage');
+  res.send('this is homepage');
 });
 router.use('/user', userRouter);
 //로그인 페이지 랜더링
@@ -26,6 +26,5 @@ router.use('/admin', adminRouter);
 // 	}
 // 	res.redirect('/login'); // 로그인 되지 않은 경우 /login 으로
 // });
-
 
 module.exports = router;
