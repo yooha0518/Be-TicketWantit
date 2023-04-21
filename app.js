@@ -1,13 +1,14 @@
 const createError = require('http-errors');
 const express = require('express');
 //const path = require('path');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const env = require('./.env');
+const getUserFromJwt = require('./middlewares/getUserFromJwt');
 const app = express();
 
 //routers
@@ -35,19 +36,19 @@ app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 �
 app.use(express.static('public')); // 정적 파일 서비스
 
 // app.use(logger('dev'));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+//app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(
-// 	session({
-// 		secret: 'secret',
-// 		resave: false,
-// 		saveUninitialized: true,
-// 	})
+//    session({
+//       secret: 'secret',
+//       resave: false,
+//       saveUninitialized: true,
+//    })
 // );
 
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(getUserFromJwt); // jwt 로그인 미들웨어 추가
 
 app.use('/api', apiRouter);
 

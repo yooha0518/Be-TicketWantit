@@ -3,12 +3,11 @@ const { Product } = require('../models');
 const productService = {
   //상품 목록 확인
   async readProduct() {
-    console.log(Product);
     const products = await Product.find({});
     return products;
   },
   // 상품 카테고리별
-  async readCategory(categoryName) {
+  async readCategoryProduct(categoryName) {
     const products = await Product.find({ category: categoryName });
     return products;
   },
