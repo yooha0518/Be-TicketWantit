@@ -8,6 +8,7 @@ const productRouter = require('./product');
 const adminRouter = require('./admin');
 const adminProductRouter = require('./adminProduct');
 const adminCategoryRouter = require('./adminCategory');
+const adminOrderRouter = require('./adminOrder');
 router.get('/', (req, res) => {
   res.send('this is homepage');
 });
@@ -22,6 +23,7 @@ router.use('/product', productRouter);
 router.use('/admin_product', adminProductRouter);
 router.use('/admin_category', adminCategoryRouter);
 router.use('/admin', adminRouter);
+router.use('/adminOrder', adminOrderRouter);
 
 // router.use('/결제', (req, res) => {
 // 	if (req.user) {
