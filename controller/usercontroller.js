@@ -8,8 +8,8 @@ const userController = {
 			const { email, password, name } = req.body;
 			// 추출한 데이터를 userService.createUser로 전달
 			const user = await userService.createUser({ email, password, name });
+			console.log(user);
 			res.json(user);
-
 			console.log('회원가입 -> 자동 로그인');
 			axios
 				.post('http://localhost:5000/api/auth', {
