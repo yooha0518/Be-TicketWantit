@@ -43,7 +43,7 @@ userRouter.post('/reset-password', async (req, res) => {
 		'티켓원잇 임시 비밀번호',
 		`티켓원잇의 임시 비밀번호입니다. "${password}" 로그인 후에 비밀번호를 변경해주세요.`
 	);
-	res.send(`${email}으로 임시비밀번호를 전송했습니다.`);
+	res.status(200).send(`${email}으로 임시비밀번호를 전송했습니다.`);
 });
 
 userRouter.post('/change-password', async (req, res) => {

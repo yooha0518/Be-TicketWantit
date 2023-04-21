@@ -27,11 +27,11 @@ const userController = {
 			const shortId = req.user.shortId;
 			console.log(shortId);
 			const { name, password } = req.body;
-			const user = await userService.updateUser(shortId, {
+			const result = await userService.updateUser(shortId, {
 				name,
 				password,
 			});
-			res.json(user);
+			res.status(200).json(result);
 		} catch (error) {
 			next(error);
 		}
