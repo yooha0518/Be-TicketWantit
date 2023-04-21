@@ -6,12 +6,8 @@ const orderSchema = new Schema({
     orderId,
     customerId:{
         type:Schema.Types.ObjectId,
-        ref:'User',
+        ref:'user',
     },
-    // customerName: {//고객명 -> 이걸 참고..?
-    //     type: String,
-    //     required: true
-    // },
     customerAddress:{ //고객주소
         type: String,
         required: true
