@@ -38,23 +38,14 @@ app.use(express.static('public')); // 정적 파일 서비스
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(
-  session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-app.use(
-  session({
-    secret: 'elice',
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: env.MONGO_URI,
-    }),
-  })
-);
+// app.use(
+// 	session({
+// 		secret: 'secret',
+// 		resave: false,
+// 		saveUninitialized: true,
+// 	})
+// );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -76,11 +67,15 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
+app.get('/', (req, res) => {
+  res.send('this is HOME PAGE');
+});
+
 //서버연결
 app.listen(env.PORT, (err) => {
   if (err) {
     console.log(`서버 연결 실패 : ${err}`);
   } else {
-    console.log(`서버 연결 성공`);
+    console.log(`${env.PORT}서버 연결 성공`);
   }
 });

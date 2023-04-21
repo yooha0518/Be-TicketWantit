@@ -18,17 +18,17 @@ const userService = {
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name, password, address, number }) {
+	async updateUser(shortId, { name, password, address, phoneNum }) {
 		const result = await User.updateOne(
 			{ shortId },
 			{
 				name,
 				password,
 				address,
-				number,
+				phoneNum,
 			}
 		);
-		if(result.modifiedCount === 0){
+		if (result.modifiedCount === 0) {
 			console.log('shortID 값이 잘못되었습니다.');
 		}
 		return result; //성공여부, 조건에 맞는 문서의 수, 새로 생성된 문서의 수, 새로 생성된 문서의 id값이 들어있음
