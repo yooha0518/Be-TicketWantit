@@ -18,6 +18,8 @@ const local = new LocalStrategy(config, async (email, password, done) => {
 		// 검색 한 유저의 비밀번호와 요청된 비밀번호의 해쉬값이 일치하는지 확인
 		if (user.password !== hashPassword(password)) {
 			console.log('비밀번호가 일치하지 않습니다.');
+			console.log(`비밀번호:${user.password}`);
+			console.log(`입력한 비밀번호:${hashPassword(password)}`);
 			throw new Error('비밀번호가 일치하지 않습니다.');
 		}
 		console.log('로그인 완료');

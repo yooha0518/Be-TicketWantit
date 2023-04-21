@@ -15,7 +15,7 @@ const userController = {
 		try {
 			const shortId = req.user.shortId;
 			const isAdmin = req.user.isAdmin;
-			console.log(isAdmin);
+			console.log(`관리자: ${isAdmin}`);
 			const user = await userService.getUser(shortId);
 			res.json(user);
 		} catch (error) {
@@ -26,12 +26,10 @@ const userController = {
 		try {
 			const shortId = req.user.shortId;
 			console.log(shortId);
-			const { name, password, address, phoneNum } = req.body;
+			const { name, password } = req.body;
 			const user = await userService.updateUser(shortId, {
 				name,
 				password,
-				address,
-				phoneNum,
 			});
 			res.json(user);
 		} catch (error) {

@@ -1,0 +1,1 @@
+module.exports = "안녕하세요 SMTP테스트 메일입니다.";
