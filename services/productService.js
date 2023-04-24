@@ -28,28 +28,29 @@ const productService = {
   },
 
   //------------------------------------ADMIN------------------------------
+  //ADMIN 상품 전체
   //상품 추가
   async createProduct({
     category,
-    imageUrl,
     productName,
     price,
     startDate,
     endDate,
     place,
     speciesAge,
-    desciption,
+    imageUrl,
+    description,
   }) {
     const products = await Product.create({
       category,
-      imageUrl,
       productName,
       price,
       startDate,
       endDate,
       place,
       speciesAge,
-      desciption,
+      imageUrl,
+      description,
     });
     return products;
   },

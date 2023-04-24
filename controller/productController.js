@@ -68,32 +68,64 @@ const productController = {
     }
   },
   //----------------------------------------- ADMIN----------------------------
+  //ADMIN 상품 전체
+  async getAdminProduct(req, res, next) {
+    try {
+      const products = await productService.readProduct();
+      const content = products.map(
+        ({
+          productId,
+          productName,
+          imageUrl,
+          price,
+          place,
+          speciesAge,
+          description,
+          startDate,
+          endDate,
+        }) => ({
+          productId,
+          productName,
+          imageUrl,
+          price,
+          place,
+          speciesAge,
+          description,
+          startDate,
+          endDate,
+        })
+      );
+      res.status(200).json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
   //ADMIN 상품 추가
   async postProduct(req, res, next) {
     try {
       const {
         category,
-        imageUrl,
         productName,
         price,
         startDate,
         endDate,
         place,
         speciesAge,
-        desciption,
+        imageUrl,
+        description,
       } = req.body;
-      const product = await productService.createProduct({
+      const products = await productService.createProduct({
         category,
-        imageUrl,
         productName,
         price,
         startDate,
         endDate,
         place,
         speciesAge,
-        desciption,
+        imageUrl,
+        description,
       });
-      res.status(200).json(product);
+      res.status(200).json(products);
     } catch (err) {
       next(err);
     }
