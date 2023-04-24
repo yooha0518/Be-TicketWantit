@@ -3,12 +3,11 @@ const { Product } = require('../models');
 const productService = {
   //상품 목록 확인
   async readProduct() {
-    console.log(Product);
     const products = await Product.find({});
     return products;
   },
   // 상품 카테고리별
-  async readCategory(categoryName) {
+  async readCategoryProduct(categoryName) {
     const products = await Product.find({ category: categoryName });
     return products;
   },
@@ -29,28 +28,29 @@ const productService = {
   },
 
   //------------------------------------ADMIN------------------------------
+  //ADMIN 상품 전체
   //상품 추가
   async createProduct({
     category,
-    imageUrl,
     productName,
     price,
     startDate,
     endDate,
     place,
     speciesAge,
-    desciption,
+    imageUrl,
+    description,
   }) {
     const products = await Product.create({
       category,
-      imageUrl,
       productName,
       price,
       startDate,
       endDate,
       place,
       speciesAge,
-      desciption,
+      imageUrl,
+      description,
     });
     return products;
   },
@@ -58,12 +58,17 @@ const productService = {
   async deleteProduct(id) {
     await Product.deleteOne({ productId: id });
 
-    return `productId: '${id}' DELETE SUCCESS!`;
+    return `productId: [${id}] DELETE SUCCESS!`;
   },
   //상품 전체 삭제
   async deleteAllProduct() {
     await Product.deleteMany({});
     return 'COMPLETE DELECTION OF ALL!';
+  },
+  //상품 수정
+  async updateProduct(id, updateData) {
+    await Product.updateOne({ productId: id }, { $set: updateData });
+    return `productId: [${id}] UPDATE SUCCESS!`;
   },
 };
 module.exports = productService;

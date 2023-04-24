@@ -21,18 +21,18 @@ const productController = {
     try {
       const products = await productService.readProduct();
       const content = productMapping(products);
-      res.json(content);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
   },
   //상품 카테고리별
-  async getCategory(req, res, next) {
+  async getCategoryProduct(req, res, next) {
     try {
       const { category } = req.query;
-      const products = await productService.readCategory(category);
+      const products = await productService.readCategoryProduct(category);
       const content = productMapping(products);
-      res.json(content);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
@@ -42,7 +42,7 @@ const productController = {
     try {
       const { productId } = req.query;
       const content = await productService.readDetail(productId);
-      res.json(content);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
@@ -52,7 +52,7 @@ const productController = {
     try {
       const products = await productService.readNewArrivals();
       const content = productMapping(products);
-      res.json(content);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
@@ -62,38 +62,70 @@ const productController = {
     try {
       const products = await productService.readMDPick();
       const content = productMapping(products);
-      res.json(content);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
   },
   //----------------------------------------- ADMIN----------------------------
+  //ADMIN 상품 전체
+  async getAdminProduct(req, res, next) {
+    try {
+      const products = await productService.readProduct();
+      const content = products.map(
+        ({
+          productId,
+          productName,
+          imageUrl,
+          price,
+          place,
+          speciesAge,
+          description,
+          startDate,
+          endDate,
+        }) => ({
+          productId,
+          productName,
+          imageUrl,
+          price,
+          place,
+          speciesAge,
+          description,
+          startDate,
+          endDate,
+        })
+      );
+      res.status(200).json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
   //ADMIN 상품 추가
   async postProduct(req, res, next) {
     try {
       const {
         category,
-        imageUrl,
         productName,
         price,
         startDate,
         endDate,
         place,
         speciesAge,
-        desciption,
+        imageUrl,
+        description,
       } = req.body;
-      const product = await productService.createProduct({
+      const products = await productService.createProduct({
         category,
-        imageUrl,
         productName,
         price,
         startDate,
         endDate,
         place,
         speciesAge,
-        desciption,
+        imageUrl,
+        description,
       });
-      res.json(product);
+      res.status(200).json(products);
     } catch (err) {
       next(err);
     }
@@ -103,7 +135,7 @@ const productController = {
     try {
       const { productId } = req.query;
       const content = await productService.deleteProduct(productId);
-      res.json(content);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
@@ -112,7 +144,18 @@ const productController = {
   async delAllProduct(req, res, next) {
     try {
       const content = await productService.deleteAllProduct();
-      res.json(content);
+      res.status(200).json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
+  //ADMIN 상품 수정
+  async putProduct(req, res, next) {
+    try {
+      const { productId } = req.query;
+      const updateData = req.body;
+      const content = await productService.updateProduct(productId, updateData);
+      res.status(200).json(content);
     } catch (err) {
       next(err);
     }
