@@ -1,4 +1,3 @@
-
 const {Order} = require('../models');
 const {User} = require('../models');
 
@@ -15,10 +14,16 @@ const adminOrderService = {
         }
     },
     //관리자 유저주문조회 - 특정 유저의 주문내역 조회 (검색)..?
-    async getUserOrder(shortId){
+    async getUserOrder(searchWord){
         try {
-            const userOrder = await Order.find({shortId});
-            return userOrder;
+            const searchUserOrder = await Order.find({
+                $or: [
+                    { orderId: searchWord },
+                    { customerId: { $in: await User.find({ email: searchWord }).distinct('_id') } }
+                ]
+                }).populate('customerId').exec();
+            console.log(searchUserOrder);
+            return searchUserOrder;
         } catch(error) {
             console.log(error);
             next(error);

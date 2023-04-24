@@ -12,7 +12,8 @@ const orderSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'user',
     },
-    customerAddress:{ //고객주소
+    items: [{ //상품
+        name: {
         type: String,
         required: true,
       },
@@ -28,7 +29,7 @@ const orderSchema = new Schema({
       },
     },
   ],
-  total: {
+  totalPrice: {
     //합계
     type: Number,
     required: true,

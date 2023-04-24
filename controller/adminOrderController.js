@@ -14,6 +14,18 @@ const adminOrderController = { //관리자인지 확인 해줘야 하나..?
             next(error);
         }
     },
+    async getUserOrder(req,res,next){
+        const {searchWord} = req.params;
+        console.log(searchWord);
+        try{
+            const getUserOrder = await adminOrderService.getUserOrder(searchWord);
+            console.log(getUserOrder);
+            res.send('ok');
+        }catch(error){
+            console.log(error);
+            next(error);
+        }
+    },
     async deleteOrder(req,res,next){
         const orderId = req.params.orderId;
         try {

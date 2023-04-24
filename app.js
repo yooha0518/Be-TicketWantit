@@ -61,6 +61,7 @@ app.use(getUserFromJwt); // jwt 로그인 미들웨어 추가
 
 app.use('/api', apiRouter);
 
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
