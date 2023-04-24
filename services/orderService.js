@@ -4,6 +4,9 @@ const orderService = {
     // 주문 추가 (주문하기)
     async createOrder({shortId,customerPhoneNum,customerAddress,items,totalPrice}){//중괄호의 역할이 뭐야
         const user = await User.findOne({shortId});
+        if(!customerPhoneNum||!customerAddress||!items||totalPrice){
+            throw new Error("정보를 모두 입력해주세요");
+        }
         const createdOrder = await Order.create({
             customerId:user._id,
             items,
@@ -17,6 +20,9 @@ const orderService = {
     async getOrder(shortId){
         try{
             const userOrder = await Order.find({shortId}).populate('customerId');
+            if(!userOrder){
+                throw new Error("주문 내역이 없습니다");
+            }
             console.log(userOrder);
             return userOrder;
         }catch(error){
@@ -25,7 +31,6 @@ const orderService = {
         }    
     },
     // 유저 주문 수정(주문전 주문 취소)
-    // 여기 코드 이게 맞나..? Controllerd에 어떤 값을 return 해줘야하는건가..?
     async deleteOrder(shortId,orderId){
         try{ 
             const order = await Order.find({shortId,orderId}).populate('customerId');
@@ -43,6 +48,7 @@ const orderService = {
             next(error);
         }
     },
+    //유저 정보수정(주문전 주문정보 변경)
 }
 
 
