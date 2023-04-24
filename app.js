@@ -67,6 +67,7 @@ app.use(passport.initialize());
 app.use(cors(corsOptions));
 app.use('/api', apiRouter);
 
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
 	next(createError(404));
