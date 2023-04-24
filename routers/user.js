@@ -15,12 +15,8 @@ userRouter.post('/', userController.postUser, (req, res) => {
 	axios
 		.post('http://localhost:5000/api/auth', { email, password })
 		.then((postRes) => {
-			//res값으로 로그인 성공여부 받아오기
-			const response = {
-				token: postRes.data,
-			};
-			console.log(response.token);
-			res.send(response);
+			console.log(postRes);
+			res.send(postRes.data);
 		})
 		.catch((error) => {
 			console.error(error);
