@@ -51,11 +51,11 @@ app.use(express.static('public')); // 정적 파일 서비스
 //app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(
-// 	session({
-// 		secret: 'secret',
-// 		resave: false,
-// 		saveUninitialized: true,
-// 	})
+//    session({
+//       secret: 'secret',
+//       resave: false,
+//       saveUninitialized: true,
+//    })
 // );
 
 const corsOptions = {
@@ -74,24 +74,24 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 app.get('/', (req, res) => {
-	res.send('this is HOME PAGE');
+  res.send('this is HOME PAGE');
 });
 
 //서버연결
 app.listen(env.PORT, (err) => {
-	if (err) {
-		console.log(`서버 연결 실패 : ${err}`);
-	} else {
-		console.log(`${env.PORT}서버 연결 성공`);
-	}
+  if (err) {
+    console.log(`서버 연결 실패 : ${err}`);
+  } else {
+    console.log(`${env.PORT}서버 연결 성공`);
+  }
 });
