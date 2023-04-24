@@ -1,17 +1,29 @@
 const JwtStrategy = require('passport-jwt').Strategy;
-const {secret} = require('../../utils/jwt.js');
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const { secret } = require('../../utils/createjwt.js');
+const { User } = require('../../models/index.js');
 
-const cookieExtractor = (req) => {
-  // req 의 cookies 에서 token 사용하기
-  const {token} = req.cookies;
-  return token;
+const jwtOptions = {
+	secretOrKey: secret,
+	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const opts = {
-  secretOrKey: secret,//./utils/jwt 의 secret 사용하기
-  jwtFromRequest: cookieExtractor,
-}
-
-module.exports = new JwtStrategy(opts, (user, done) => {
-  done(null, user);
+const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
+	console.log('jwt 토큰 전략 함수 시작');
+	User.findOne({ shortId: payload.shortId })
+		.then((user) => {
+			if (user) {
+				console.log('user가 있습니다.');
+				return done(null, user);
+			} else {
+				console.log('user가 없습니다..');
+				return done(null, false);
+			}
+		})
+		.catch((err) => {
+			console.log('실패');
+			done(err, false);
+		});
 });
+
+module.exports = jwtStrategy;

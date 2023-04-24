@@ -14,6 +14,7 @@ const userService = {
 	},
 	// 사용자 정보 조회
 	async getUser(shortId) {
+		console.log(`${shortId}:유저의 데이터를 조회합니다.`);
 		const user = await User.findOne({ shortId });
 		return user;
 	},
