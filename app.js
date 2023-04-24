@@ -29,6 +29,15 @@ mongoose.connection.on('disconnected', (err) => {
   console.log('byebye');
 });
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+
 require('./passport')();
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
