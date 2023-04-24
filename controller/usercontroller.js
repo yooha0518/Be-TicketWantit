@@ -1,34 +1,25 @@
 const { userService } = require('../services');
-const axios = require('axios');
-const hashPassword = require('../utils/hash-password');
 
 const userController = {
 	async postUser(req, res, next) {
 		try {
+			console.log('회원가입(postUser) 시작');
 			const { email, password, name } = req.body;
 			// 추출한 데이터를 userService.createUser로 전달
 			const user = await userService.createUser({ email, password, name });
-			res.json(user);
-
-			console.log('회원가입 -> 자동 로그인');
-			axios
-				.post('http://localhost:5000/api/auth', {
-					email: user.email,
-					password: hashPassword(user.password),
-				})
-				.catch((error) => {
-					console.error('회원가입 -> 자동 로그인 에러');
-					console.error(error);
-				});
+			//console.log(user);
+			req.user = user;
+			next();
 		} catch (error) {
 			next(error);
 		}
 	},
 	async getUser(req, res, next) {
 		try {
-			const shortId = req.user.shortId;
-			const isAdmin = req.user.isAdmin;
+			console.log('getUser 실행');
+			const { shortId, isAdmin, isTempPassword } = req.user;
 			console.log(`관리자: ${isAdmin}`);
+			console.log(`임시비밀번호: ${isTempPassword}`);
 			const user = await userService.getUser(shortId);
 			res.json(user);
 		} catch (error) {

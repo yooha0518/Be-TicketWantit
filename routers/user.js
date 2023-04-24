@@ -1,68 +1,56 @@
 const { Router } = require('express');
-const { User } = require('../models');
 const { userController } = require('../controller');
 const userRouter = Router();
-
+const getUserFromJwt = require('../middlewares/getUserFromJwt');
+const generateRandomPassword = require('../utils/generateRandomPassword.js');
+const resetPassword = require('./resetPassword.js');
+const changePassword = require('./changePassword.js');
 const sendMail = require('../utils/sendMail');
-const generateRandomPassword = require('../utils/generateRandomPassword');
-const hashPassword = require('../utils/hash-password');
+const axios = require('axios');
 
 //사용자 추가
-userRouter.post('/', userController.postUser);
-
-//사용자 정보 조회
-userRouter.get('/', userController.getUser);
-
-//사용자 정보 수정
-userRouter.put('/', userController.putUser);
-
-//사용자 정보 삭제
-userRouter.delete('/', userController.deleteUser);
-
-userRouter.get('/send-message', (req, res) => {
-	res.send('email을 넣어서 post요청해주세요');
+userRouter.post('/', userController.postUser, (req, res) => {
+	const { email, password } = req.body;
+	console.log('로그인 시작');
+	axios
+		.post('http://localhost:5000/api/auth', { email, password })
+		.then((postRes) => {
+			//res값으로 로그인 성공여부 받아오기
+			const response = {
+				token: postRes.data,
+			};
+			console.log(response.token);
+			res.send(response);
+		})
+		.catch((error) => {
+			console.error(error);
+		});
 });
 
-userRouter.post('/reset-password', async (req, res) => {
+async function authEmail() {
 	const { email } = req.body;
-	const user = await User.findOne({ email });
-	if (!user) {
-		throw new Error('해당 메일로 가입된 사용자가 없습니다.');
-	}
+	const authNum = generateRandomPassword();
 
-	const password = generateRandomPassword();
-
-	await User.updateOne(
-		{ email },
-		{
-			password: hashPassword(password),
-		}
-	);
 	await sendMail(
 		email,
-		'티켓원잇 임시 비밀번호',
-		`티켓원잇의 임시 비밀번호입니다. "${password}" 로그인 후에 비밀번호를 변경해주세요.`
+		`티켓원잇 인증번호`,
+		`티켓원잇의 인증번호 입니다. "${authNum}"`
 	);
-	res.status(200).send(`${email}으로 임시비밀번호를 전송했습니다.`);
-});
+}
 
-userRouter.post('/change-password', async (req, res) => {
-	const { currentPassword, password } = req.body;
-	const user = await User.findOne({ shortId: req.user.shortId });
+//사용자 정보 조회
+userRouter.get('/', getUserFromJwt, userController.getUser);
 
-	if (user.password !== hashPassword(currentPassword)) {
-		throw new Error('임시 비밀번호가 일치하지 않습니다.');
-	}
+//사용자 정보 수정
+userRouter.put('/', getUserFromJwt, userController.putUser);
 
-	await User.updateOne(
-		{ shortId: user.shortId },
-		{
-			password: hashPassword(password),
-			passwordReset: false,
-		}
-	);
+//사용자 정보 삭제
+userRouter.delete('/', getUserFromJwt, userController.deleteUser);
 
-	res.stat('200').send('비밀번호 변경완료 로그인페이지로 랜더링');
-});
+//사용자 비밀번호 초기화
+userRouter.use('/reset-password', resetPassword);
+
+//사용자 비밀번호 변경
+userRouter.use('/change-password', getUserFromJwt, changePassword);
 
 module.exports = userRouter;
