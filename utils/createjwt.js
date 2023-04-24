@@ -8,6 +8,7 @@ exports.setUserToken = (user) => {
 	const payload = {
 		shortId: user.shortId,
 		name: user.name,
+		email:user.email,
 		isAdmin: user.isAdmin,
 		isTempPassword: user.isTempPassword,
 	};

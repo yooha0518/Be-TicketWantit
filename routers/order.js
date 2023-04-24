@@ -11,5 +11,7 @@ orderRouter.get('/', orderController.getOrder);
 //유저 주문수정 - 배송 전까지 취소 가능
 orderRouter.delete('/:orderId',orderController.deleteOrder);
 
+//유저 주문 수정 - 배송 전까지 정보 수정(배송지, 휴대폰 번호)
+orderRouter.put('/:orderId',orderController.updateOrder);
 
 module.exports = orderRouter;

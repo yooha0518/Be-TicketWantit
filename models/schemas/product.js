@@ -14,15 +14,15 @@ const ProductSchema = new Schema({
     type: Number,
     required: true,
   },
+  place: {
+    type: String,
+    required: true,
+  },
   startDate: {
     type: String,
     required: true,
   },
   endDate: {
-    type: String,
-    required: true,
-  },
-  place: {
     type: String,
     required: true,
   },
@@ -34,7 +34,7 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
-  desciption: {
+  description: {
     type: String,
     required: true,
   },
