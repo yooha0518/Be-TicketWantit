@@ -47,6 +47,22 @@ const orderController = {
             next(error);
         }
     },
+    async updateOrder(req,res,next){ //배송전 주문정보 수정
+        const orderId = req.params.orderId;
+        // const shortId = req.user.shortId;
+        const {customerAddress,customerPhoneNum} = req.body;
+        try{
+            const isDelivered = await orderService.updateOrder(orderId,customerAddress,customerPhoneNum);
+            if(isDelivered ===1){
+                res.status(200).send('유저 주문 정보가 수정되었습니다.')
+            }else{
+                res.status(404).send('이미 배송중인 상품입니다.')
+            }
+        }catch(error){
+            console.log('유저의 주문 정보 수정에 실패했습니다.')
+            next(error);
+        }
+    }
     
 }
 
