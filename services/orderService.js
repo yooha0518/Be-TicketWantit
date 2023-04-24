@@ -1,10 +1,14 @@
 const {Order} = require('../models');
 const {User} = require('../models');
+const dayjs = require('dayjs');
+const orderDate = dayjs().format('YYYYMMDD');
+
 const orderService = {
     // 주문 추가 (주문하기)
     async createOrder({shortId,customerPhoneNum,customerAddress,items,totalPrice}){//중괄호의 역할이 뭐야
         const user = await User.findOne({shortId});
         const createdOrder = await Order.create({
+            orderId:orderDate+shortId,
             customerId:user._id,
             items,
             customerAddress,
@@ -25,7 +29,6 @@ const orderService = {
         }    
     },
     // 유저 주문 수정(주문전 주문 취소)
-    // 여기 코드 이게 맞나..? Controllerd에 어떤 값을 return 해줘야하는건가..?
     async deleteOrder(shortId,orderId){
         try{ 
             const order = await Order.find({shortId,orderId}).populate('customerId');
@@ -43,6 +46,26 @@ const orderService = {
             next(error);
         }
     },
+    async updateOrder(putTargetOrderId,putTargetCustomerAddress,putTargetCustomerPhoneNum){
+        try {
+            const order = await Order.find({orderId:putTargetOrderId}).populate('customerId');
+            console.log(order);
+            const orderStatus = order[0].orderStatus;
+            if(orderStatus==1){
+                await Order.updateMany({orderId:putTargetOrderId},
+                                        {customerAddress:putTargetCustomerAddress,
+                                        customerPhoneNum:putTargetCustomerPhoneNum});
+                console.log('유저의 주문정보가 수정되었습니다');
+                return 1;                        
+            }else{
+                return 2;
+            }
+            
+        } catch(error) {
+            console.log('유저의 주문정보 수정에 실패했습니다.');
+            next(error);
+        }
+    }
 }
 
 
