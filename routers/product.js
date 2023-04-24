@@ -1,45 +1,23 @@
 const { Router } = require('express');
 const router = Router();
-const { Product } = require('../models');
 const { productController } = require('../controller');
 
-// router.post('/', productController.postProduct);
+//상품 전체
+router.get('/', productController.getProduct);
 
-const bodyParser = require('body-parser');
+//상품 카테고리별
+router.get('/category', productController.getCategoryProduct);
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+//상품 상세
+router.get('/detail', productController.getDetail);
 
-router.get('/', async (req, res) => {
-  const products = await Product.find({});
-  res.send('succeess!' + products);
-});
+//thumbnail
+// router.get('/thumbnail', productController);
 
-router.post('/', async (req, res, next) => {
-  const {
-    category,
-    thumbnail,
-    productName,
-    price,
-    place,
-    speciesAge,
-    desciption,
-  } = req.body;
-  console.log(req.body);
-  try {
-    const products = await Product.create({
-      category,
-      thumbnail,
-      productName,
-      price,
-      place,
-      speciesAge,
-      desciption,
-    });
-    res.send(products);
-  } catch (err) {
-    next(err);
-  }
-});
+//NEW ARRIVALS
+router.get('/new_arrivals', productController.getNewArrivals);
+
+//MD추천
+router.get('/MD_Pick', productController.getMDPick);
 
 module.exports = router;
