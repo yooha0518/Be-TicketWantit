@@ -1,10 +1,14 @@
 const {Order} = require('../models');
 const {User} = require('../models');
+const dayjs = require('dayjs');
+const orderDate = dayjs().format('YYYYMMDD');
+
 const orderService = {
     // 주문 추가 (주문하기)
     async createOrder({shortId,customerPhoneNum,customerAddress,items,totalPrice}){//중괄호의 역할이 뭐야
         const user = await User.findOne({shortId});
         const createdOrder = await Order.create({
+            orderId:orderDate+shortId,
             customerId:user._id,
             items,
             customerAddress,
