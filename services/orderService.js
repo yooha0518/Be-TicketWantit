@@ -11,9 +11,10 @@ const orderService = {
     customerAddress,
     items,
     totalPrice,
+    zipCode
   }) {
     const user = await User.findOne({ shortId });
-    if (!customerPhoneNum || !customerAddress || !items || !totalPrice) {
+    if (!customerPhoneNum || !customerAddress || !items || !totalPrice || !zipCode) {
       throw new Error('정보를 모두 입력해주세요');
     }
     const createdOrder = await Order.create({
@@ -23,6 +24,7 @@ const orderService = {
       customerAddress,
       customerPhoneNum,
       totalPrice,
+      zipCode
     });
     return createdOrder;
   },
