@@ -1,6 +1,6 @@
 const { nanoid } = require("nanoid"); //고유한 문자열 생성 라이브러리
 const dayjs = require("dayjs");
-const orderDate = dayjs().format("YYYYMMDD");
+const orderDate = dayjs().format("YYYY-MM-DD");
 
 const shortId = {
   type: String,
