@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const orderId = require('./types/short-id');
+const dayjs = require('dayjs');
+const formattedDate = dayjs().format('YYYY-MM-DD');
 
 const orderSchema = new Schema({ 
     orderId: {
@@ -41,8 +43,8 @@ const orderSchema = new Schema({
     required: true,
   },
   date: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default:formattedDate,
   },
 });
 
