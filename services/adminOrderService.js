@@ -22,7 +22,6 @@ const adminOrderService = {
                     { customerId: { $in: await User.find({ email: searchWord }).distinct('_id') } }
                 ]
                 }).populate('customerId').exec();
-            console.log(searchUserOrder);
             return searchUserOrder;
         } catch(error) {
             console.log(error);
