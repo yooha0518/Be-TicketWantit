@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const cors = require('cors');
-// const path = require('path');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
 const mongoose = require('mongoose');
@@ -49,7 +49,8 @@ require('./passport')();
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
 app.use(express.static('public')); // 정적 파일 서비스
-app.use(express.static('uploads'));
+// app.use(express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // app.use(logger('dev'));
 app.use(cookieParser());
@@ -67,6 +68,7 @@ app.use(passport.initialize());
 app.use(getUserFromJwt); // jwt 로그인 미들웨어 추가
 
 app.use('/api', apiRouter);
+app.use('/uploads', express.static('/uploads'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

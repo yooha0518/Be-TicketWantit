@@ -75,6 +75,7 @@ const productController = {
       const products = await productService.readProduct();
       const content = products.map(
         ({
+          category,
           productId,
           productName,
           imageUrl,
@@ -85,6 +86,7 @@ const productController = {
           startDate,
           endDate,
         }) => ({
+          category,
           productId,
           productName,
           imageUrl,
@@ -115,6 +117,7 @@ const productController = {
         description,
       } = req.body;
       const imageUrl = req.file.path;
+      console.log(imageUrl);
       const products = await productService.createProduct({
         category,
         productName,
@@ -154,8 +157,30 @@ const productController = {
   async putProduct(req, res, next) {
     try {
       const { productId } = req.query;
-      const updateData = req.body;
-      const content = await productService.updateProduct(productId, updateData);
+      // const updateData = req.body;
+      const {
+        category,
+        productName,
+        price,
+        startDate,
+        endDate,
+        place,
+        speciesAge,
+        description,
+      } = req.body;
+      const imageUrl = req.file.path;
+      const content = await productService.updateProduct(
+        productId,
+        category,
+        productName,
+        price,
+        startDate,
+        endDate,
+        place,
+        speciesAge,
+        description,
+        imageUrl
+      );
       res.status(200).json(content);
     } catch (err) {
       next(err);
