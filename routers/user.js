@@ -13,14 +13,10 @@ userRouter.post('/', userController.postUser, (req, res) => {
 	const { email, password } = req.body;
 	console.log('로그인 시작');
 	axios
-		.post('http://localhost:5000/api/auth', { email, password })
+		.post('http://34.64.112.166/api/auth', { email, password })
 		.then((postRes) => {
-			//res값으로 로그인 성공여부 받아오기
-			const response = {
-				token: postRes.data,
-			};
-			console.log(response.token);
-			res.send(response);
+			console.log(postRes);
+			res.send(postRes.data);
 		})
 		.catch((error) => {
 			console.error(error);
