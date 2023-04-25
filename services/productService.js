@@ -65,7 +65,29 @@ const productService = {
     await Product.deleteMany({});
     return 'COMPLETE DELECTION OF ALL!';
   },
-  async updateProduct(id, updateData) {
+  async updateProduct(
+    id,
+    category,
+    productName,
+    price,
+    startDate,
+    endDate,
+    place,
+    speciesAge,
+    description,
+    imageUrl
+  ) {
+    const updateData = {
+      category,
+      productName,
+      price,
+      startDate,
+      endDate,
+      place,
+      speciesAge,
+      description,
+      imageUrl,
+    };
     await Product.updateOne({ productId: id }, { $set: updateData });
     return `productId: [${id}] UPDATE SUCCESS!`;
   },

@@ -27,6 +27,6 @@ router.delete('/delete', productController.delProduct);
 router.delete('/delete/all', productController.delAllProduct);
 
 //ADMIN 상품 수정
-router.put('/edit', productController.putProduct);
+router.put('/edit', upload.single('imageUrl'), productController.putProduct);
 
 module.exports = router;
