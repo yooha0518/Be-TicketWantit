@@ -35,7 +35,7 @@ const orderService = {
   // 유저 주문 조회
   async getOrder(userId) {
     try {
-      const userOrder = await Order.find({ userId });
+      const userOrder = await Order.find({ userId }).sort({ date: -1 }).exec();
       console.log(userOrder);
       return userOrder;
     } catch (error) {
