@@ -2,11 +2,10 @@ const { Router } = require('express');
 const { userController } = require('../controller');
 const userRouter = Router();
 const getUserFromJwt = require('../middlewares/getUserFromJwt');
-const generateRandomPassword = require('../utils/generateRandomPassword.js');
 const resetPassword = require('./resetPassword.js');
 const changePassword = require('./changePassword.js');
-const sendMail = require('../utils/sendMail');
 const axios = require('axios');
+const emailAuth = require('../utils/emailAuth');
 
 //사용자 추가
 userRouter.post('/', userController.postUser, (req, res) => {
@@ -23,16 +22,6 @@ userRouter.post('/', userController.postUser, (req, res) => {
 		});
 });
 
-async function authEmail() {
-	const { email } = req.body;
-	const authNum = generateRandomPassword();
-
-	await sendMail(
-		email,
-		`티켓원잇 인증번호`,
-		`티켓원잇의 인증번호 입니다. "${authNum}"`
-	);
-}
 
 //사용자 정보 조회
 userRouter.get('/', getUserFromJwt, userController.getUser);
@@ -48,5 +37,8 @@ userRouter.use('/reset-password', resetPassword);
 
 //사용자 비밀번호 변경
 userRouter.use('/change-password', getUserFromJwt, changePassword);
+
+//이메일 본인인증
+userRouter.use('/emailAuth', emailAuth);
 
 module.exports = userRouter;

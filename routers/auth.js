@@ -19,12 +19,12 @@ authRouter.post('/', async (req, res, next) => {
 	const user = await User.findOne({ email });
 	if (!user) {
 		console.log('회원을 찾을 수 없습니다.');
-		return res.status(401).json({ message: '로그인 실패' });
+		return res.status(400).json({ message: '계정이 존재하지 않습니다.' });
 	}
 	// 검색 한 유저의 비밀번호와 요청된 비밀번호의 해쉬값이 일치하는지 확인
 	if (user.password !== hashPassword(password)) {
 		console.log('비밀번호가 일치하지 않습니다.');
-		return res.status(401).json({ message: '로그인 실패' });
+		return res.status(400).json({ message: '비밀번호가 틀렸습니다.' });
 	}
 	console.log('토큰 만들기 실행');
 	res.send(setUserToken(user));
