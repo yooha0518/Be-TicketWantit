@@ -1,21 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const orderId = require('./types/short-id');
-const dayjs = require('dayjs');
-const formattedDate = dayjs().format('YYYY-MM-DD');
+const orderId = require("./types/order-id");
+const dayjs = require("dayjs");
+const formattedDate = dayjs().format("YYYYMMDD");
 
-const orderSchema = new Schema({ 
-    orderId: {
-        type: String, 
-        required: true, 
-        default:orderId
-    },
-    customerId:{
-        type:Schema.Types.ObjectId,
-        ref:'user',
-    },
-    items: [{ 
-        name: {
+const orderSchema = new Schema({
+  orderId,
+  userId: {
+    type: String,
+    required: true,
+  },
+  customerId: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  items: [
+    {
+      name: {
         type: String,
         required: true,
       },
@@ -38,13 +39,13 @@ const orderSchema = new Schema({
     default: 1,
     required: true,
   },
-  zipCode:{
+  zipCode: {
     type: String,
     required: true,
   },
   date: {
     type: String,
-    default:formattedDate,
+    default: formattedDate,
   },
 });
 
