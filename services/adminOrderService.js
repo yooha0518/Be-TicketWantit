@@ -5,7 +5,7 @@ const adminOrderService = {
     //관리자 주문조회 - db에 있는 모든 주문내역
     async getOrder(){
         try{
-            const orderList = await Order.find({});
+            const orderList = await Order.find({}).populate('customerId').exec();
             console.log(orderList);
             return orderList;
         }catch(error){
