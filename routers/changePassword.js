@@ -1,5 +1,3 @@
-const { Router } = require('express');
-const changePassword = Router();
 const hashPassword = require('../utils/hash-password');
 const { User } = require('../models');
 
