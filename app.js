@@ -88,7 +88,7 @@ app.get('/', (req, res) => {
 });
 
 //서버연결
-app.listen(env.PORT, (err) => {
+app.listen(env.PORT, '0.0.0.0', (err) => {
   if (err) {
     console.log(`서버 연결 실패 : ${err}`);
   } else {
