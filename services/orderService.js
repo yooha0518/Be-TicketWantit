@@ -11,10 +11,10 @@ const orderService = {
     customerAddress,
     items,
     totalPrice,
+    zipCode
   }) {
-    //중괄호의 역할이 뭐야
     const user = await User.findOne({ shortId });
-    if (!customerPhoneNum || !customerAddress || !items || totalPrice) {
+    if (!customerPhoneNum || !customerAddress || !items || !totalPrice ||!zipCode) {
       throw new Error('정보를 모두 입력해주세요');
     }
     const createdOrder = await Order.create({
@@ -24,13 +24,14 @@ const orderService = {
       customerAddress,
       customerPhoneNum,
       totalPrice,
+      zipCode
     });
     return createdOrder;
   },
   // 유저 주문 조회
   async getOrder(shortId) {
     try {
-      const userOrder = await Order.find({ shortId }).populate('customerId');
+      const userOrder = await Order.find({ shortId }).populate('customerId').exec();
       if (!userOrder) {
         throw new Error('주문 내역이 없습니다');
       }
@@ -69,7 +70,7 @@ const orderService = {
     try {
       const order = await Order.find({ orderId: putTargetOrderId }).populate(
         'customerId'
-      );
+      ).exec();
       console.log(order);
       const orderStatus = order[0].orderStatus;
       if (orderStatus == 1) {
