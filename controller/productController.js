@@ -158,6 +158,7 @@ const productController = {
     try {
       const { productId } = req.query;
       // const updateData = req.body;
+      console.log(productId);
       const {
         category,
         productName,
