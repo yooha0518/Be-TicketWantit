@@ -1,4 +1,5 @@
 const { productService } = require('../services');
+const path = require('path');
 
 //메인 페이지 상품 매핑
 function productMapping(items) {
@@ -111,9 +112,9 @@ const productController = {
         endDate,
         place,
         speciesAge,
-        imageUrl,
         description,
       } = req.body;
+      const imageUrl = req.file.path;
       const products = await productService.createProduct({
         category,
         productName,

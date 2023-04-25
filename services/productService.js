@@ -65,10 +65,10 @@ const productService = {
     await Product.deleteMany({});
     return 'COMPLETE DELECTION OF ALL!';
   },
-  //상품 수정
   async updateProduct(id, updateData) {
     await Product.updateOne({ productId: id }, { $set: updateData });
     return `productId: [${id}] UPDATE SUCCESS!`;
   },
+  //상품 수정
 };
 module.exports = productService;

@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
-//const path = require('path');
+const cors = require('cors');
+// const path = require('path');
 const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
 const mongoose = require('mongoose');
@@ -28,7 +29,12 @@ mongoose.connection.on('disconnected', (err) => {
   console.log('MongoDB disconnected');
   console.log('byebye');
 });
-
+//cors 설정해야함, http://example.com 도메인에서의 요청만 허용하도록
+// const corsOptions = {
+//   origin: 'http://example.com',
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -43,6 +49,7 @@ require('./passport')();
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
 app.use(express.static('public')); // 정적 파일 서비스
+app.use(express.static('uploads'));
 
 // app.use(logger('dev'));
 app.use(cookieParser());
