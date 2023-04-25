@@ -19,8 +19,11 @@ const adminOrderController = { //관리자인지 확인 해줘야 하나..?
         console.log(searchWord);
         try{
             const getUserOrder = await adminOrderService.getUserOrder(searchWord);
-            console.log(getUserOrder);
-            res.send('ok');
+            if(getUserOrder.length >=1){
+                res.status(200).send({message:'해당 유저의 주문조회에 성공했습니다.',orderList:getUserOrder})
+            }else{
+                res.status(404).send({message:'유저의 주문내역이 없습니다'})
+            }
         }catch(error){
             console.log(error);
             next(error);

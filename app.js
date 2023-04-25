@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const cors = require('cors');
 //const path = require('path');
 const cookieParser = require('cookie-parser');
 // const logger = require('morgan');
@@ -29,7 +30,7 @@ mongoose.connection.on('disconnected', (err) => {
 	console.log('MongoDB disconnected');
 	console.log('byebye');
 });
-
+app.use(cors());
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header(
@@ -66,7 +67,6 @@ const corsOptions = {
 app.use(passport.initialize());
 app.use(cors(corsOptions));
 app.use('/api', apiRouter);
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

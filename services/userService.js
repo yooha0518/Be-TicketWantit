@@ -19,12 +19,11 @@ const userService = {
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name, password }) {
+	async updateUser(shortId, { name }) {
 		const result = await User.updateOne(
 			{ shortId },
 			{
 				name,
-				password: hashPassword(password),
 			}
 		);
 		if (result.modifiedCount === 0) {
