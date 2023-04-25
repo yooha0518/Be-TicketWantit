@@ -14,7 +14,7 @@ const orderService = {
   }) {
     //중괄호의 역할이 뭐야
     const user = await User.findOne({ shortId });
-    if (!customerPhoneNum || !customerAddress || !items || totalPrice) {
+    if (!customerPhoneNum || !customerAddress || !items || !totalPrice) {
       throw new Error('정보를 모두 입력해주세요');
     }
     const createdOrder = await Order.create({
