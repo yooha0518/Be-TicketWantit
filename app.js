@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
-const cors = require('cors');
 const env = require('./.env');
 const getUserFromJwt = require('./middlewares/getUserFromJwt');
 const app = express();
