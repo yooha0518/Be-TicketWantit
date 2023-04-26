@@ -1,9 +1,12 @@
 const { Router } = require('express');
 const router = Router();
-const { productController } = require('../controller');
+const { productController, categoryController } = require('../controller');
 
 //상품 전체
 router.get('/', productController.getProduct);
+
+//카테고리 목록
+router.get('/category/all', categoryController.getCategory);
 
 //상품 카테고리별
 router.get('/category', productController.getCategoryProduct);
