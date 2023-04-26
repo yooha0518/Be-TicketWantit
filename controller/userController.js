@@ -4,9 +4,14 @@ const userController = {
 	async postUser(req, res, next) {
 		try {
 			console.log('회원가입(postUser) 시작');
-			const { email, password, name } = req.body;
+			const { email, password, name, address } = req.body;
 			// 추출한 데이터를 userService.createUser로 전달
-			const user = await userService.createUser({ email, password, name });
+			const user = await userService.createUser({
+				email,
+				password,
+				name,
+				address,
+			});
 			//console.log(user);
 			req.user = user;
 			next();
@@ -29,10 +34,10 @@ const userController = {
 	async putUser(req, res, next) {
 		try {
 			const shortId = req.user.shortId;
-			console.log(shortId);
-			const { name } = req.body;
+			const { name, address } = req.body;
 			const result = await userService.updateUser(shortId, {
 				name,
+				address,
 			});
 			res.status(200).json(result);
 		} catch (error) {
