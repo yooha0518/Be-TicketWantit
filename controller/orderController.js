@@ -4,10 +4,17 @@ const orderController = {
   async postOrder(req, res, next) {
     const userId = req.user.shortId;
     try {
-      const { items, totalPrice, customerAddress, customerPhoneNum, zipCode } =
-        req.body;
+      const {
+        items,
+        totalPrice,
+        customerAddress,
+        customerPhoneNum,
+        zipCode,
+        imgUrl,
+      } = req.body;
       const order = await orderService.createOrder({
         userId,
+        imgUrl,
         customerAddress,
         customerPhoneNum,
         items,
