@@ -43,14 +43,18 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+//const dir_name ='/home/elice/server/back-end/uploads/'
 require('./passport')();
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
-app.use(express.static('public')); // 정적 파일 서비스
-// app.use(express.static('uploads'));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+//app.use(express.static('public')); // 정적 파일 서비스
+//app.use(express.static('back-end/'));
+app.use('/uploads', express.static(path.join(__dirname, 'back-end', 'uploads')));
+//app.use('/',express.static(dir_name))
+//app.use(dir_name, express.static('public'))
+//app.use(express.static(dir_name + 'uploads/'));
+//app.use('/static', express.static(__dirname, '/uploads'));
 
 // app.use(logger('dev'));
 
@@ -72,7 +76,7 @@ const corsOptions = {
 app.use(passport.initialize());
 app.use(cors(corsOptions));
 app.use('/api', apiRouter);
-app.use('/uploads', express.static('/uploads'));
+//app.use('/uploads', express.static('/uploads'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -17,8 +17,8 @@ router.use('/user', userRouter);
 router.use('/auth', authRouter);
 router.use('/orders', getUserFromJwt, orderRouter);
 router.use('/product', productRouter);
-router.use('/admin_product', getUserFromJwt, adminProductRouter);
-router.use('/admin_category', getUserFromJwt, adminCategoryRouter);
+router.use('/admin_product',getUserFromJwt, adminProductRouter);
+router.use('/admin_category', adminCategoryRouter);
 router.use('/adminOrder', getUserFromJwt, adminOrderRouter);
 
 module.exports = router;
