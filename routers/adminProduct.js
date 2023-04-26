@@ -23,7 +23,7 @@ const upload = multer({
 router.get('/', productController.getAdminProduct);
 
 //ADMIN 상품 추가
-router.post('/add', upload.single('imageUrl'), productController.postProduct);
+router.post('/add', productController.postProduct);
 
 //ADMIN 상품 삭제
 router.delete('/delete', productController.delProduct);
@@ -32,6 +32,12 @@ router.delete('/delete', productController.delProduct);
 router.delete('/delete/all', productController.delAllProduct);
 
 //ADMIN 상품 수정
-router.put('/edit', upload.single('imageUrl'), productController.putProduct);
+router.put('/edit', productController.putProduct);
+//ADMIN 상품 수정 (이미지 수정)
+router.put(
+  '/img/edit',
+  upload.single('imageUrl'),
+  productController.putProduct
+);
 
 module.exports = router;

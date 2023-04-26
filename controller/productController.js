@@ -115,8 +115,9 @@ const productController = {
         place,
         speciesAge,
         description,
+        imageUrl,
       } = req.body;
-      const imageUrl = req.file.path;
+      // const imageUrl = req.file.path;
       const products = await productService.createProduct({
         category,
         productName,
@@ -156,8 +157,6 @@ const productController = {
   async putProduct(req, res, next) {
     try {
       const { productId } = req.query;
-      // const updateData = req.body;
-      console.log(productId);
       const {
         category,
         productName,
@@ -168,7 +167,7 @@ const productController = {
         speciesAge,
         description,
       } = req.body;
-      const imageUrl = req.file.path;
+      // const imageUrl = req.file.path;
       const content = await productService.updateProduct(
         productId,
         category,
@@ -178,8 +177,8 @@ const productController = {
         endDate,
         place,
         speciesAge,
-        description,
-        imageUrl
+        description
+        // imageUrl
       );
       res.status(200).json(content);
     } catch (err) {

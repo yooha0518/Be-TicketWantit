@@ -74,8 +74,8 @@ const productService = {
     endDate,
     place,
     speciesAge,
-    description,
-    imageUrl
+    description
+    // imageUrl
   ) {
     const updateData = {
       category,
@@ -86,7 +86,7 @@ const productService = {
       place,
       speciesAge,
       description,
-      imageUrl,
+      // imageUrl,
     };
     await Product.updateOne({ productId: id }, { $set: updateData });
     return `productId: [${id}] UPDATE SUCCESS!`;
