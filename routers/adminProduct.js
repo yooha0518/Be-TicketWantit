@@ -7,13 +7,18 @@ const { productController } = require('../controller');
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+      cb(null, 'back-end/uploads/');
     },
     filename: function (req, file, cb) {
       cb(null, new Date().valueOf() + path.extname(file.originalname));
     },
   }),
 });
+// const upload = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, './images');
+//   },
+// });
 //ADMIN 상품 전체
 router.get('/', productController.getAdminProduct);
 
