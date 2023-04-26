@@ -3,12 +3,13 @@ const hashPassword = require('../utils/hash-password');
 
 const userService = {
 	// 사용자 생성 (회원가입)
-	async createUser({ email, password, name }) {
+	async createUser({ email, password, name, address }) {
 		const hashedPassword = hashPassword(password); // 비밀번호 해쉬값 만들기
 		const createdUser = await User.create({
 			email,
 			password: hashedPassword,
 			name,
+			address,
 		});
 		return createdUser;
 	},
@@ -19,11 +20,12 @@ const userService = {
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name }) {
+	async updateUser(shortId, { name,address }) {
 		const result = await User.updateOne(
 			{ shortId },
 			{
 				name,
+				address
 			}
 		);
 		if (result.modifiedCount === 0) {
