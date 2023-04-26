@@ -10,7 +10,15 @@ const transport = nodemailer.createTransport({
 
 const userTo = '518hayoung@gmail.com';
 
+let contentMessage = '';
+
 const setMailOption = (to, subject, text) => {
+	if (subject === '티켓원잇 임시 비밀번호') {
+		contentMessage = '로그인후 비밀번호를 변경해 주세요.';
+	} else {
+		contentMessage = '티켓원잇의 인증번호 입니다. 인증을 완료해 주세요.';
+	}
+
 	const { html } = mjml2html(
 		`<mjml>
     <mj-head>
@@ -37,7 +45,6 @@ const setMailOption = (to, subject, text) => {
         color: #888888
         }
       </mj-style>
-  
     </mj-head>
     <mj-body background-color="#f4f4f4" width="600px">
       <mj-section full-width="full-width" background-color="#f4f4f4" padding-bottom="130px">
@@ -52,20 +59,16 @@ const setMailOption = (to, subject, text) => {
       <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
         <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
           <mj-column width="100%">
-            <mj-text color="#212b35" font-weight="bold" font-size="40px" align="center" padding="60px">
+            <mj-text color="#212b35" font-weight="bold" font-size="40px" align="center" padding="100px 60px 100px 60px">
               ${text}
             </mj-text>
-            <mj-text color="#212b35" font-weight="bold" font-size="20px" align="center" padding="0 10px 10px 10px"> </mj-text>
+            <mj-text color="#212b35" font-weight="bold" font-size="20px" align="center" padding="0 10px 0px 10px"> 
+            ${contentMessage}
+            </mj-text>
           </mj-column>
-          
-          
-          
-          
         </mj-section>
         <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px" padding-top="0">
-          
           <mj-column width="50%">
-            
           </mj-column>
         </mj-section>
         <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px" padding-top="0">
@@ -75,27 +78,20 @@ const setMailOption = (to, subject, text) => {
         </mj-section>
         <mj-section background-color="#ffffff" padding="0 15px 0 15px">
           <mj-column width="100%">
-            
           </mj-column>
         </mj-section>
         <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
           <mj-column width="50%">
-            
           </mj-column>
         </mj-section>
         <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
           <mj-column width="100%">
-            
           </mj-column>
         </mj-section>
       </mj-wrapper>
-  
       <mj-wrapper full-width="full-width">
         <mj-section>
           <mj-column width="100%" padding="0">
-            
-            
-            
             <mj-text color="#445566" font-size="11px" align="center" line-height="16px">
               &copy; Ticket Want It's Accountants Inc., All Rights Reserved.
             </mj-text>
@@ -105,14 +101,11 @@ const setMailOption = (to, subject, text) => {
           <mj-group>
             <mj-column width="100%" padding-right="0">
               <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
-                
               </mj-text>
             </mj-column>
           </mj-group>
-  
         </mj-section>
       </mj-wrapper>
-  
     </mj-body>
   </mjml>
   `
@@ -123,7 +116,6 @@ const setMailOption = (to, subject, text) => {
 			from: userTo,
 			to,
 			subject,
-			text,
 			text,
 			html: html,
 		};
