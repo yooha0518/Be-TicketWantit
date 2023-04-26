@@ -11,7 +11,6 @@ const orderService = {
     totalPrice,
     zipCode,
   }) {
-    const user = await User.findOne({ userId });
     if (
       !customerPhoneNum ||
       !customerAddress ||
@@ -21,8 +20,9 @@ const orderService = {
     ) {
       throw new Error("정보를 모두 입력해주세요");
     }
+    const user = await User.findOne({ userId });
     const createdOrder = await Order.create({
-      userId,
+      userId, //user._id는 populate를 위해 필요하지만, 저 값 자체는 사용을 잘 안하기에 따로 명시
       customerId: user._id,
       items,
       customerAddress,
@@ -34,27 +34,20 @@ const orderService = {
   },
   // 유저 주문 조회
   async getOrder(userId) {
-    console.log(userId);
     try {
       const userOrder = await Order.find({ userId })
-        .populate("customerId")
+        .sort({ createdAt: -1 })
         .exec();
-      if (!userOrder) {
-        throw new Error("주문 내역이 없습니다");
-      }
       console.log(userOrder);
       return userOrder;
     } catch (error) {
       console.log(error);
-      next(error);
     }
   },
   // 유저 주문 수정(주문전 주문 취소)
-  async deleteOrder(shortId, orderId) {
+  async deleteOrder(orderId) {
     try {
-      const order = await Order.find({ shortId, orderId }).populate(
-        "customerId"
-      );
+      const order = await Order.find({ orderId }).populate("customerId");
       const orderStatus = order[0].orderStatus;
       if (orderStatus == 1) {
         await Order.deleteOne({ orderId });
@@ -66,7 +59,6 @@ const orderService = {
       }
     } catch (error) {
       console.log(error);
-      next(error);
     }
   },
   async updateOrder(
@@ -94,8 +86,7 @@ const orderService = {
         return 2;
       }
     } catch (error) {
-      console.log("유저의 주문정보 수정에 실패했습니다.");
-      next(error);
+      console.log("유저의 주문정보 수정에 실패했습니다." + error);
     }
   },
 };

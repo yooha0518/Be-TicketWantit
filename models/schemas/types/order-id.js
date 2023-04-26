@@ -5,7 +5,7 @@ const orderDate = dayjs().format("YYYYMMDD");
 const shortId = {
   type: String,
   default: () => {
-    return orderDate + nanoid(8);
+    return orderDate + "-" + nanoid(8);
   },
   require: true,
   index: true,

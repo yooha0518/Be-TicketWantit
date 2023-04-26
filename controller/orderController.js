@@ -3,7 +3,6 @@ const { orderService } = require("../services");
 const orderController = {
   async postOrder(req, res, next) {
     const userId = req.user.shortId;
-    console.log(userId);
     try {
       const { items, totalPrice, customerAddress, customerPhoneNum, zipCode } =
         req.body;
@@ -16,17 +15,16 @@ const orderController = {
         zipCode,
       });
       console.log("Order created successfully: " + order);
-      res.status(200).json({ mesage: "data saved", orderId: order.orderId });
+      res.status(200).json({ message: "data saved", orderId: order.orderId });
     } catch (error) {
       console.log("데이터를 db에 저장하는 것에 실패했습니다." + error);
-      res.status(500).send({ mesage: "data save failed" });
+      res.status(500).send({ message: "data save failed" });
       next(error);
     }
   },
   async getOrder(req, res, next) {
     //유저의 주문내역
     const userId = req.user.shortId;
-    console.log(userId);
     try {
       const orderList = await orderService.getOrder(userId); //db에서 받아온 값이 넘어옴
       if (orderList.length < 1) {
@@ -43,10 +41,9 @@ const orderController = {
   },
   async deleteOrder(req, res, next) {
     //orderId req.body로 받아오는걸로 수정!
-    const shortId = req.user.shortId;
     const orderId = req.params.orderId;
     try {
-      const isCanceled = await orderService.deleteOrder(shortId, orderId);
+      const isCanceled = await orderService.deleteOrder(orderId);
       if (isCanceled === 1) {
         res.status(200).send("user order is canceled successfully");
       } else {
@@ -60,7 +57,6 @@ const orderController = {
   async updateOrder(req, res, next) {
     //배송전 주문정보 수정
     const orderId = req.params.orderId;
-    // const shortId = req.user.shortId;
     const { customerAddress, customerPhoneNum } = req.body;
     try {
       const isDelivered = await orderService.updateOrder(
