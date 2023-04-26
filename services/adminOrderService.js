@@ -5,7 +5,10 @@ const adminOrderService = {
   //관리자 주문조회 - db에 있는 모든 주문내역
   async getOrder() {
     try {
-      const orderList = await Order.find({}).populate("customerId").exec();
+      const orderList = await Order.find({})
+        .populate("customerId")
+        .exec()
+        .lean();
       console.log(orderList);
       return orderList;
     } catch (error) {
@@ -26,7 +29,8 @@ const adminOrderService = {
         ],
       })
         .populate("customerId")
-        .exec();
+        .exec()
+        .lean();
       return searchUserOrder;
     } catch (error) {
       console.log(error);
@@ -47,7 +51,7 @@ const adminOrderService = {
       const orderUpdate = await Order.findOneAndUpdate(
         { orderId: orderId },
         { orderStatus: orderStatus }
-      );
+      ).lean();
       return orderUpdate;
     } catch (err) {
       console.log("배송상태 변경 중 에러발생" + err);

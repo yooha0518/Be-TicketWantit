@@ -1,53 +1,50 @@
 const { Order } = require("../models");
 const { User } = require("../models");
+const asyncHandler = require("express-async-handler");
 
 const orderService = {
   // 주문 추가 (주문하기)
-  async createOrder({
-    userId,
-    customerPhoneNum,
-    customerAddress,
-    items,
-    totalPrice,
-    zipCode,
-  }) {
-    if (
-      !customerPhoneNum ||
-      !customerAddress ||
-      !items ||
-      !totalPrice ||
-      !zipCode
-    ) {
-      throw new Error("정보를 모두 입력해주세요");
-    }
-    const user = await User.findOne({ userId });
-    const createdOrder = await Order.create({
-      userId, //user._id는 populate를 위해 필요하지만, 저 값 자체는 사용을 잘 안하기에 따로 명시
-      customerId: user._id,
-      items,
-      customerAddress,
+  createOrder: asyncHandler(
+    async ({
+      userId,
+      imgUrl,
       customerPhoneNum,
+      customerAddress,
+      items,
       totalPrice,
       zipCode,
-    });
-    return createdOrder;
-  },
+    }) => {
+      const user = await User.findOne({ userId }).lean();
+      const createdOrder = await Order.create({
+        userId, //user._id는 populate를 위해 필요하지만, 저 값 자체는 사용을 잘 안하기에 따로 명시
+        customerId: user._id,
+        imgUrl,
+        items,
+        customerAddress,
+        customerPhoneNum,
+        totalPrice,
+        zipCode,
+      });
+      return createdOrder;
+    }
+  ),
   // 유저 주문 조회
-  async getOrder(userId) {
+  getOrder: asyncHandler(async (userId) => {
     try {
       const userOrder = await Order.find({ userId })
-        .sort({ createdAt: -1 })
-        .exec();
+        .sort({ date: -1 })
+        .exec()
+        .lean();
       console.log(userOrder);
       return userOrder;
     } catch (error) {
       console.log(error);
     }
-  },
+  }),
   // 유저 주문 수정(주문전 주문 취소)
-  async deleteOrder(orderId) {
+  deleteOrder: asyncHandler(async (orderId) => {
     try {
-      const order = await Order.find({ orderId }).populate("customerId");
+      const order = await Order.find({ orderId }).populate("customerId").lean();
       const orderStatus = order[0].orderStatus;
       if (orderStatus == 1) {
         await Order.deleteOne({ orderId });
@@ -60,7 +57,7 @@ const orderService = {
     } catch (error) {
       console.log(error);
     }
-  },
+  }), //여기까지 asyncHandler 수정했음!
   async updateOrder(
     putTargetOrderId,
     putTargetCustomerAddress,
@@ -68,6 +65,7 @@ const orderService = {
   ) {
     try {
       const order = await Order.find({ orderId: putTargetOrderId })
+        .lean()
         .populate("customerId")
         .exec();
       console.log(order);
@@ -79,7 +77,7 @@ const orderService = {
             customerAddress: putTargetCustomerAddress,
             customerPhoneNum: putTargetCustomerPhoneNum,
           }
-        );
+        ).lean();
         console.log("유저의 주문정보가 수정되었습니다");
         return 1;
       } else {
