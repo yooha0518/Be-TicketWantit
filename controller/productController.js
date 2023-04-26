@@ -117,7 +117,6 @@ const productController = {
         description,
       } = req.body;
       const imageUrl = req.file.path;
-      console.log(imageUrl);
       const products = await productService.createProduct({
         category,
         productName,

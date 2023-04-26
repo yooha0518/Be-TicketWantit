@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const orderId = require("./types/order-id");
 const dayjs = require("dayjs");
-const formattedDate = dayjs().format("YYYYMMDD");
+const formattedDate = dayjs().format("YYYY-MM-DD");
 
 const orderSchema = new Schema({
   orderId,
@@ -13,6 +13,14 @@ const orderSchema = new Schema({
   customerId: {
     type: Schema.Types.ObjectId,
     ref: "user",
+  },
+  customerAddress: {
+    type: String,
+    required: true,
+  },
+  customerPhoneNum: {
+    type: String,
+    required: true,
   },
   items: [
     {
