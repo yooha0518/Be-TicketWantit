@@ -4,13 +4,12 @@ const userController = {
 	async postUser(req, res, next) {
 		try {
 			console.log('회원가입(postUser) 시작');
-			const { email, password, name, address } = req.body;
+			const { email, password, name } = req.body;
 			// 추출한 데이터를 userService.createUser로 전달
 			const user = await userService.createUser({
 				email,
 				password,
-				name,
-				address,
+				name
 			});
 			//console.log(user);
 			req.user = user;

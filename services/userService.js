@@ -3,13 +3,12 @@ const hashPassword = require('../utils/hash-password');
 
 const userService = {
 	// 사용자 생성 (회원가입)
-	async createUser({ email, password, name, address }) {
+	async createUser({ email, password, name }) {
 		const hashedPassword = hashPassword(password); // 비밀번호 해쉬값 만들기
 		const createdUser = await User.create({
 			email,
 			password: hashedPassword,
-			name,
-			address,
+			name
 		});
 		return createdUser;
 	},
