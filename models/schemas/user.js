@@ -16,11 +16,12 @@ const UserSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		Number: {
+		number: {
 			type: String,
 		},
-		Address: {
+		address: {
 			type: String,
+			required: false,
 		},
 		isAdmin: {
 			type: Boolean,

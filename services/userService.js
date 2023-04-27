@@ -8,7 +8,7 @@ const userService = {
 		const createdUser = await User.create({
 			email,
 			password: hashedPassword,
-			name,
+			name
 		});
 		return createdUser;
 	},
@@ -19,11 +19,12 @@ const userService = {
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name }) {
+	async updateUser(shortId, { name,address }) {
 		const result = await User.updateOne(
 			{ shortId },
 			{
 				name,
+				address
 			}
 		);
 		if (result.modifiedCount === 0) {

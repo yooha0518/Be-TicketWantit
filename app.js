@@ -43,7 +43,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+//const dir_name ='/home/elice/server/back-end/uploads/'
 require('./passport')();
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
