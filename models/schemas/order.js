@@ -59,6 +59,10 @@ const orderSchema = new Schema({
     type: String,
     default: formattedDate,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = orderSchema;
