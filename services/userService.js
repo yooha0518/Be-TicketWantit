@@ -18,6 +18,11 @@ const userService = {
 		const user = await User.findOne({ shortId });
 		return user;
 	},
+	async getUserEmail(email){
+		console.log(`email이 ${email}인 유저의 데이터를 조회합니다.`);
+		const user = await User.findOne({ email });
+		return user;
+	},
 	// 사용자 정보 수정
 	async updateUser(shortId, { name,address }) {
 		const result = await User.updateOne(
