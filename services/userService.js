@@ -4,18 +4,24 @@ const hashPassword = require('../utils/hash-password');
 const userService = {
 	// 사용자 생성 (회원가입)
 	async createUser({ email, password, name }) {
+		console.log('createUser 시작');
 		const user = await User.findOne({ email });
-		if(user){ //이미 가입된 이메일인 경우 
-			return res.status(400).json({ message: '계정이 이미 가입되어있습니다.' }); 
+		if (user) {
+			console.log('------------------');
+			//이미 가입된 이메일인 경우
+			//return res.status(400).json({ message: '계정이 이미 가입되어있습니다.' });
+			const err = new Error('계정이 이미 가입되어있습니다.');
+			err.status = 400;
+			throw err;
+		} else {
+			const hashedPassword = hashPassword(password); // 비밀번호 해쉬값 만들기
+			const createdUser = await User.create({
+				email,
+				password: hashedPassword,
+				name,
+			});
+			return createdUser;
 		}
-
-		const hashedPassword = hashPassword(password); // 비밀번호 해쉬값 만들기
-		const createdUser = await User.create({
-			email,
-			password: hashedPassword,
-			name
-		});
-		return createdUser;
 	},
 	// 사용자 정보 조회
 	async getUser(shortId) {
@@ -23,18 +29,18 @@ const userService = {
 		const user = await User.findOne({ shortId });
 		return user;
 	},
-	async getUserEmail(email){
+	async getUserEmail(email) {
 		console.log(`email이 ${email}인 유저의 데이터를 조회합니다.`);
 		const user = await User.findOne({ email });
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name,address }) {
+	async updateUser(shortId, { name, address }) {
 		const result = await User.updateOne(
 			{ shortId },
 			{
 				name,
-				address
+				address,
 			}
 		);
 		if (result.modifiedCount === 0) {
