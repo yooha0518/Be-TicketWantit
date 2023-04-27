@@ -1,5 +1,5 @@
 const { productService } = require('../services');
-const path = require('path');
+const Domain = 'http://34.64.112.166/';
 
 //메인 페이지 상품 매핑
 function productMapping(items) {
@@ -106,6 +106,7 @@ const productController = {
   //ADMIN 상품 추가
   async postProduct(req, res, next) {
     try {
+      const imageUrl = Domain + req.file.path;
       const {
         category,
         productName,
@@ -115,9 +116,8 @@ const productController = {
         place,
         speciesAge,
         description,
-        imageUrl,
       } = req.body;
-      // const imageUrl = req.file.path;
+
       const products = await productService.createProduct({
         category,
         productName,
@@ -167,7 +167,7 @@ const productController = {
         speciesAge,
         description,
       } = req.body;
-      // const imageUrl = req.file.path;
+
       const content = await productService.updateProduct(
         productId,
         category,
@@ -178,8 +178,18 @@ const productController = {
         place,
         speciesAge,
         description
-        // imageUrl
       );
+      res.status(200).json(content);
+    } catch (err) {
+      next(err);
+    }
+  },
+  //ADMIN 상품 수정
+  async putImg(req, res, next) {
+    try {
+      const { productId } = req.query;
+      const imageUrl = Domain + req.file.path;
+      const content = await productService.updateImg(productId, imageUrl);
       res.status(200).json(content);
     } catch (err) {
       next(err);

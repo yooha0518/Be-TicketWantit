@@ -7,23 +7,19 @@ const { productController } = require('../controller');
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'back-end/uploads/');
+      cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
       cb(null, new Date().valueOf() + path.extname(file.originalname));
     },
   }),
 });
-// const upload = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './images');
-//   },
-// });
+
 //ADMIN 상품 전체
 router.get('/', productController.getAdminProduct);
 
 //ADMIN 상품 추가
-router.post('/add', productController.postProduct);
+router.post('/add', upload.single('imageUrl'), productController.postProduct);
 
 //ADMIN 상품 삭제
 router.delete('/delete', productController.delProduct);
@@ -33,11 +29,8 @@ router.delete('/delete/all', productController.delAllProduct);
 
 //ADMIN 상품 수정
 router.put('/edit', productController.putProduct);
+
 //ADMIN 상품 수정 (이미지 수정)
-router.put(
-  '/img/edit',
-  upload.single('imageUrl'),
-  productController.putProduct
-);
+router.put('/edit/img', upload.single('imageUrl'), productController.putImg);
 
 module.exports = router;

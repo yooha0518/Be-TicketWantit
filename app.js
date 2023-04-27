@@ -49,12 +49,9 @@ require('./passport')();
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
 app.use(express.static('public')); // 정적 파일 서비스
-// app.use(express.static('uploads'));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // app.use(logger('dev'));
-
-// app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(
 //    session({
@@ -72,7 +69,6 @@ const corsOptions = {
 app.use(passport.initialize());
 app.use(cors(corsOptions));
 app.use('/api', apiRouter);
-app.use('/uploads', express.static('/uploads'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

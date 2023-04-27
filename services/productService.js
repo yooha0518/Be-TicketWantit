@@ -65,6 +65,7 @@ const productService = {
     await Product.deleteMany({});
     return 'COMPLETE DELECTION OF ALL!';
   },
+  //상품 수정
   async updateProduct(
     id,
     category,
@@ -75,7 +76,6 @@ const productService = {
     place,
     speciesAge,
     description
-    // imageUrl
   ) {
     const updateData = {
       category,
@@ -86,11 +86,14 @@ const productService = {
       place,
       speciesAge,
       description,
-      // imageUrl,
     };
     await Product.updateOne({ productId: id }, { $set: updateData });
     return `productId: [${id}] UPDATE SUCCESS!`;
   },
-  //상품 수정
+  //상품 이미지 수정
+  async updateImg(id, uploadImg) {
+    await Product.updateOne({ productId: id }, { imageUrl: uploadImg });
+    return `productId: [${id}] UPDATE SUCCESS!`;
+  },
 };
 module.exports = productService;
