@@ -10,7 +10,9 @@ resetPasswordRouter.post('/', async (req, res) => {
 
 	const user = await User.findOne({ email });
 	if (!user) {
-		throw new Error('해당 메일로 가입된 사용자가 없습니다.');
+		return res
+			.status(400)
+			.json({ message: '해당 메일로 가입된 사용자가 없습니다.' });
 	}
 
 	const password = generateRandomPassword();

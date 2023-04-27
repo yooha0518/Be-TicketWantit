@@ -16,11 +16,11 @@ emailAuthRouter.post('/', async (req, res) => {
 	const user = await User.findOne({ email });
 
 	if (user) {
-		console.log('이미 해당 메일로 가입된 사용자가 있습니다.');
-		res.status(400).send('이미 해당 메일로 가입된 사용자가 있습니다.');
+		return res
+			.status(400)
+			.json({ message: '이미 해당 메일로 가입된 사용자가 있습니다.' });
 	} else {
 		const authCode = generateRandomPassword();
-
 		await sendMail(email, `티켓원잇 인증번호`, `${authCode}`);
 		console.log('토큰 만들기 실행');
 		res.send(setAuthCodeToken(authCode));

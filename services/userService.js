@@ -4,6 +4,11 @@ const hashPassword = require('../utils/hash-password');
 const userService = {
 	// 사용자 생성 (회원가입)
 	async createUser({ email, password, name }) {
+		const user = await User.findOne({ email });
+		if(user){ //이미 가입된 이메일인 경우 
+			return res.status(400).json({ message: '계정이 이미 가입되어있습니다.' }); 
+		}
+
 		const hashedPassword = hashPassword(password); // 비밀번호 해쉬값 만들기
 		const createdUser = await User.create({
 			email,

@@ -5,6 +5,7 @@ const userController = {
 		try {
 			console.log('회원가입(postUser) 시작');
 			const { email, password, name } = req.body;
+
 			// 추출한 데이터를 userService.createUser로 전달
 			const user = await userService.createUser({
 				email,
@@ -21,9 +22,7 @@ const userController = {
 	async getUser(req, res, next) {
 		try {
 			console.log('getUser 실행');
-			const { shortId, isAdmin, isTempPassword } = req.user;
-			console.log(`관리자: ${isAdmin}`);
-			console.log(`임시비밀번호: ${isTempPassword}`);
+			const { shortId } = req.user;
 			const user = await userService.getUser(shortId);
 			res.json(user);
 		} catch (error) {

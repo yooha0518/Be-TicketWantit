@@ -22,7 +22,6 @@ userRouter.post('/', userController.postUser, (req, res) => {
 		});
 });
 
-
 //사용자 정보 조회
 userRouter.get('/', getUserFromJwt, userController.getUser);
 
