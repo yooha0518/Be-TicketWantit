@@ -35,12 +35,13 @@ const userService = {
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name, address }) {
+	async updateUser(shortId, { name, address, zipCode }) {
 		const result = await User.updateOne(
 			{ shortId },
 			{
 				name,
 				address,
+				zipCode,
 			}
 		);
 		if (result.modifiedCount === 0) {
