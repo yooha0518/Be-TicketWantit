@@ -30,7 +30,7 @@ const productService = {
         },
       };
     }
-    return { products: [product] };
+    return { products: product };
   },
   //NEW_ARRIVAlS
   async readNewArrivals() {
