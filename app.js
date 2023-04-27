@@ -1,15 +1,9 @@
 const createError = require('http-errors');
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-// const logger = require('morgan');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const passport = require('passport');
-const MongoStore = require('connect-mongo');
 const env = require('./.env');
-const getUserFromJwt = require('./middlewares/getUserFromJwt');
 const app = express();
 
 //routers
@@ -29,11 +23,7 @@ mongoose.connection.on('disconnected', (err) => {
   console.log('MongoDB disconnected');
   console.log('byebye');
 });
-//cors 설정해야함, http://example.com 도메인에서의 요청만 허용하도록
-// const corsOptions = {
-//   origin: 'http://example.com',
-// };
-// app.use(cors(corsOptions));
+
 app.use(cors());
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -43,23 +33,12 @@ app.use(function (req, res, next) {
   );
   next();
 });
-//const dir_name ='/home/elice/server/back-end/uploads/'
+
 require('./passport')();
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
 app.use(express.static('public')); // 정적 파일 서비스
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// app.use(logger('dev'));
-
-// app.use(
-//    session({
-//       secret: 'secret',
-//       resave: false,
-//       saveUninitialized: true,
-//    })
-// );
 
 const corsOptions = {
   origin: '*',

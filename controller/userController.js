@@ -9,7 +9,7 @@ const userController = {
 			const user = await userService.createUser({
 				email,
 				password,
-				name
+				name,
 			});
 			//console.log(user);
 			req.user = user;
@@ -49,6 +49,15 @@ const userController = {
 			const user = await userService.deleteUser(shortId);
 			res.json(user);
 		} catch (error) {
+			next(error);
+		}
+	},
+	async authUser(req, res, next) {
+		try {
+			const { email } = req.body;
+			const user = await userService.getUserEmail(email);
+			res.json(user);
+		} catch (errer) {
 			next(error);
 		}
 	},
