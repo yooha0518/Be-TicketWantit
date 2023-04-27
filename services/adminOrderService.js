@@ -30,7 +30,6 @@ const adminOrderService = {
       return searchUserOrder;
     } catch (error) {
       console.log(error);
-      next(error);
     }
   },
   async deleteOrder(orderId) {
@@ -39,7 +38,6 @@ const adminOrderService = {
       return "success";
     } catch (error) {
       console.log("관리자 주문 삭제");
-      next(error);
     }
   },
   async patchOrder(orderId, orderStatus) {
@@ -51,9 +49,7 @@ const adminOrderService = {
       return orderUpdate;
     } catch (err) {
       console.log("배송상태 변경 중 에러발생" + err);
-      next(err);
     }
   },
 };
-
 module.exports = adminOrderService;
