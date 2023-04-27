@@ -1,4 +1,6 @@
 const { adminOrderService } = require("../services");
+const appError = require("../utils/appError");
+const commonErrors = require("../utils/commonErrors");
 
 const adminOrderController = {
   async getOrder(req, res, next) {
@@ -12,9 +14,7 @@ const adminOrderController = {
         orderList: getOrderList,
       });
     } catch (error) {
-      console.log(error);
       res.status(500).send({ mesage: "전체 주문내역 조회에 실패했습니다." });
-      next(error);
     }
   },
   async getUserOrder(req, res, next) {
