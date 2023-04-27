@@ -12,11 +12,10 @@ const userController = {
 				password,
 				name,
 			});
-			//console.log(user);
 			req.user = user;
 			next();
 		} catch (error) {
-			next(error);
+			return res.status(400).json({ message: '계정이 이미 가입되어있습니다.' });
 		}
 	},
 	async getUser(req, res, next) {
