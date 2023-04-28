@@ -65,7 +65,7 @@ const productController = {
   //----------------------------------------- ADMIN----------------------------
   //ADMIN 상품 전체
   getAdminProduct: asyncHandler(async (req, res) => {
-    const products = await productService.readProduct();
+    const products = await productService.adminReadProduct();
     const content = products.map(
       ({
         category,
