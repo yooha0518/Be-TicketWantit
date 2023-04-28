@@ -7,21 +7,21 @@ const orderService = {
   async createOrder({
     userId,
     imgUrl,
-    customerPhoneNum,
-    customerAddress,
+    deliveryPhoneNum,
+    deliveryAddress,
     items,
     totalPrice,
     zipCode,
   }) {
-    const user = await User.findOne({ userId }).lean();
+    const user = await User.findOne({ shortId: userId }).lean();
     console.log("유저아이디" + user._id);
     const createdOrder = await Order.create({
       userId, //user._id는 populate를 위해 필요하지만, 저 값 자체는 사용을 잘 안하기에 따로 명시
       customerId: user._id,
       imgUrl,
       items,
-      customerAddress,
-      customerPhoneNum,
+      deliveryAddress,
+      deliveryPhoneNum,
       totalPrice,
       zipCode,
     });
@@ -58,8 +58,8 @@ const orderService = {
   }, //여기까지 asyncHandler 수정했음!
   async updateOrder(
     putTargetOrderId,
-    putTargetCustomerAddress,
-    putTargetCustomerPhoneNum
+    putTargetDeliveryAddress,
+    putTargetDeliveryPhoneNum
   ) {
     try {
       const order = await Order.find({ orderId: putTargetOrderId })
@@ -72,8 +72,8 @@ const orderService = {
         await Order.updateMany(
           { orderId: putTargetOrderId },
           {
-            customerAddress: putTargetCustomerAddress,
-            customerPhoneNum: putTargetCustomerPhoneNum,
+            deliveryAddress: putTargetDeliveryAddress,
+            deliveryPhoneNum: putTargetDeliveryPhoneNum,
           }
         ).lean();
         console.log("유저의 주문정보가 수정되었습니다");

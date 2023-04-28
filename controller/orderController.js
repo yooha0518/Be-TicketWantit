@@ -7,16 +7,16 @@ const orderController = {
       const {
         items,
         totalPrice,
-        customerAddress,
-        customerPhoneNum,
+        deliveryAddress,
+        deliveryPhoneNum,
         zipCode,
         imgUrl,
       } = req.body;
       const order = await orderService.createOrder({
         userId,
         imgUrl,
-        customerAddress,
-        customerPhoneNum,
+        deliveryAddress,
+        deliveryPhoneNum,
         items,
         totalPrice,
         zipCode,
@@ -35,6 +35,7 @@ const orderController = {
     try {
       const orderList = await orderService.getOrder(userId); //db에서 받아온 값이 넘어옴
       if (orderList.length < 1) {
+        console.log("콘솔로그 보이면 성공");
         res
           .status(404)
           .send({ mesage: "해당 유저의 주문내역이 존재하지 않습니다." });
@@ -64,12 +65,12 @@ const orderController = {
   async updateOrder(req, res, next) {
     //배송전 주문정보 수정
     const orderId = req.params.orderId;
-    const { customerAddress, customerPhoneNum } = req.body;
+    const { deliveryAddress, deliveryPhoneNum } = req.body;
     try {
       const isDelivered = await orderService.updateOrder(
         orderId,
-        customerAddress,
-        customerPhoneNum
+        deliveryAddress,
+        deliveryPhoneNum
       );
       if (isDelivered === 1) {
         res.status(200).send("유저 주문 정보가 수정되었습니다.");
