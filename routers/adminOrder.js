@@ -3,10 +3,7 @@ const adminOrderRouter = Router();
 const { adminOrderController } = require("../controller");
 
 //관리자 페이지 주문 정보 수정 -> orderStatus 1:주문 2:배송시작 3:배송완료
-adminOrderRouter.patch(
-  "/:orderId/:orderStatus",
-  adminOrderController.patchOrder
-);
+adminOrderRouter.put("/:orderId/:orderStatus", adminOrderController.putOrder);
 
 //관리자 전체주문조회
 adminOrderRouter.get("/", adminOrderController.getOrder);

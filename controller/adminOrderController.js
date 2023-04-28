@@ -48,20 +48,21 @@ const adminOrderController = {
       next(error);
     }
   },
-  async patchOrder(req, res, next) {
+  async putOrder(req, res, next) {
     const { orderId, orderStatus } = req.params;
     try {
       if (orderStatus == 2) {
-        const orderUpdate = await adminOrderService.patchOrder(
+        const orderUpdate = await adminOrderService.putOrder(
           orderId,
           orderStatus
         );
+        console.log("여기까지 들어옴 컨트롤러");
         console.log(orderUpdate);
         res
           .send(200)
           .status({ message: "주문상태가 배송중으로 변경되었습니다." });
       } else if (orderStatus == 3) {
-        const orderUpdate = await adminOrderService.patchOrder(
+        const orderUpdate = await adminOrderService.putOrder(
           orderId,
           orderStatus
         );
