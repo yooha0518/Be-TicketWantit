@@ -74,6 +74,16 @@ const adminOrderController = {
       next(error);
     }
   },
+  async deleteAll(req, res, next) {
+    try {
+      const deleteData = await adminOrderService.deleteAll();
+      if (deleteData == "success") {
+        res.send(200).send("delete all data success");
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = adminOrderController;
