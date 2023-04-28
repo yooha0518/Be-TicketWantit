@@ -13,7 +13,7 @@ const orderService = {
     totalPrice,
     zipCode,
   }) {
-    const user = await User.findOne({ shortId: userId }).lean();
+    const user = await User.findOne({ userId }).lean();
     console.log("유저아이디" + user._id);
     const createdOrder = await Order.create({
       userId, //user._id는 populate를 위해 필요하지만, 저 값 자체는 사용을 잘 안하기에 따로 명시
