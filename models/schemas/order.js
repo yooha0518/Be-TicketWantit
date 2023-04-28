@@ -14,11 +14,11 @@ const orderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
-  customerAddress: {
+  deliveryAddress: {
     type: String,
     required: true,
   },
-  customerPhoneNum: {
+  deliveryPhoneNum: {
     type: String,
     required: true,
   },
@@ -58,6 +58,10 @@ const orderSchema = new Schema({
   date: {
     type: String,
     default: formattedDate,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

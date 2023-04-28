@@ -1,4 +1,6 @@
 const { adminOrderService } = require("../services");
+const appError = require("../utils/appError");
+const commonErrors = require("../utils/commonErrors");
 
 const adminOrderController = {
   async getOrder(req, res, next) {
@@ -6,15 +8,14 @@ const adminOrderController = {
       const getOrderList = await adminOrderService.getOrder();
       if (getOrderList.length < 1) {
         res.status(404).send({ message: "주문 내역이 없습니다" });
+        return;
       }
       res.status(200).send({
         message: "전체 주문내역을 조회합니다",
         orderList: getOrderList,
       });
     } catch (error) {
-      console.log(error);
       res.status(500).send({ mesage: "전체 주문내역 조회에 실패했습니다." });
-      next(error);
     }
   },
   async getUserOrder(req, res, next) {
@@ -71,6 +72,16 @@ const adminOrderController = {
       }
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  },
+  async deleteAll(req, res, next) {
+    try {
+      const deleteData = await adminOrderService.deleteAll();
+      if (deleteData == "success") {
+        res.status(200).send({ message: "data deleted success" });
+      }
+    } catch (error) {
       next(error);
     }
   },
