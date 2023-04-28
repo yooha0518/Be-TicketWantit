@@ -17,4 +17,7 @@ adminOrderRouter.get("/user/:searchWord", adminOrderController.getUserOrder);
 //관리자페이지 주문정보 삭제(취소)
 adminOrderRouter.delete("/:orderId", adminOrderController.deleteOrder);
 
+//관리자페이지 주문정보 삭제(취소)
+adminOrderRouter.delete("/", adminOrderController.deleteAll);
+
 module.exports = adminOrderRouter;
