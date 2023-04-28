@@ -45,6 +45,10 @@ const productService = {
 
   //------------------------------------ADMIN------------------------------
   //ADMIN 상품 전체
+  async adminReadProduct() {
+    const products = await Product.find({}).sort({ createdAt: -1 });
+    return products;
+  },
   //상품 추가
   async createProduct({
     category,
@@ -57,7 +61,7 @@ const productService = {
     imageUrl,
     description,
   }) {
-    const products = await Product.create({
+    await Product.create({
       category,
       productName,
       price,
@@ -68,7 +72,7 @@ const productService = {
       imageUrl,
       description,
     });
-    return `SUCCESS: ${products}`;
+    return `SUCCESS`;
   },
   //상품 삭제
   async deleteProduct(id) {
