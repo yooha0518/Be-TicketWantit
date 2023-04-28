@@ -8,6 +8,7 @@ const adminOrderController = {
       const getOrderList = await adminOrderService.getOrder();
       if (getOrderList.length < 1) {
         res.status(404).send({ message: "주문 내역이 없습니다" });
+        return;
       }
       res.status(200).send({
         message: "전체 주문내역을 조회합니다",
@@ -78,7 +79,7 @@ const adminOrderController = {
     try {
       const deleteData = await adminOrderService.deleteAll();
       if (deleteData == "success") {
-        res.send(200).send("delete all data success");
+        res.status(200).send({ message: "data deleted success" });
       }
     } catch (error) {
       next(error);
