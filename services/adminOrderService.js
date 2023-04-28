@@ -43,7 +43,7 @@ const adminOrderService = {
       console.log("관리자 주문 삭제");
     }
   },
-  async patchOrder(orderId, orderStatus) {
+  async putOrder(orderId, orderStatus) {
     try {
       const orderUpdate = await Order.findOneAndUpdate(
         { orderId: orderId },
