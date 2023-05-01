@@ -1,15 +1,15 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const { accessSecret } = require('../../utils/createjwt.js');
+const { refreshSecret } = require('../../utils/createjwt.js');
 const { User } = require('../../models/index.js');
 
 const jwtOptions = {
-	secretOrKey: accessSecret,
+	secretOrKey: refreshSecret,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-	console.log('jwt 토큰 전략 함수 시작');
+const refreshJwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
+	console.log('jwt 토큰 refresh전략 함수 시작');
 	User.findOne({ shortId: payload.shortId })
 		.then((user) => {
 			if (user) {
@@ -27,5 +27,4 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
 });
 
 
-
-module.exports = jwtStrategy;
+module.exports = refreshJwtStrategy;

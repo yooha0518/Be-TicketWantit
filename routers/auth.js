@@ -3,14 +3,16 @@ const passport = require('passport');
 const { User } = require('../models/index');
 const { setUserToken } = require('../utils/createjwt');
 const getUserFromJwt = require('../middlewares/getUserFromJwt');
+const refreshToken = require('../middlewares/refreshToken');
 const hashPassword = require('../utils/hash-password');
 const authRouter = Router();
 const logoutRouter = require('./logout');
-const decodeJwt = require('../middlewares/decodeJwt');
+const { createAccessJwt } = require('../utils/createAccessJwt');
 
-authRouter.get('/', decodeJwt, (req, res) => {
+authRouter.get('/', refreshToken, (req, res) => {
 	console.log('새로운 토큰 만들기 실행');
-	res.json(setUserToken(req.user));
+
+	res.send(createAccessJwt(req.user));
 });
 
 // 로그인
