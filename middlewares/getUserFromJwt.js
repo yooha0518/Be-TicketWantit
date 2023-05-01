@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
 
 	console.log('인증전략을 사용하여 검사 시작');
 	//토큰검증 미들웨어
-	passport.authenticate('jwt', { session: false })(req, res, (err) => {
+	passport.authenticate('access', { session: false })(req, res, (err) => {
 		if (err) {
 			console.log('authenticate 에러남');
 			res.status(500).send(err.message);
