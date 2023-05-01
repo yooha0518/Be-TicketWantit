@@ -7,11 +7,9 @@ module.exports =
 		console.log('changePassword 시작');
 		const { currentPassword, password } = req.body;
 		const user = await User.findOne({ shortId: req.user.shortId });
+
 		if (user.password !== hashPassword(currentPassword)) {
-			console.log(user.password);
-			console.log(hashPassword(currentPassword));
-			res.status(400);
-			return;
+			return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
 		}
 
 		await User.updateOne(

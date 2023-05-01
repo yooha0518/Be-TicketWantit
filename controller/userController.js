@@ -5,25 +5,23 @@ const userController = {
 		try {
 			console.log('회원가입(postUser) 시작');
 			const { email, password, name } = req.body;
+
 			// 추출한 데이터를 userService.createUser로 전달
 			const user = await userService.createUser({
 				email,
 				password,
-				name
+				name,
 			});
-			//console.log(user);
 			req.user = user;
 			next();
 		} catch (error) {
-			next(error);
+			return res.status(400).json({ message: '계정이 이미 가입되어있습니다.' });
 		}
 	},
 	async getUser(req, res, next) {
 		try {
 			console.log('getUser 실행');
-			const { shortId, isAdmin, isTempPassword } = req.user;
-			console.log(`관리자: ${isAdmin}`);
-			console.log(`임시비밀번호: ${isTempPassword}`);
+			const { shortId } = req.user;
 			const user = await userService.getUser(shortId);
 			res.json(user);
 		} catch (error) {
@@ -33,10 +31,11 @@ const userController = {
 	async putUser(req, res, next) {
 		try {
 			const shortId = req.user.shortId;
-			const { name, address } = req.body;
+			const { name, address, zipCode } = req.body;
 			const result = await userService.updateUser(shortId, {
 				name,
 				address,
+				zipCode,
 			});
 			res.status(200).json(result);
 		} catch (error) {
@@ -49,6 +48,15 @@ const userController = {
 			const user = await userService.deleteUser(shortId);
 			res.json(user);
 		} catch (error) {
+			next(error);
+		}
+	},
+	async authUser(req, res, next) {
+		try {
+			const { email } = req.body;
+			const user = await userService.getUserEmail(email);
+			res.json(user);
+		} catch (errer) {
 			next(error);
 		}
 	},
