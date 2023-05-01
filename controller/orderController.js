@@ -35,10 +35,12 @@ const orderController = {
     try {
       const orderList = await orderService.getOrder(userId); //db에서 받아온 값이 넘어옴
       if (orderList.length < 1) {
-        console.log("콘솔로그 보이면 성공");
-        res
-          .status(404)
-          .send({ mesage: "해당 유저의 주문내역이 존재하지 않습니다." });
+        res.send({
+          message: "해당 유저의 주문내역이 존재하지 않습니다.",
+          orderList: [],
+        });
+        // .status(404)
+        // .send({ mesage: "해당 유저의 주문내역이 존재하지 않습니다." });
       }
       res
         .status(200)
