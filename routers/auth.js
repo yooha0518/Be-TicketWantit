@@ -6,10 +6,11 @@ const getUserFromJwt = require('../middlewares/getUserFromJwt');
 const hashPassword = require('../utils/hash-password');
 const authRouter = Router();
 const logoutRouter = require('./logout');
+const decodeJwt = require('../middlewares/decodeJwt');
 
-authRouter.get('/', getUserFromJwt, (req, res) => {
+authRouter.get('/', decodeJwt, (req, res) => {
 	console.log('새로운 토큰 만들기 실행');
-	res.send(setUserToken(req.user));
+	res.json(setUserToken(req.user));
 });
 
 // 로그인
