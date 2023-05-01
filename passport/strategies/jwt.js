@@ -1,10 +1,10 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const { secret } = require('../../utils/createjwt.js');
+const { accessSecret } = require('../../utils/createjwt.js');
 const { User } = require('../../models/index.js');
 
 const jwtOptions = {
-	secretOrKey: secret,
+	secretOrKey: accessSecret,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
@@ -16,7 +16,7 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
 				console.log('user가 있습니다.');
 				return done(null, user);
 			} else {
-				console.log('user가 없습니다..');
+				console.log('user가 없습니다.');
 				return done(null, false);
 			}
 		})
