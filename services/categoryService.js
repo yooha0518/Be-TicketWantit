@@ -5,7 +5,7 @@ const categoryService = {
     const content = await Category.create({
       category,
     });
-    return content;
+    return `SUCCESS: ${content}`;
   },
   //카테고리 조회
   async readCategory() {
@@ -15,13 +15,13 @@ const categoryService = {
   //카테고리 수정
   async updateCategory(id, category) {
     await Category.updateOne({ categoryId: id }, { $set: category });
-    return `categoryId: [${id}] UPDATE SUCCESS!`;
+    return `SUCCESS!`;
   },
 
   //카테고리 삭제
   async deleteCategory(id) {
     await Category.deleteOne({ categoryId: id });
-    return `categoryId: [${id}] DELETE SUCCESS!`;
+    return `SUCCESS!`;
   },
 };
 module.exports = categoryService;

@@ -1,51 +1,39 @@
 const { categoryService } = require('../services');
+const asyncHandler = require('../utils/async-handler');
 const categoryController = {
   //ADMIN 카테고리 조회
-  async getCategory(req, res, next) {
-    try {
-      const category = await categoryService.readCategory();
-      const content = category.map(({ categoryId, category }) => ({
-        categoryId,
-        category,
-      }));
-      res.status(200).json(content);
-    } catch (err) {
-      next(err);
-    }
-  },
+  getCategory: asyncHandler(async (req, res) => {
+    const category = await categoryService.readCategory();
+    const content = category.map(({ categoryId, category }) => ({
+      categoryId,
+      category,
+    }));
+    res.status(200).json(content);
+  }),
   //ADMIN 카테고리 추가
-  async postCategory(req, res, next) {
-    try {
-      const { category } = req.body;
-      const content = await categoryService.createCategory({ category });
-      res.status(200).json(content);
-    } catch (err) {
-      next(err);
+  postCategory: asyncHandler(async (req, res) => {
+    const { category } = req.body;
+    if (!category) {
+      return res.status(400).json({
+        message: '필수 입력값이 누락되었습니다. 값을 전부 입력해주세요.',
+      });
     }
-  },
+    const content = await categoryService.createCategory({ category });
+    res.status(200).json(content);
+  }),
   //ADMIN 카테고리 수정
-  async editCategory(req, res, next) {
-    try {
-      const { categoryId } = req.query;
-      const category = req.body;
-      const content = await categoryService.updateCategory(
-        categoryId,
-        category
-      );
-      res.status(200).json(content);
-    } catch (err) {
-      next(err);
-    }
-  },
+  editCategory: asyncHandler(async (req, res) => {
+    const { categoryId } = req.query;
+    const category = req.body;
+    const content = await categoryService.updateCategory(categoryId, category);
+    res.status(200).json(content);
+  }),
+
   //ADMIN 카테고리 삭제
-  async deleteCategory(req, res, next) {
-    try {
-      const { categoryId } = req.query;
-      const content = await categoryService.deleteCategory(categoryId);
-      res.status(200).json(content);
-    } catch (err) {
-      next(err);
-    }
-  },
+  deleteCategory: asyncHandler(async (req, res) => {
+    const { categoryId } = req.query;
+    const content = await categoryService.deleteCategory(categoryId);
+    res.status(200).json(content);
+  }),
 };
 module.exports = categoryController;
