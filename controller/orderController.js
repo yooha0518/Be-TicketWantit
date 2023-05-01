@@ -39,8 +39,6 @@ const orderController = {
           message: "해당 유저의 주문내역이 존재하지 않습니다.",
           orderList: [],
         });
-        // .status(404)
-        // .send({ mesage: "해당 유저의 주문내역이 존재하지 않습니다." });
       }
       res
         .status(200)
