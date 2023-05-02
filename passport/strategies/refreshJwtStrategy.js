@@ -1,10 +1,10 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const { refreshSecret } = require('../../utils/createjwt.js');
+const env = require('../../.env');
 const { User } = require('../../models/index.js');
 
 const jwtOptions = {
-	secretOrKey: refreshSecret,
+	secretOrKey: env.REFRESHSECRET,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
