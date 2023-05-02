@@ -146,6 +146,34 @@ const productController = {
     const content = await productService.deleteAllProduct();
     res.status(200).json(content);
   }),
+  //ADMIN 상품 수정 추가 API
+  reviseProduct: asyncHandler(async (req, res) => {
+    const { productId } = req.query;
+    const imageUrl = Domain + req.file.path;
+    const {
+      category,
+      productName,
+      price,
+      startDate,
+      endDate,
+      place,
+      speciesAge,
+      description,
+    } = req.body;
+    const content = await productService.updateReviseProduct(
+      productId,
+      category,
+      productName,
+      price,
+      startDate,
+      endDate,
+      place,
+      speciesAge,
+      description,
+      imageUrl
+    );
+    res.status(200).json(content);
+  }),
   //ADMIN 상품 수정
   putProduct: asyncHandler(async (req, res) => {
     const { productId } = req.query;
