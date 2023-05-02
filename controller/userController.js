@@ -31,11 +31,12 @@ const userController = {
 	async putUser(req, res, next) {
 		try {
 			const shortId = req.user.shortId;
-			const { name, address, zipCode } = req.body;
+			const { name, address, zipCode, phoneNumber } = req.body;
 			const result = await userService.updateUser(shortId, {
 				name,
 				address,
 				zipCode,
+				phoneNumber,
 			});
 			res.status(200).json(result);
 		} catch (error) {
