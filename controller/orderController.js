@@ -42,8 +42,9 @@ const orderController = {
       }
       res
         .status(200)
-        .send({ message: "주문내역 조회 성공", orderList: orderList });
+        .send({ message: "유저 주문내역 조회 성공", orderList: orderList });
     } catch (error) {
+      res.send(500).send({ message: "유저 주문내역 조회 실패" });
       next(error);
     }
   },
@@ -53,12 +54,13 @@ const orderController = {
     try {
       const isCanceled = await orderService.deleteOrder(orderId);
       if (isCanceled === 1) {
-        res.status(200).send("user order is canceled successfully");
+        res.status(200).send("유저의 주문이 취소되었습니다");
       } else {
-        res.status(404).send("please check orderStatus!");
+        res.status(404).send("이미 배송중인 상품입니다.");
       }
     } catch (error) {
       console.log("유저주문 취소 에러 발생" + err);
+      res.send(500).send("유저 주문 취소 실패");
       next(error);
     }
   },
@@ -79,6 +81,7 @@ const orderController = {
       }
     } catch (error) {
       console.log("유저의 주문 정보 수정에 실패했습니다.");
+      res.send(500).send("유저 주문정보 수정 실패");
       next(error);
     }
   },

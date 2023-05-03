@@ -15,7 +15,7 @@ const adminOrderService = {
       console.log(error);
     }
   },
-  //관리자 유저주문조회 - 특정 유저의 주문내역 조회 (검색)..?
+  //관리자 유저주문조회 - 특정 유저의 주문내역 조회 (검색)
   async getUserOrder(searchWord) {
     try {
       const searchUserOrder = await Order.find({
@@ -40,7 +40,7 @@ const adminOrderService = {
       await Order.deleteOne({ orderId });
       return "success";
     } catch (error) {
-      console.log("관리자 주문 삭제");
+      console.log("관리자 주문 삭제 실패");
     }
   },
   async putOrder(orderId, orderStatus) {
