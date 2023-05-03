@@ -1,22 +1,22 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const { secret } = require('../../utils/createjwt.js');
+const env = require('../../.env');
 const { User } = require('../../models/index.js');
 
 const jwtOptions = {
-	secretOrKey: secret,
+	secretOrKey: env.REFRESHSECRET,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-	console.log('jwt 토큰 전략 함수 시작');
+const refreshJwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
+	console.log('jwt 토큰 refresh전략 함수 시작');
 	User.findOne({ shortId: payload.shortId })
 		.then((user) => {
 			if (user) {
 				console.log('user가 있습니다.');
 				return done(null, user);
 			} else {
-				console.log('user가 없습니다..');
+				console.log('user가 없습니다.');
 				return done(null, false);
 			}
 		})
@@ -26,4 +26,5 @@ const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
 		});
 });
 
-module.exports = jwtStrategy;
+
+module.exports = refreshJwtStrategy;

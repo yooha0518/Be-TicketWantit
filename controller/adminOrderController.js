@@ -7,7 +7,9 @@ const adminOrderController = {
     try {
       const getOrderList = await adminOrderService.getOrder();
       if (getOrderList.length < 1) {
-        res.status(404).send({ message: "주문 내역이 없습니다" });
+        res
+          .status(404)
+          .send({ message: "주문 내역이 없습니다", getOrderList: [] });
         return;
       }
       res.status(200).send({
@@ -29,22 +31,25 @@ const adminOrderController = {
           orderList: getUserOrder,
         });
       } else {
-        res.status(404).send({ message: "유저의 주문내역이 없습니다" });
+        res
+          .status(404)
+          .send({ message: "유저의 주문내역이 없습니다", orderList: [] });
       }
     } catch (error) {
-      console.log(error);
+      res.status(500).send({ message: "유저의 주문내역 조회 실패" });
       next(error);
     }
+    console.log(error);
+    next(error);
   },
   async deleteOrder(req, res, next) {
     const orderId = req.params.orderId;
     try {
       const deleteOrder = await adminOrderService.deleteOrder(orderId);
       if (deleteOrder === "success")
-        res.status(200).send("data delete success");
-      else res.status(404).send("data delete failed");
+        res.status(200).send("해당 주문이 취소되었습니다.");
     } catch (error) {
-      console.log(error);
+      res.status(500).send("주문 취소에 실패하였습니다");
       next(error);
     }
   },
@@ -56,7 +61,6 @@ const adminOrderController = {
           orderId,
           orderStatus
         );
-        console.log("여기까지 들어옴 컨트롤러");
         console.log(orderUpdate);
         res
           .send(200)
@@ -69,10 +73,11 @@ const adminOrderController = {
         console.log(orderUpdate);
         res
           .status(200)
-          .send({ message: "주문상태가 배송완료으로 변경되었습니다." });
+          .send({ message: "주문상태가 배송완료로 변경되었습니다." });
       }
     } catch (error) {
       console.log(error);
+      res.status(500).send("주문상태 변경에 실패");
       next(error);
     }
   },
@@ -80,9 +85,10 @@ const adminOrderController = {
     try {
       const deleteData = await adminOrderService.deleteAll();
       if (deleteData == "success") {
-        res.status(200).send({ message: "data deleted success" });
+        res.status(200).send({ message: "전체 주문내역이 삭제되었습니다." });
       }
     } catch (error) {
+      res.status(500).send({ message: "전체 주문내역 삭제에 실패였습니다" });
       next(error);
     }
   },

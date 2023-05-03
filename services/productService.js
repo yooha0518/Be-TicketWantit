@@ -85,6 +85,33 @@ const productService = {
     await Product.deleteMany({});
     return `SUCCESS!`;
   },
+  //상품 수정 추가 API
+  async updateReviseProduct(
+    id,
+    category,
+    productName,
+    price,
+    startDate,
+    endDate,
+    place,
+    speciesAge,
+    description,
+    imageUrl
+  ) {
+    const updateData = {
+      category,
+      productName,
+      price,
+      startDate,
+      endDate,
+      place,
+      speciesAge,
+      description,
+      imageUrl,
+    };
+    await Product.updateOne({ productId: id }, { $set: updateData });
+    return `SUCCESS!`;
+  },
   //상품 수정
   async updateProduct(
     id,

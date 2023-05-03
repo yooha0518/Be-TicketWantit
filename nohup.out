@@ -1,8 +1,0 @@
-
-> back-end@1.0.0 start
-> node app.js "$"
-
-(node:34044) [MONGOOSE] DeprecationWarning: Mongoose: the `strictQuery` option will be switched back to `false` by default in Mongoose 7. Use `mongoose.set('strictQuery', false);` if you want to prepare for this change. Or use `mongoose.set('strictQuery', true);` to suppress this warning.
-(Use `node --trace-deprecation ...` to show where the warning was created)
-5000서버 연결 성공
-MongoDB Connected

@@ -1,7 +1,10 @@
 const passport = require('passport');
-const jwtStrategy = require('./strategies/jwt');
+const accessJwtStrategy = require('./strategies/accessJwtStrategy');
+const refreshJwtStrategy = require('./strategies/refreshJwtStrategy');
 
 module.exports = () => {
 	// jwt strategy 사용
-	passport.use(jwtStrategy);
+	console.log('passport index 시작');
+	passport.use('access', accessJwtStrategy);
+	passport.use('refresh', refreshJwtStrategy);
 };
