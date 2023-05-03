@@ -27,6 +27,9 @@ router.delete('/delete', productController.delProduct);
 //ADMIN 상품 전체 삭제
 router.delete('/delete/all', productController.delAllProduct);
 
+//ADMIN 상품 수정 추가 API
+router.put('/revise', productController.reviseProduct);
+
 //ADMIN 상품 수정
 router.put('/edit', productController.putProduct);
 

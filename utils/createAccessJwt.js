@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const env = require('../.env');
 
-exports.setUserToken = (user) => {
+
+exports.createAccessJwt = (user) => {
 	const accessPayload = {
 		shortId: user.shortId,
 		name: user.name,
@@ -9,15 +10,8 @@ exports.setUserToken = (user) => {
 		isAdmin: user.isAdmin,
 		isTempPassword: user.isTempPassword,
 	};
-	const refreshPayload = {
-		shortId: user.shortId,
-	};
-	const accessOptions = { algorithm: 'HS256', expiresIn: '1h' }; 
-	const refreshOptions = { algorithm: 'HS256', expiresIn: '7d' }; 
-	
+	const accessOptions = { algorithm: 'HS256', expiresIn: '1h' }; //토큰 만료시간(1시간)
 	const accessToken = jwt.sign(accessPayload, env.ACCESSSECRET, accessOptions);
-	const refreshToken = jwt.sign(refreshPayload,env.REFRESHSECRET,refreshOptions);
-	
 	console.log('토큰 만들기 완료');
-	return { accessToken, refreshToken };
+	return { accessToken };
 };
