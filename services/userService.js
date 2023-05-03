@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { User } = require('../models');
 const hashPassword = require('../utils/hash-password');
 
@@ -52,6 +53,12 @@ const userService = {
 	},
 	// 사용자 삭제 (회원탈퇴)
 	async deleteUser(shortId) {
+		const user = await User.findOne({ shortId });
+		const profileImagePath = user.profileImage;
+		fs.unlink(profileImagePath, (err) => {
+			if (err) throw err;
+			console.log('탈퇴한 유저의 프로필사진이 삭제되었습니다.');
+		});
 		const deletedUser = await User.deleteOne({ shortId });
 		return deletedUser;
 	},
