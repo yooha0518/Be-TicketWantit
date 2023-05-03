@@ -8,9 +8,9 @@ const reviewSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
-  productId: {
+  orderId: {
     type: Schema.Types.ObjectId,
-    ref: "Product",
+    ref: "Order",
   },
   reviewContent: {
     type: String,
