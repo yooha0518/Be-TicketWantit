@@ -53,6 +53,11 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
+  isReviewed: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
