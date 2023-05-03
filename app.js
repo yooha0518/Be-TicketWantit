@@ -1,18 +1,9 @@
-<<<<<<< HEAD
 const createError = require("http-errors");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const env = require("./.env");
-=======
-const createError = require('http-errors');
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const env = require('./.env');
->>>>>>> order
 const app = express();
 
 //routers
@@ -43,11 +34,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-require('./passport')();
+require("./passport")();
 // 애플리케이션 수준 미들웨어
 app.use(express.json()); // JSON 요청 바디 파싱
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청 바디 파싱
-app.use(express.static('public')); // 정적 파일 서비스
+app.use(express.static("public")); // 정적 파일 서비스
 
 const corsOptions = {
   origin: "*",
@@ -56,7 +47,7 @@ const corsOptions = {
 
 app.use(passport.initialize());
 app.use(cors(corsOptions));
-app.use('/api', apiRouter);
+app.use("/api", apiRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
