@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const orderId = require("./types/order-id");
-const dayjs = require("dayjs");
-const formattedDate = dayjs().format("YYYY-MM-DD");
 
 const orderSchema = new Schema({
   orderId,
@@ -55,9 +53,10 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: String,
-    default: formattedDate,
+  isReviewed: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   createdAt: {
     type: Date,
