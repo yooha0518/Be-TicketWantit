@@ -41,7 +41,9 @@ const userService = {
 		console.log(shortId);
 		if (!user) {
 			console.log('유저가 없습니다.');
-			return new Error();
+			const err = new Error('유저가 없습니다.');
+			err.status = 400;
+			return err;
 		}
 		const result = await User.updateOne(
 			{ shortId },
@@ -61,14 +63,20 @@ const userService = {
 	async deleteUser(shortId) {
 		const user = await User.findOne({ shortId });
 		if (!user) {
-			return new Error();
+			const err = new Error('유저가 없습니다.');
+			err.status = 400;
+			return err;
 		}
 		// const profileImagePath = user.profileImage;
 		// fs.unlink(profileImagePath, (err) => {
 		// 	if (err) throw err;
 		// 	console.log('탈퇴한 유저의 프로필사진이 삭제되었습니다.');
 		// });
-		const deletedresult = await User.deleteOne({ shortId });
+
+		const deletedresult = await User.updateOne(
+			{ shortId },
+			{ $set: { state: false } }
+		);
 		return deletedresult;
 	},
 
@@ -77,6 +85,20 @@ const userService = {
 		const userlist = await User.find({}).sort({ name: 1 });
 		return userlist;
 	},
+
+	// async adminRefreshUser() {
+	// 	const refreshUser = await User.updateOne(
+	// 		{ shortId },
+	// 		{ $set: { state: true } }
+	// 	);
+
+	// 	if (!refreshUser) {
+	// 		const err = new Error('유저가 없습니다.');
+	// 		err.status = 400;
+	// 		return err;
+	// 	}
+	// 	return refreshUser;
+	// },
 };
 
 module.exports = userService;
