@@ -7,6 +7,7 @@ const productRouter = require('./product');
 const adminProductRouter = require('./adminProduct');
 const adminCategoryRouter = require('./adminCategory');
 const adminOrderRouter = require('./adminOrder');
+const adminUserRouter = require('./adminUser');
 const reviewRouter = require('./review');
 const adminReviewRouter = require('./adminReview');
 const getUserFromJwt = require('../middlewares/getUserFromJwt');
@@ -21,7 +22,7 @@ router.use('/orders', getUserFromJwt, orderRouter);
 router.use('/product', productRouter);
 router.use('/admin_product', getUserFromJwt, adminProductRouter);
 router.use('/admin_category', adminCategoryRouter);
-// router.use("/mypage/review", reviewRouter);
+//router.use("/mypage/review", reviewRouter);
 router.use('/adminOrder', getUserFromJwt, adminOrderRouter);
-
+router.use('/adminUser', getUserFromJwt, adminUserRouter);
 module.exports = router;
