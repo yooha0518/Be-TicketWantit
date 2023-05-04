@@ -1,6 +1,7 @@
 const { adminOrderService } = require('../services');
 const appError = require('../utils/appError');
 const commonErrors = require('../utils/commonErrors');
+const schedule = require('node-schedule');
 
 const adminOrderController = {
 	async getOrder(req, res, next) {
@@ -76,6 +77,15 @@ const adminOrderController = {
 					orderStatus
 				);
 				console.log(orderUpdate);
+
+				const date = new Date();
+				date.setDate(date.getDate() + 3);
+				schedule.scheduleJob('*/1 * * * *', async function () {
+					// 3일 후에 실행될 코드를 작성해야됨
+					console.log('1분 지났음~');
+					await adminOrderService.putOrder(orderId, 4);
+				});
+
 				res
 					.status(200)
 					.send({ message: '주문상태가 배송완료로 변경되었습니다.' });
