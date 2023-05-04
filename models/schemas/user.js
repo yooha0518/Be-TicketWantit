@@ -40,6 +40,10 @@ const UserSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		state: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	{ timestamps: true }
 );

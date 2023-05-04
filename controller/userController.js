@@ -7,6 +7,9 @@ const userController = {
 			const { email, password, name } = req.body;
 			const alreadyUser = await userService.getUserEmail(email);
 			if (alreadyUser) {
+				if (!alreadyUser.state) {
+					return res.status(400).json({ message: '탈퇴한 계정입니다.' });
+				}
 				return res
 					.status(400)
 					.json({ message: '계정이 이미 가입되어있습니다.' });
@@ -101,6 +104,15 @@ const userController = {
 			next(error);
 		}
 	},
+	// async adminRefreshUser(req, res, next) {
+	// 	try {
+	// 		const { shortId } = req.params;
+	// 		const result = await userService.adminRefreshUser(shortId);
+	// 		res.send(result);
+	// 	} catch (error) {
+	// 		next(error);
+	// 	}
+	// },
 };
 
 module.exports = userController;

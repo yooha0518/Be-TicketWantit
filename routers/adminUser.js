@@ -11,5 +11,4 @@ adminUserRouter.put('/:shortId', userController.adminUpdateUser);
 //ADNIM 유저 정보 삭제
 adminUserRouter.delete('/:shortId', userController.adminDeleteUser);
 
-
 module.exports = adminUserRouter;

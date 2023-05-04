@@ -15,7 +15,7 @@ userRouter.post('/', userController.postUser, (req, res) => {
 	const { email, password } = req.body;
 	console.log('로그인 시작');
 	axios
-		.post('34.64.112.166/api/auth', { email, password })
+		.post('localhost:5000/api/auth', { email, password })
 		.then((postRes) => {
 			console.log(postRes);
 			res.send(postRes.data);
