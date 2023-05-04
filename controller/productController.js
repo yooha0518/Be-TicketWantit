@@ -24,6 +24,18 @@ const productController = {
     const content = productMapping(products);
     res.status(200).json(content);
   }),
+  //상품 검색 API
+  getSearch: asyncHandler(async (req, res) => {
+    const { keyword } = req.query;
+    const result = await productService.searchProduct(keyword);
+    if (result.error) {
+      const {
+        error: { message, status },
+      } = result;
+      res.status(status).json({ message });
+    }
+    res.status(200).json(result.searchProduct);
+  }),
   //상품 카테고리별
   getCategoryProduct: asyncHandler(async (req, res) => {
     const { category } = req.query;
