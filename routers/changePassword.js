@@ -4,16 +4,15 @@ const { User } = require('../models');
 module.exports =
 	('/',
 	async (req, res) => {
-		console.log('changePassword 시작');
 		const { currentPassword, password } = req.body;
-		const user = await User.findOne({ shortId: req.user.shortId });
-
-		if (user.password !== hashPassword(currentPassword)) {
+		const { shortId } = req.user;
+		const userPassword = await User.findOne({ shortId }, 'password');
+		if (userPassword.password !== hashPassword(currentPassword)) {
 			return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
 		}
 
 		await User.updateOne(
-			{ shortId: user.shortId },
+			{ shortId },
 			{
 				password: hashPassword(password),
 				isTempPassword: false,
