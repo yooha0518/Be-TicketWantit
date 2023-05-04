@@ -20,6 +20,8 @@ authRouter.post('/', async (req, res, next) => {
 	console.log('authRouter.post 실행');
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
+	const userPassword = await User.findOne({ email }, 'password');
+	console.log('userPassword: ', userPassword);
 	if (!user.state) {
 		return res.status(400).json({ message: '탈퇴한 계정입니다.' });
 	}
@@ -28,7 +30,10 @@ authRouter.post('/', async (req, res, next) => {
 		return res.status(400).json({ message: '계정이 존재하지 않습니다.' });
 	}
 	// 검색 한 유저의 비밀번호와 요청된 비밀번호의 해쉬값이 일치하는지 확인
-	if (user.password !== hashPassword(password)) {
+	if (userPassword.password !== hashPassword(password)) {
+		console.log(hashPassword(password));
+		console.log(userPassword.password);
+		console.log(password);
 		console.log('비밀번호가 일치하지 않습니다.');
 		return res.status(400).json({ message: '비밀번호가 틀렸습니다.' });
 	}
