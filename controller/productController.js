@@ -27,14 +27,12 @@ const productController = {
   //상품 검색 API
   getSearch: asyncHandler(async (req, res) => {
     const { keyword } = req.query;
-    const result = await productService.searchProduct(keyword);
-    if (result.error) {
-      const {
-        error: { message, status },
-      } = result;
-      res.status(status).json({ message });
+    if (!keyword) {
+      return res.status(204).json({ message: '검색어를 입력해주세요.' });
     }
-    res.status(200).json(result.searchProduct);
+    const result = await productService.searchProduct(keyword);
+    const content = productMapping(result);
+    res.status(200).json(content);
   }),
   //상품 카테고리별
   getCategoryProduct: asyncHandler(async (req, res) => {
