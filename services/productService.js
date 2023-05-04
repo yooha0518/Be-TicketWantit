@@ -8,18 +8,13 @@ const productService = {
   },
   //상품 검색
   async searchProduct(keyword) {
-    const searchProduct = await Product.find({
+    let product = await Product.find({
       productName: { $regex: new RegExp(`${keyword}`, 'i') },
     });
-    if (searchProduct.length === 0) {
-      return {
-        error: {
-          message: `'${keyword}' 해당 상품은 존재하지 않습니다.`,
-          status: 404,
-        },
-      };
+    if (product.length === 0) {
+      product = [];
     }
-    return { searchProduct: searchProduct };
+    return product;
   },
   // 상품 카테고리별
   async readCategoryProduct(categoryName) {

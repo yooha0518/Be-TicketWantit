@@ -13,8 +13,8 @@ const adminReviewRouter = require('./adminReview');
 const getUserFromJwt = require('../middlewares/getUserFromJwt');
 
 router.get('/', (req, res) => {
-	console.log('api 라우터 테스트');
-	res.send('this is homepage');
+  console.log('api 라우터 테스트');
+  res.send('this is homepage');
 });
 router.use('/user', userRouter);
 router.use('/auth', authRouter);
