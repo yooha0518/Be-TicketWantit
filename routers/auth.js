@@ -20,6 +20,9 @@ authRouter.post('/', async (req, res, next) => {
 	console.log('authRouter.post 실행');
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
+	if (!user.state) {
+		return res.status(400).json({ message: '탈퇴한 계정입니다.' });
+	}
 	if (!user) {
 		console.log('회원을 찾을 수 없습니다.');
 		return res.status(400).json({ message: '계정이 존재하지 않습니다.' });
