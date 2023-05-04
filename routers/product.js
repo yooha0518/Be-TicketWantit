@@ -5,6 +5,10 @@ const { productController, categoryController } = require('../controller');
 //상품 전체
 router.get('/', productController.getProduct);
 
+//상품 검색
+
+router.get('/search', productController.getSearch);
+
 //카테고리 목록
 router.get('/category/all', categoryController.getCategory);
 
