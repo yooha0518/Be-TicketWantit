@@ -1,4 +1,4 @@
-const { orderService } = require("../services");
+const { orderService } = require('../services');
 
 const orderController = {
   async postOrder(req, res, next) {

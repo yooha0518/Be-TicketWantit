@@ -2,7 +2,7 @@ const { Router } = require("express");
 const adminOrderRouter = Router();
 const { adminOrderController } = require("../controller");
 
-//관리자 페이지 주문 정보 수정 -> orderStatus 1:주문 2:배송시작 3:배송완료
+//관리자 페이지 주문 정보 수정 -> orderStatus 1:주문 2:배송시작 3:배송완료 4:구매확정
 adminOrderRouter.put("/:orderId/:orderStatus", adminOrderController.putOrder);
 
 //관리자 전체주문조회
