@@ -68,6 +68,39 @@ const userController = {
 			next(error);
 		}
 	},
+	async adminGetUserlist(req, res, next) {
+		try {
+			const userlist = await userService.adminReadUser();
+			res.json(userlist);
+		} catch (error) {
+			next(error);
+		}
+	},
+	async adminUpdateUser(req, res, next) {
+		try {
+			const { shortId } = req.params;
+			const { name, address, zipCode, phoneNumber } = req.body;
+
+			const result = await userService.updateUser(shortId, {
+				name,
+				address,
+				zipCode,
+				phoneNumber,
+			});
+			res.status(200).json(result);
+		} catch (error) {
+			next(error);
+		}
+	},
+	async adminDeleteUser(req, res, next) {
+		try {
+			const { shortId } = req.params;
+			const result = await userService.deleteUser(shortId);
+			res.send(result);
+		} catch (error) {
+			next(error);
+		}
+	},
 };
 
 module.exports = userController;

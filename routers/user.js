@@ -64,3 +64,7 @@ userRouter.use('/change-password', getUserFromJwt, changePassword);
 userRouter.use('/emailAuth', emailAuth);
 
 module.exports = userRouter;
+
+// 관리자 계정
+// dbsdnwjd96@naver.com
+// 1234!@#$

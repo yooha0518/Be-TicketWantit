@@ -3,7 +3,7 @@ const reviewRouter = Router();
 const { reviewController } = require("../controller");
 
 //유저 리뷰작성
-reviewRouter.post("/", reviewController.postReview);
+//reviewRouter.post("/", reviewController.postReview);
 
 //유저의 리뷰 조회
 
