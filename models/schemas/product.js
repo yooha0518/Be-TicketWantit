@@ -17,9 +17,12 @@ const ProductSchema = new Schema(
     },
     discount: {
       type: String,
-      required: true,
+      required: false,
     },
-
+    discountPrice: {
+      type: String,
+      required: false,
+    },
     place: {
       type: String,
       required: true,
