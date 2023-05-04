@@ -38,6 +38,10 @@ const orderSchema = new Schema({
         type: Number,
         required: true,
       },
+      productId: {
+        type: String,
+        required: true,
+      },
     },
   ],
   totalPrice: {

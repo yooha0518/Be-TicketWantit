@@ -15,6 +15,14 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
+    discount: {
+      type: String,
+      required: false,
+    },
+    discountPrice: {
+      type: String,
+      required: false,
+    },
     place: {
       type: String,
       required: true,
