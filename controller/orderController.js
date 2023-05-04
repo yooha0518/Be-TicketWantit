@@ -1,4 +1,4 @@
-const { orderService } = require("../services");
+const { orderService } = require('../services');
 
 const orderController = {
   async postOrder(req, res, next) {
@@ -11,6 +11,7 @@ const orderController = {
         deliveryPhoneNum,
         zipCode,
         imgUrl,
+        productId,
       } = req.body;
       const order = await orderService.createOrder({
         userId,
@@ -20,6 +21,7 @@ const orderController = {
         items,
         totalPrice,
         zipCode,
+        productId,
       });
       console.log("Order created successfully: " + order);
       res.status(200).json({ message: "data saved", orderId: order.orderId });

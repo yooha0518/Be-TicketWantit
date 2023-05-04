@@ -10,3 +10,5 @@ const reviewRouter = Router();
 //유저 리뷰수정
 
 //유저 리뷰삭제
+
+module.exports = reviewRouter;

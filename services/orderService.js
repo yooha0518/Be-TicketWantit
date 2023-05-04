@@ -12,6 +12,7 @@ const orderService = {
     items,
     totalPrice,
     zipCode,
+    productId,
   }) {
     const user = await User.findOne({ shortId: userId }).lean();
     console.log("유저아이디" + user._id);
@@ -24,6 +25,7 @@ const orderService = {
       deliveryPhoneNum,
       totalPrice,
       zipCode,
+      productId,
     });
     return createdOrder;
   },
