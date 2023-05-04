@@ -1,10 +1,13 @@
 const { Router } = require('express');
+const multer = require('multer');
+const axios = require('axios');
+const path = require('path');
 const { userController } = require('../controller');
 const userRouter = Router();
 const getUserFromJwt = require('../middlewares/getUserFromJwt');
-const resetPassword = require('./resetPassword.js');
-const changePassword = require('./changePassword.js');
-const axios = require('axios');
+const resetPassword = require('./resetPassword');
+const changePassword = require('./changePassword');
+const postProfileImage = require('./postProfileImage');
 const emailAuth = require('../utils/emailAuth');
 
 //사용자 추가
@@ -12,7 +15,7 @@ userRouter.post('/', userController.postUser, (req, res) => {
 	const { email, password } = req.body;
 	console.log('로그인 시작');
 	axios
-		.post('http://34.64.112.166/api/auth', { email, password })
+		.post('34.64.112.166/api/auth', { email, password })
 		.then((postRes) => {
 			console.log(postRes);
 			res.send(postRes.data);
@@ -34,6 +37,26 @@ userRouter.delete('/', getUserFromJwt, userController.deleteUser);
 //사용자 비밀번호 초기화
 userRouter.use('/reset-password', resetPassword);
 
+//사용자 프로필사진 추가
+const upload = multer({
+	storage: multer.diskStorage({
+		destination(req, file, callback) {
+			callback(null, 'public/');
+		},
+		filename(req, file, callback) {
+			const extension = file.originalname.split('.').pop();
+			callback(null, req.user.shortId + '.' + extension);
+		},
+	}),
+});
+
+userRouter.use(
+	'/profileImage',
+	getUserFromJwt,
+	upload.single('profileImage'),
+	postProfileImage
+);
+
 //사용자 비밀번호 변경
 userRouter.use('/change-password', getUserFromJwt, changePassword);
 
@@ -41,3 +64,7 @@ userRouter.use('/change-password', getUserFromJwt, changePassword);
 userRouter.use('/emailAuth', emailAuth);
 
 module.exports = userRouter;
+
+// 관리자 계정
+// dbsdnwjd96@naver.com
+// 1234!@#$

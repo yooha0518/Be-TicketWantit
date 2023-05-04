@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { User } = require('../models');
 const hashPassword = require('../utils/hash-password');
 
@@ -36,6 +37,12 @@ const userService = {
 	},
 	// 사용자 정보 수정
 	async updateUser(shortId, { name, address, zipCode, phoneNumber }) {
+		const user = await User.findOne({ shortId });
+		console.log(shortId);
+		if (!user) {
+			console.log('유저가 없습니다.');
+			return new Error();
+		}
 		const result = await User.updateOne(
 			{ shortId },
 			{
@@ -52,8 +59,23 @@ const userService = {
 	},
 	// 사용자 삭제 (회원탈퇴)
 	async deleteUser(shortId) {
-		const deletedUser = await User.deleteOne({ shortId });
-		return deletedUser;
+		const user = await User.findOne({ shortId });
+		if (!user) {
+			return new Error();
+		}
+		// const profileImagePath = user.profileImage;
+		// fs.unlink(profileImagePath, (err) => {
+		// 	if (err) throw err;
+		// 	console.log('탈퇴한 유저의 프로필사진이 삭제되었습니다.');
+		// });
+		const deletedresult = await User.deleteOne({ shortId });
+		return deletedresult;
+	},
+
+	//관리자 - 사용자 전체 정보 조회
+	async adminReadUser() {
+		const userlist = await User.find({}).sort({ name: 1 });
+		return userlist;
 	},
 };
 
