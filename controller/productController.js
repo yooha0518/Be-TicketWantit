@@ -5,9 +5,20 @@ const Domain = 'http://34.64.112.166/';
 //메인 페이지 상품 매핑
 function productMapping(items) {
   const content = items.map(
-    ({ productName, price, startDate, endDate, imageUrl, productId }) => ({
+    ({
       productName,
       price,
+      discount,
+      discountPrice,
+      startDate,
+      endDate,
+      imageUrl,
+      productId,
+    }) => ({
+      productName,
+      price,
+      discount,
+      discountPrice,
       startDate,
       endDate,
       imageUrl,
@@ -83,6 +94,8 @@ const productController = {
         productName,
         imageUrl,
         price,
+        discount,
+        discountPrice,
         place,
         speciesAge,
         description,
@@ -94,6 +107,8 @@ const productController = {
         productName,
         imageUrl,
         price,
+        discount,
+        discountPrice,
         place,
         speciesAge,
         description,
@@ -113,6 +128,7 @@ const productController = {
       startDate,
       endDate,
       place,
+      discount,
       speciesAge,
       description,
     } = req.body;
@@ -138,6 +154,7 @@ const productController = {
       startDate,
       endDate,
       place,
+      discount,
       speciesAge,
       imageUrl,
       description,
@@ -191,6 +208,7 @@ const productController = {
       category,
       productName,
       price,
+      discount,
       startDate,
       endDate,
       place,
@@ -203,6 +221,7 @@ const productController = {
       category,
       productName,
       price,
+      discount,
       startDate,
       endDate,
       place,
