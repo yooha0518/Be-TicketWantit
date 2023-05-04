@@ -12,15 +12,15 @@ const ProductSchema = new Schema(
       required: true,
     },
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
     discount: {
-      type: String,
+      type: Number,
       required: false,
     },
     discountPrice: {
-      type: String,
+      type: Number,
       required: false,
     },
     place: {
@@ -50,5 +50,25 @@ const ProductSchema = new Schema(
   },
   { timestamps: true }
 );
+ProductSchema.pre('save', function (next) {
+  if (this.discount) {
+    this.discountPrice =
+      Math.floor((this.price * ((100 - this.discount) * 0.01)) / 10) * 10;
+  } else {
+    this.discountPrice = this.price;
+  }
+  next();
+});
+
+ProductSchema.pre('findOneAndUpdate', function (next) {
+  const update = this._update;
+
+  if (update.discount || update.price) {
+    update.discountPrice =
+      Math.floor((update.price * ((100 - update.discount) * 0.01)) / 10) * 10;
+  }
+
+  next();
+});
 
 module.exports = ProductSchema;

@@ -64,6 +64,7 @@ const productService = {
     category,
     productName,
     price,
+    discount,
     startDate,
     endDate,
     place,
@@ -75,6 +76,7 @@ const productService = {
       category,
       productName,
       price,
+      discount,
       startDate,
       endDate,
       place,
@@ -128,6 +130,7 @@ const productService = {
     category,
     productName,
     price,
+    discount,
     startDate,
     endDate,
     place,
@@ -138,14 +141,25 @@ const productService = {
       category,
       productName,
       price,
+      discount,
       startDate,
       endDate,
       place,
       speciesAge,
       description,
     };
-    await Product.updateOne({ productId: id }, { $set: updateData });
-    return `SUCCESS!`;
+    // await Product.updateOne({ productId: id }, { $set: updateData });
+    const options = { new: true };
+
+    const content = await Product.findOneAndUpdate(
+      { productId: id },
+      updateData,
+      options
+    );
+
+    // await content.save();
+
+    return content;
   },
   //상품 이미지 수정
   async updateImg(id, uploadImg) {
