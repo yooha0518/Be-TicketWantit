@@ -2,8 +2,26 @@ const { Product } = require('../models');
 
 const productService = {
   //상품 목록 전체
-  async readProduct() {
-    const products = await Product.find({});
+  async readProduct(sort) {
+    let products = [];
+    if (sort === 'new') {
+      products = await Product.find({}).sort({ createdAt: -1 });
+    } else if (sort === 'max_price') {
+      products = await Product.aggregate([
+        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
+        { $sort: { discountPrice: -1 } },
+      ]);
+    } else if (sort === 'min_price') {
+      products = await Product.aggregate([
+        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
+        { $sort: { discountPrice: 1 } },
+      ]);
+    } else if (sort === 'discount') {
+      products = await Product.aggregate([
+        { $addFields: { discount: { $toDouble: '$discount' } } },
+        { $sort: { discount: -1 } },
+      ]);
+    }
     return products;
   },
   //상품 검색
@@ -17,8 +35,31 @@ const productService = {
     return product;
   },
   // 상품 카테고리별
-  async readCategoryProduct(categoryName) {
-    const products = await Product.find({ category: categoryName });
+  async readCategoryProduct(categoryName, sort) {
+    let products = [];
+    if (sort === 'new') {
+      products = await Product.find({ category: categoryName }).sort({
+        createdAt: -1,
+      });
+    } else if (sort === 'max_price') {
+      products = await Product.aggregate([
+        { $match: { category: categoryName } },
+        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
+        { $sort: { discountPrice: -1 } },
+      ]);
+    } else if (sort === 'min_price') {
+      products = await Product.aggregate([
+        { $match: { category: categoryName } },
+        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
+        { $sort: { discountPrice: 1 } },
+      ]);
+    } else if (sort === 'discount') {
+      products = await Product.aggregate([
+        { $match: { category: categoryName } },
+        { $addFields: { discount: { $toDouble: '$discount' } } },
+        { $sort: { discount: -1 } },
+      ]);
+    }
     if (products.length === 0) {
       return {
         error: {

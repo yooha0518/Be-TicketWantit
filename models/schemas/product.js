@@ -17,11 +17,28 @@ const ProductSchema = new Schema(
     },
     discount: {
       type: Number,
-      required: false,
+      default: 0,
+      validate: {
+        validator: function (v) {
+          return v === null || (v >= 0 && v <= 100);
+        },
+      },
     },
     discountPrice: {
       type: Number,
       required: false,
+      default: function () {
+        if (
+          this.discount === null ||
+          this.discount === undefined ||
+          this.discount === 0
+        ) {
+          return this.price;
+        }
+        return (
+          Math.floor((this.price * ((100 - this.discount) * 0.01)) / 10) * 10
+        );
+      },
     },
     place: {
       type: String,
@@ -50,8 +67,16 @@ const ProductSchema = new Schema(
   },
   { timestamps: true }
 );
+
+ProductSchema.pre('validate', function (next) {
+  if (this.discount === null) {
+    this.discount = 0;
+  }
+  next();
+});
+
 ProductSchema.pre('save', function (next) {
-  if (this.discount) {
+  if (this.discount >= 1) {
     this.discountPrice =
       Math.floor((this.price * ((100 - this.discount) * 0.01)) / 10) * 10;
   } else {
@@ -63,7 +88,7 @@ ProductSchema.pre('save', function (next) {
 ProductSchema.pre('findOneAndUpdate', function (next) {
   const update = this._update;
 
-  if (update.discount || update.price) {
+  if (update.discount >= 1 || update.price) {
     update.discountPrice =
       Math.floor((update.price * ((100 - update.discount) * 0.01)) / 10) * 10;
   }
