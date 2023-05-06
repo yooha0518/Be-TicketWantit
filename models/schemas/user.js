@@ -46,7 +46,7 @@ const UserSchema = new Schema(
 			default: true,
 		},
 	},
-	{ timestamps: true }
+	{ timestamps: false }
 );
 
 module.exports = UserSchema;
