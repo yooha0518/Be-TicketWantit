@@ -31,7 +31,7 @@ const UserSchema = new Schema(
 		},
 		profileImage: {
 			type: String,
-			default: 'http://34.64.112.166/defaultImage.png',
+			default: 'http://34.64.112.166:5000/defaultImage.png',
 		},
 		isAdmin: {
 			type: Boolean,
