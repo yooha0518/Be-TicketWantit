@@ -94,8 +94,12 @@ const userService = {
 	},
 
 	//관리자 - 사용자 전체 정보 조회
-	async adminReadUser() {
-		const userlist = await User.find({}).sort({ name: 1 });
+	async adminReadUser(page) {
+		const userlist = await User.find({})
+			.sort({ name: 1 })
+			.skip(7 * (page-1))
+			.limit(7)
+
 		return userlist;
 	},
 };
