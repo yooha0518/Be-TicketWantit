@@ -2,10 +2,13 @@ const { Product } = require('../models');
 
 const productService = {
   //상품 목록 전체
-  async readProduct(sort) {
+  async readProduct(skip, limit, sort) {
     let products = [];
     if (sort === 'new') {
-      products = await Product.find({}).sort({ createdAt: -1 });
+      products = await Product.find({})
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 });
     } else if (sort === 'max_price') {
       products = await Product.aggregate([
         { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },

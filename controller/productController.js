@@ -31,8 +31,8 @@ function productMapping(items) {
 const productController = {
   //상품 전체
   getProduct: asyncHandler(async (req, res) => {
-    const { sort } = req.query;
-    const products = await productService.readProduct(sort);
+    const { skip, limit, sort } = req.query;
+    const products = await productService.readProduct(skip, limit, sort);
     const content = productMapping(products);
     res.status(200).json(content);
   }),
