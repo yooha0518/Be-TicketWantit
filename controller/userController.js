@@ -90,7 +90,7 @@ const userController = {
 		try {
 			console.log('프로필사진 수정 시작');
 			const { shortId } = req.user;
-			const profileImage = `https://34.64.112.166:5000/${req.file.filename}`;
+			const profileImage = `34.64.112.166:5000/${req.file.filename}`;
 			const result = await userService.updateProfileImage(
 				shortId,
 				profileImage
@@ -221,7 +221,7 @@ const userController = {
 	async adminUpdateUser(req, res, next) {
 		try {
 			const { shortId } = req.params;
-			const { name, address, zipCode, phoneNumber } = req.body;
+			const { name, address, zipCode, phoneNumber, profileImage } = req.body;
 
 			const result = await userService.updateUser(shortId, {
 				name,
