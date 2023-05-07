@@ -57,7 +57,6 @@ const userController = {
 					res.send(setAuthCodeToken(authCode));
 				}
 			} else {
-				console.log('shortId if');
 				const { shortId } = req.user;
 				user = await userService.getUser(shortId);
 				return res.json(user);
@@ -92,6 +91,22 @@ const userController = {
 			console.log('프로필사진 수정 시작');
 			const { shortId } = req.user;
 			const profileImage = `34.64.112.166:5000/${req.file.filename}`;
+			const result = await userService.updateProfileImage(
+				shortId,
+				profileImage
+			);
+			res.send(result);
+		} catch (error) {
+			console.log(error);
+			return res
+				.status(500)
+				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
+		}
+	},
+	async deleteProfileImate(req, res, next) {
+		try {
+			const { shortId } = req.user;
+			const profileImage = `34.64.112.166:5000/defaultImage.png`;
 			const result = await userService.updateProfileImage(
 				shortId,
 				profileImage

@@ -17,7 +17,7 @@ userRouter.put('/', getUserFromJwt, userController.putUser);
 userRouter.delete('/', getUserFromJwt, userController.deleteUser);
 
 //사용자 비밀번호 초기화
-userRouter.post('/reset-password',  userController.resetPassword);
+userRouter.post('/reset-password', userController.resetPassword);
 
 //사용자 프로필사진 추가
 userRouter.post(
@@ -25,6 +25,11 @@ userRouter.post(
 	getUserFromJwt,
 	upload.single('profileImage'),
 	userController.putProfileImage
+);
+userRouter.delete(
+	'/profileImage',
+	getUserFromJwt,
+	userController.deleteProfileImate
 );
 
 //사용자 비밀번호 변경
