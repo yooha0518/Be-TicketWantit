@@ -210,7 +210,6 @@ const userController = {
 	async adminGetUserlist(req, res, next) {
 		try {
 			const page = Number(req.query.page || 1);
-			console.log(page);
 			const userlist = await userService.adminReadUser(page);
 			res.json(userlist);
 		} catch (error) {
