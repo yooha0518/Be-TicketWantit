@@ -22,7 +22,7 @@ router.use("/orders", getUserFromJwt, orderRouter);
 router.use("/product", productRouter);
 router.use("/admin_product", getUserFromJwt, adminProductRouter);
 router.use("/admin_category", adminCategoryRouter);
-router.use("/review", reviewRouter);
+router.use("/review", getUserFromJwt, reviewRouter);
 router.use("/adminOrder", getUserFromJwt, adminOrderRouter);
 router.use("/adminUser", getUserFromJwt, adminUserRouter);
 module.exports = router;
