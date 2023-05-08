@@ -90,17 +90,20 @@ const userService = {
 	},
 	async realDeleteUser(shortId) {
 		const deleteResult = await User.deleteOne({ shortId });
+		console.log(deleteResult);
 		return { message: '계정이 영구삭제 되었습니다.' };
 	},
 
 	//관리자 - 사용자 전체 정보 조회
 	async adminReadUser(page) {
+		const total = await User.countDocuments({});
 		const userlist = await User.find({})
 			.sort({ name: 1 })
-			.skip(7 * (page-1))
-			.limit(7)
+			.skip(7 * (page - 1))
+			.limit(7);
 
-		return userlist;
+		console.log([userlist, { total: total }]);
+		return [userlist, { total: total }];
 	},
 };
 
