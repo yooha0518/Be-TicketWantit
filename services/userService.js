@@ -96,21 +96,13 @@ const userService = {
 
 	//관리자 - 사용자 전체 정보 조회
 	async adminReadUser(page) {
-		let total = 0;
-		User.countDocuments({}, (err, count) => {
-			if (err) {
-				console.log(err);
-				return '사용자 리스트 개수를 불러오지 못했습니다. (User.countDocuments 에러)';
-			} else {
-				total = count;
-			}
-		});
-
+		const total = await User.countDocuments({});
 		const userlist = await User.find({})
 			.sort({ name: 1 })
 			.skip(7 * (page - 1))
 			.limit(7);
 
+		console.log([userlist, { total: total }]);
 		return [userlist, { total: total }];
 	},
 };
