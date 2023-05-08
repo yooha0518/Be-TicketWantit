@@ -14,6 +14,7 @@ function productMapping(items) {
       endDate,
       imageUrl,
       productId,
+      _id,
     }) => ({
       productName,
       price,
@@ -23,6 +24,7 @@ function productMapping(items) {
       endDate,
       imageUrl,
       productId,
+      _id,
     })
   );
   return content;
@@ -36,33 +38,28 @@ const productController = {
     const content = productMapping(products);
     res.status(200).json(content);
   }),
-  //상품 검색 API
-  getSearch: asyncHandler(async (req, res) => {
-    const { keyword } = req.query;
-    if (!keyword) {
-      return res.status(204).json({ message: '검색어를 입력해주세요.' });
-    }
-    const result = await productService.searchProduct(keyword);
-    const content = productMapping(result);
-    res.status(200).json(content);
-  }),
   //상품 카테고리별
   getCategoryProduct: asyncHandler(async (req, res) => {
     const { category, sort, page } = req.query;
-    const result = await productService.readCategoryProduct(
+    const products = await productService.readCategoryProduct(
       category,
       sort,
       page
     );
-    if (result.error) {
-      const {
-        error: { message, status },
-      } = result;
-      res.status(status).json({ message });
-    }
-    const content = productMapping(result.products);
+    const content = productMapping(products);
     res.status(200).json(content);
   }),
+  //상품 검색 API
+  getSearch: asyncHandler(async (req, res) => {
+    const { keyword, sort, page } = req.query;
+    if (!keyword) {
+      return res.status(204).json({ message: '검색어를 입력해주세요.' });
+    }
+    const result = await productService.searchProduct(keyword, sort, page);
+    const content = productMapping(result);
+    res.status(200).json(content);
+  }),
+
   //상품 상세
   getDetail: asyncHandler(async (req, res) => {
     const { productId } = req.query;
