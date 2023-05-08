@@ -31,8 +31,8 @@ function productMapping(items) {
 const productController = {
   //상품 전체
   getProduct: asyncHandler(async (req, res) => {
-    const { page, sort } = req.query;
-    const products = await productService.readProduct(page, sort);
+    const { sort, page } = req.query;
+    const products = await productService.readProduct(sort, page);
     const content = productMapping(products);
     res.status(200).json(content);
   }),
@@ -48,8 +48,12 @@ const productController = {
   }),
   //상품 카테고리별
   getCategoryProduct: asyncHandler(async (req, res) => {
-    const { category, sort } = req.query;
-    const result = await productService.readCategoryProduct(category, sort);
+    const { category, sort, page } = req.query;
+    const result = await productService.readCategoryProduct(
+      category,
+      sort,
+      page
+    );
     if (result.error) {
       const {
         error: { message, status },

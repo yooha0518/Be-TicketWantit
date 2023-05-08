@@ -1,30 +1,38 @@
 const { Product } = require('../models');
+const limit = 12;
 
 const productService = {
   //상품 목록 전체
-  async readProduct(page, sort) {
+
+  async readProduct(sort, page) {
     let products = [];
-    const limit = 12;
+
     const skip = page * limit;
     if (sort === 'new') {
       products = await Product.find({})
+        .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 });
+        .limit(limit);
     } else if (sort === 'max_price') {
       products = await Product.aggregate([
         { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
         { $sort: { discountPrice: -1 } },
+        { $skip: skip },
+        { $limit: limit },
       ]);
     } else if (sort === 'min_price') {
       products = await Product.aggregate([
         { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
         { $sort: { discountPrice: 1 } },
+        { $skip: skip },
+        { $limit: limit },
       ]);
     } else if (sort === 'discount') {
       products = await Product.aggregate([
         { $addFields: { discount: { $toDouble: '$discount' } } },
         { $sort: { discount: -1 } },
+        { $skip: skip },
+        { $limit: limit },
       ]);
     }
     return products;
@@ -40,29 +48,39 @@ const productService = {
     return product;
   },
   // 상품 카테고리별
-  async readCategoryProduct(categoryName, sort) {
+  async readCategoryProduct(categoryName, sort, page) {
     let products = [];
+    const skip = page * limit;
     if (sort === 'new') {
-      products = await Product.find({ category: categoryName }).sort({
-        createdAt: -1,
-      });
+      products = await Product.find({ category: categoryName })
+        .sort({
+          createdAt: -1,
+        })
+        .skip(skip)
+        .limit(limit);
     } else if (sort === 'max_price') {
       products = await Product.aggregate([
         { $match: { category: categoryName } },
         { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
         { $sort: { discountPrice: -1 } },
+        { $skip: skip },
+        { $limit: limit },
       ]);
     } else if (sort === 'min_price') {
       products = await Product.aggregate([
         { $match: { category: categoryName } },
         { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
         { $sort: { discountPrice: 1 } },
+        { $skip: skip },
+        { $limit: limit },
       ]);
     } else if (sort === 'discount') {
       products = await Product.aggregate([
         { $match: { category: categoryName } },
         { $addFields: { discount: { $toDouble: '$discount' } } },
         { $sort: { discount: -1 } },
+        { $skip: skip },
+        { $limit: limit },
       ]);
     }
     if (products.length === 0) {
