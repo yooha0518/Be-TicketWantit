@@ -2,8 +2,10 @@ const { Product } = require('../models');
 
 const productService = {
   //상품 목록 전체
-  async readProduct(skip, limit, sort) {
+  async readProduct(page, sort) {
     let products = [];
+    const limit = 12;
+    const skip = page * limit;
     if (sort === 'new') {
       products = await Product.find({})
         .skip(skip)
