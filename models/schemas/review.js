@@ -5,12 +5,16 @@ const reviewId = require("./types/short-id");
 const reviewSchema = new Schema({
   reviewId,
   userId: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
+    type: String,
+    required: true,
+  },
+  productId: {
+    type: String,
+    required: true,
   },
   orderId: {
-    type: Schema.Types.ObjectId,
-    ref: "Order",
+    type: String,
+    required: true,
   },
   reviewContent: {
     type: String,
