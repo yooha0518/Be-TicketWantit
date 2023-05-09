@@ -1,6 +1,6 @@
 const { productService } = require('../services');
 const asyncHandler = require('../utils/async-handler');
-const Domain = 'http://34.64.112.166/';
+const Domain = 'http://ticketwantit.shop/';
 
 //메인 페이지 상품 매핑
 function productMapping(items) {
