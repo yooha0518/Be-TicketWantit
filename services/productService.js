@@ -73,9 +73,24 @@ const productService = {
 
   //------------------------------------ADMIN------------------------------
   //ADMIN 상품 전체
-  async adminReadProduct() {
-    const products = await Product.find({}).sort({ createdAt: -1 });
-    return products;
+  async adminReadProduct(page) {
+    const limit = 10;
+    const startPage = (page - 1) * limit;
+    const endPage = page * limit;
+    const total = await Product.countDocuments();
+
+    const resultPage = await Product.find({})
+      .sort({ _id: -1 })
+      .skip(startPage)
+      .limit(limit);
+
+    const pageInfo = {
+      currentPage: page,
+      totalPage: Math.ceil(total / limit),
+      prevPage: page > 1 ? page - 1 : null,
+      nextPage: endPage < total ? page + 1 : null,
+    };
+    return { pageInfo, resultPage };
   },
   //상품 추가
   async createProduct({

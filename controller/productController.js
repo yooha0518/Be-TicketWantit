@@ -88,8 +88,9 @@ const productController = {
   //----------------------------------------- ADMIN----------------------------
   //ADMIN 상품 전체
   getAdminProduct: asyncHandler(async (req, res) => {
-    const products = await productService.adminReadProduct();
-    const content = products.map(
+    const page = parseInt(req.query.page || 1);
+    const result = await productService.adminReadProduct(page);
+    const content = result.resultPage.map(
       ({
         category,
         productId,
@@ -118,7 +119,7 @@ const productController = {
         endDate,
       })
     );
-    res.status(200).json(content);
+    res.status(200).json({ pageInfo: result.pageInfo, data: content });
   }),
   //ADMIN 상품 추가
   postProduct: asyncHandler(async (req, res) => {
