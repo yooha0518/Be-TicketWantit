@@ -19,11 +19,11 @@ const UserSchema = new Schema(
 		},
 		phoneNumber: {
 			type: String,
-			required: false,
+			default: '',
 		},
 		address: {
 			type: String,
-			required: false,
+			default: '',
 		},
 		zipCode: {
 			type: String,
