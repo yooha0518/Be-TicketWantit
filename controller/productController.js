@@ -1,6 +1,6 @@
 const { productService } = require('../services');
 const asyncHandler = require('../utils/async-handler');
-const Domain = 'http://34.64.112.166/';
+const Domain = 'http://ticketwantit.shop/';
 
 //메인 페이지 상품 매핑
 function productMapping(items) {
@@ -14,6 +14,7 @@ function productMapping(items) {
       endDate,
       imageUrl,
       productId,
+      _id,
     }) => ({
       productName,
       price,
@@ -23,6 +24,7 @@ function productMapping(items) {
       endDate,
       imageUrl,
       productId,
+      _id,
     })
   );
   return content;
@@ -36,33 +38,28 @@ const productController = {
     const content = productMapping(products);
     res.status(200).json(content);
   }),
-  //상품 검색 API
-  getSearch: asyncHandler(async (req, res) => {
-    const { keyword } = req.query;
-    if (!keyword) {
-      return res.status(204).json({ message: '검색어를 입력해주세요.' });
-    }
-    const result = await productService.searchProduct(keyword);
-    const content = productMapping(result);
-    res.status(200).json(content);
-  }),
   //상품 카테고리별
   getCategoryProduct: asyncHandler(async (req, res) => {
     const { category, sort, page } = req.query;
-    const result = await productService.readCategoryProduct(
+    const products = await productService.readCategoryProduct(
       category,
       sort,
       page
     );
-    if (result.error) {
-      const {
-        error: { message, status },
-      } = result;
-      res.status(status).json({ message });
-    }
-    const content = productMapping(result.products);
+    const content = productMapping(products);
     res.status(200).json(content);
   }),
+  //상품 검색 API
+  getSearch: asyncHandler(async (req, res) => {
+    const { keyword, sort, page } = req.query;
+    if (!keyword) {
+      return res.status(204).json({ message: '검색어를 입력해주세요.' });
+    }
+    const result = await productService.searchProduct(keyword, sort, page);
+    const content = productMapping(result);
+    res.status(200).json(content);
+  }),
+
   //상품 상세
   getDetail: asyncHandler(async (req, res) => {
     const { productId } = req.query;
@@ -91,8 +88,9 @@ const productController = {
   //----------------------------------------- ADMIN----------------------------
   //ADMIN 상품 전체
   getAdminProduct: asyncHandler(async (req, res) => {
-    const products = await productService.adminReadProduct();
-    const content = products.map(
+    const page = parseInt(req.query.page || 1);
+    const result = await productService.adminReadProduct(page);
+    const content = result.resultPage.map(
       ({
         category,
         productId,
@@ -121,7 +119,7 @@ const productController = {
         endDate,
       })
     );
-    res.status(200).json(content);
+    res.status(200).json({ pageInfo: result.pageInfo, data: content });
   }),
   //ADMIN 상품 추가
   postProduct: asyncHandler(async (req, res) => {

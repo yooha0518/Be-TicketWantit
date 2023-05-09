@@ -1,98 +1,52 @@
 const { Product } = require('../models');
-const limit = 12;
-
 const productService = {
-  //상품 목록 전체
-
+  //전체 상품
   async readProduct(sort, page) {
-    let products = [];
-
-    const skip = page * limit;
-    if (sort === 'new') {
-      products = await Product.find({})
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit);
-    } else if (sort === 'max_price') {
-      products = await Product.aggregate([
-        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
-        { $sort: { discountPrice: -1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ]);
-    } else if (sort === 'min_price') {
-      products = await Product.aggregate([
-        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
-        { $sort: { discountPrice: 1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ]);
-    } else if (sort === 'discount') {
-      products = await Product.aggregate([
-        { $addFields: { discount: { $toDouble: '$discount' } } },
-        { $sort: { discount: -1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ]);
-    }
+    const products = await this.sortingAndPaging(null, null, sort, page);
+    return products;
+  },
+  //카테고리별 상품
+  async readCategoryProduct(category, sort, page) {
+    const products = await this.sortingAndPaging(null, category, sort, page);
     return products;
   },
   //상품 검색
-  async searchProduct(keyword) {
-    let product = await Product.find({
-      productName: { $regex: new RegExp(`${keyword}`, 'i') },
-    });
-    if (product.length === 0) {
-      product = [];
-    }
-    return product;
+  async searchProduct(keyword, sort, page) {
+    const products = await this.sortingAndPaging(keyword, null, sort, page);
+    return products;
   },
-  // 상품 카테고리별
-  async readCategoryProduct(categoryName, sort, page) {
-    let products = [];
-    const skip = page * limit;
-    if (sort === 'new') {
-      products = await Product.find({ category: categoryName })
-        .sort({
-          createdAt: -1,
-        })
-        .skip(skip)
-        .limit(limit);
-    } else if (sort === 'max_price') {
-      products = await Product.aggregate([
-        { $match: { category: categoryName } },
-        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
-        { $sort: { discountPrice: -1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ]);
-    } else if (sort === 'min_price') {
-      products = await Product.aggregate([
-        { $match: { category: categoryName } },
-        { $addFields: { discountPrice: { $toDouble: '$discountPrice' } } },
-        { $sort: { discountPrice: 1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ]);
-    } else if (sort === 'discount') {
-      products = await Product.aggregate([
-        { $match: { category: categoryName } },
-        { $addFields: { discount: { $toDouble: '$discount' } } },
-        { $sort: { discount: -1 } },
-        { $skip: skip },
-        { $limit: limit },
-      ]);
-    }
-    if (products.length === 0) {
-      return {
-        error: {
-          message: `'${categoryName}' 해당 카테고리는 존재하지 않습니다.`,
-          status: 404,
-        },
+
+  //상품 정렬 및 페이징 처리 함수
+  async sortingAndPaging(keyword, category, sort, page) {
+    const pageSize = 12;
+    const currentPage = page || 1;
+    const skip = (currentPage - 1) * pageSize;
+    let query = {};
+    console.log(keyword, category, sort, page);
+    if (keyword) {
+      query = {
+        productName: { $regex: new RegExp(`${keyword}`, 'i') },
+      };
+    } else if (category) {
+      query = {
+        category,
       };
     }
-    return { products: products };
+    const sortOptions = {
+      new: { _id: -1 },
+      max_price: { discountPrice: -1, productName: 1 },
+      min_price: { discountPrice: 1, productName: 1 },
+      discount: { discount: -1, productName: 1 },
+    };
+    const sortOption = sortOptions[sort] || sortOptions.new;
+    const result = await Product.find(query)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(pageSize);
+
+    return result;
   },
+
   //상품 상세
   async readDetail(id) {
     const product = await Product.findOne({ productId: id });
@@ -119,9 +73,24 @@ const productService = {
 
   //------------------------------------ADMIN------------------------------
   //ADMIN 상품 전체
-  async adminReadProduct() {
-    const products = await Product.find({}).sort({ createdAt: -1 });
-    return products;
+  async adminReadProduct(page) {
+    const limit = 10;
+    const startPage = (page - 1) * limit;
+    const endPage = page * limit;
+    const total = await Product.countDocuments();
+
+    const resultPage = await Product.find({})
+      .sort({ _id: -1 })
+      .skip(startPage)
+      .limit(limit);
+
+    const pageInfo = {
+      currentPage: page,
+      totalPage: Math.ceil(total / limit),
+      prevPage: page > 1 ? page - 1 : null,
+      nextPage: endPage < total ? page + 1 : null,
+    };
+    return { pageInfo, resultPage };
   },
   //상품 추가
   async createProduct({
