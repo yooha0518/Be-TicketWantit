@@ -31,7 +31,7 @@ const UserSchema = new Schema(
 		},
 		profileImage: {
 			type: String,
-			default: 'ticketwantit.shop:5000/defaultImage.png',
+			default: 'https://ticketwantit.shop:5000/defaultImage.png',
 		},
 		isAdmin: {
 			type: Boolean,
