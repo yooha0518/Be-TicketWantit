@@ -91,7 +91,7 @@ const userController = {
 		try {
 			console.log('프로필사진 수정 시작');
 			const { shortId } = req.user;
-			const profileImage = `ticketwantit.shop:5000/${req.file.filename}`;
+			const profileImage = `https://ticketwantit.shop:5000/${req.file.filename}`;
 			const result = await userService.updateProfileImage(
 				shortId,
 				profileImage
@@ -107,7 +107,7 @@ const userController = {
 	async deleteProfileImate(req, res, next) {
 		try {
 			const { shortId } = req.user;
-			const profileImage = `ticketwantit.shop:5000/defaultImage.png`;
+			const profileImage = `https://ticketwantit.shop:5000/defaultImage.png`;
 			const result = await userService.updateProfileImage(
 				shortId,
 				profileImage

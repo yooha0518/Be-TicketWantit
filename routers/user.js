@@ -26,6 +26,7 @@ userRouter.post(
 	upload.single('profileImage'),
 	userController.putProfileImage
 );
+//사용자 프로필사진 삭제
 userRouter.delete(
 	'/profileImage',
 	getUserFromJwt,
