@@ -19,11 +19,11 @@ const UserSchema = new Schema(
 		},
 		phoneNumber: {
 			type: String,
-			required: false,
+			default: '',
 		},
 		address: {
 			type: String,
-			required: false,
+			default: '',
 		},
 		zipCode: {
 			type: String,
@@ -31,7 +31,7 @@ const UserSchema = new Schema(
 		},
 		profileImage: {
 			type: String,
-			default: 'ticketwantit.shop:5000/defaultImage.png',
+			default: 'https://ticketwantit.shop:5000/defaultImage.png',
 		},
 		isAdmin: {
 			type: Boolean,

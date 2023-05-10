@@ -29,7 +29,10 @@ const userService = {
 		return user;
 	},
 	// 사용자 정보 수정
-	async updateUser(shortId, { name, address, zipCode, phoneNumber }) {
+	async updateUser(
+		shortId,
+		{ name, address, zipCode, phoneNumber, profileImage }
+	) {
 		//성공여부, 조건에 맞는 문서의 수, 새로 생성된 문서의 수, 새로 생성된 문서의 id값이 들어있음
 		const result = await User.updateOne(
 			{ shortId },
@@ -38,6 +41,7 @@ const userService = {
 				address,
 				zipCode,
 				phoneNumber,
+				profileImage,
 			}
 		);
 		if (result.modifiedCount === 0) {
