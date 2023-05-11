@@ -9,7 +9,6 @@ const jwtOptions = {
 };
 
 const refreshJwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-	console.log('jwt 토큰 refresh전략 함수 시작');
 	User.findOne({ shortId: payload.shortId })
 		.then((user) => {
 			if (user) {

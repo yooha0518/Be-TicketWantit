@@ -9,11 +9,9 @@ const jwtOptions = {
 };
 
 const accessJwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-	console.log('jwt 토큰 access전략 함수 시작');
 	User.findOne({ shortId: payload.shortId })
 		.then((user) => {
 			if (user) {
-				console.log('user가 있습니다.');
 				return done(null, user);
 			} else {
 				console.log('user가 없습니다.');

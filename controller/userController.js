@@ -208,7 +208,20 @@ const userController = {
 				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
 		}
 	},
-	async adminGetUserlist(req, res, next) {
+	async adminGetUser(req, res) {
+		try {
+			const { name } = req.params;
+			console.log(name);
+			const userlist = await userService.adminReadSearchUser(name);
+			res.json(userlist);
+		} catch (error) {
+			console.log(error);
+			return res
+				.status(500)
+				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
+		}
+	},
+	async adminGetUserlist(req, res) {
 		try {
 			const page = Number(req.query.page || 1);
 			const userlist = await userService.adminReadUser(page);
@@ -220,7 +233,7 @@ const userController = {
 				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
 		}
 	},
-	async adminUpdateUser(req, res, next) {
+	async adminUpdateUser(req, res) {
 		try {
 			const { shortId } = req.params;
 			const { name, address, zipCode, phoneNumber, profileImage, state } =
@@ -242,7 +255,7 @@ const userController = {
 				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
 		}
 	},
-	async adminDeleteUser(req, res, next) {
+	async adminDeleteUser(req, res) {
 		try {
 			const { shortId } = req.params;
 			const result = await userService.deleteUser(shortId);
