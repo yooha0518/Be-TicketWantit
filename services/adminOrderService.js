@@ -3,14 +3,29 @@ const { User } = require("../models");
 
 const adminOrderService = {
   //관리자 주문조회 - db에 있는 모든 주문내역
-  async getOrder() {
+  async getOrder(page) {
+    const pageNum = Number(page);
+    const limit = 10;
+    const startPage = (pageNum - 1) * limit;
+    const endPage = pageNum * limit;
+    const total = await Order.countDocuments();
+
     try {
-      const orderList = await Order.find({})
+      const getOrderList = await Order.find({})
         .populate("customerId")
-        .sort({ createdAt: -1 })
+        .sort({ _id: -1 })
+        .skip(startPage)
+        .limit(limit)
         .exec();
-      console.log(orderList);
-      return orderList;
+
+      const pageInfo = {
+        currentPage: pageNum,
+        totalPage: Math.ceil(total / limit),
+        prevPage: pageNum > 1 ? pageNum - 1 : null,
+        nextPage: endPage < total ? pageNum + 1 : null,
+      };
+      console.log(getOrderList);
+      return { getOrderList, pageInfo };
     } catch (error) {
       console.log(error);
     }
