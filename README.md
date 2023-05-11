@@ -95,6 +95,11 @@ https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-
 
 <br />
 
+## 📝API 
+https://documenter.getpostman.com/view/24299810/2s93eU3uKv
+
+<br />
+
 ## 💁‍♂️ 프로젝트 팀원
 |Frontend|Frontend|Frontend|Backend|Backend|Backend|
 |:---:|:---:|:---:|:---:|:---:|:---:|
