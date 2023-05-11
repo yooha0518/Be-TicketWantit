@@ -57,6 +57,10 @@
 
 ### 🏁데모영상
 
+
+https://github.com/yooha0518/Be-TicketWantit/assets/109330191/a6472e34-2f30-4bad-bd2c-d533cce0a81f
+
+
 # ✨기술스택
 
 <aside>
