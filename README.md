@@ -1,8 +1,7 @@
 # 📌프로젝트 소개
 
 # 티켓원잇 (one it, want it!)
-
-![티켓원잇.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/143b247f-39b9-4e5b-9d26-3631d4bda7a3/%ED%8B%B0%EC%BC%93%EC%9B%90%EC%9E%87.png)
+![티켓원잇 (1) (1)](https://github.com/yooha0518/Be-TicketWantit/assets/109330191/342bc631-16a3-4096-b767-e138a469a15b)
 
 ### 🎟️ ”저희는 전시, 공연 등 다양한 티켓을 구매 할 수 있는 서비스를 구현합니다.”
 
@@ -121,11 +120,12 @@ Node.js
 
 ### 🏁서비스 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5a6f8eba-a0ea-49f3-9b14-fd8ee614004f/Untitled.png)
+![Untitled](https://github.com/yooha0518/Be-TicketWantit/assets/109330191/3459d718-b483-4942-bc0d-ca10e8d9a9b4)
+
 
 ### 🏁파일구조
+![Untitled (1)](https://github.com/yooha0518/Be-TicketWantit/assets/109330191/91ecc95a-6d7e-4a21-a8e6-c9f371a48c12)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c95dd71c-dcf4-4247-95c7-a672b5ca626f/Untitled.png)
 
 # ✨ 구성원 역할
 
