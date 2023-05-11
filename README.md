@@ -91,14 +91,14 @@ JWT
 
 <aside>
 📌 mongodb 
-Node.js 
-Express.js 
-mongoose
-multer
-Passport
-Nginx
-jsonwebtoken
-nodemailer
+Node.js   
+Express.js   
+mongoose  
+multer  
+Passport  
+Nginx  
+jsonwebtoken  
+nodemailer  
 
 </aside>
 
