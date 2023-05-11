@@ -93,19 +93,19 @@ JWT
 📌 mongodb 
 Node.js  
     
-Express.js  
+ Express.js  
     
-mongoose   
+  mongoose   
     
-multer  
+  multer  
     
-Passport  
+  Passport  
     
-Nginx  
+  Nginx  
     
-jsonwebtoken  
+  jsonwebtoken  
     
-nodemailer  
+  nodemailer  
     
 
 </aside>
