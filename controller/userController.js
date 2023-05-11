@@ -223,7 +223,8 @@ const userController = {
 	async adminUpdateUser(req, res, next) {
 		try {
 			const { shortId } = req.params;
-			const { name, address, zipCode, phoneNumber, profileImage } = req.body;
+			const { name, address, zipCode, phoneNumber, profileImage, state } =
+				req.body;
 
 			const result = await userService.updateUser(shortId, {
 				name,
@@ -231,6 +232,7 @@ const userController = {
 				zipCode,
 				phoneNumber,
 				profileImage,
+				state,
 			});
 			res.status(200).json(result);
 		} catch (error) {
