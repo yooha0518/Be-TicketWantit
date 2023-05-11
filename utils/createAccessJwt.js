@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const env = require('../.env');
 
-
 exports.createAccessJwt = (user) => {
 	const accessPayload = {
 		shortId: user.shortId,
 		name: user.name,
 		email: user.email,
+		profileImage: user.profileImage,
 		isAdmin: user.isAdmin,
 		isTempPassword: user.isTempPassword,
 	};
