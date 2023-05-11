@@ -6,6 +6,7 @@ exports.setUserToken = (user) => {
 		shortId: user.shortId,
 		name: user.name,
 		email: user.email,
+		profileImage:user.profileImage,
 		isAdmin: user.isAdmin,
 		isTempPassword: user.isTempPassword,
 	};
