@@ -189,7 +189,7 @@ const productController = {
   //ADMIN 상품 수정 추가 API
   reviseProduct: asyncHandler(async (req, res) => {
     const { productId } = req.query;
-    const imageUrl = Domain + req.file.path;
+    const imageUrl = Domain + req.file.filename;
     const {
       category,
       productName,
