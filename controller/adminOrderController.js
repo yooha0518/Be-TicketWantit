@@ -3,7 +3,7 @@ const schedule = require("node-schedule");
 
 const adminOrderController = {
   async getOrder(req, res, next) {
-    const page = req.query.page;
+    const page = req.query.page || 1;
     try {
       const { getOrderList, pageInfo } = await adminOrderService.getOrder(page);
       if (getOrderList.length < 1) {
