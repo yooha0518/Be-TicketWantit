@@ -124,7 +124,7 @@ const productController = {
   }),
   //ADMIN 상품 추가
   postProduct: asyncHandler(async (req, res) => {
-    const imageUrl = Domain + req.file.path;
+    const imageUrl = Domain + req.file.filename;
     const {
       category,
       productName,
@@ -136,7 +136,6 @@ const productController = {
       speciesAge,
       description,
     } = req.body;
-
     if (
       !category ||
       !productName ||
