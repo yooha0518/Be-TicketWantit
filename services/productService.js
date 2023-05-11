@@ -1,4 +1,5 @@
 const { Product } = require('../models');
+const { RecommandedProduct } = require('../models');
 const productService = {
   //전체 상품
   async readProduct(sort, page) {
@@ -67,7 +68,9 @@ const productService = {
   },
   //MD추천
   async readMDPick() {
-    const products = await Product.aggregate([{ $sample: { size: 6 } }]);
+    const products = await RecommandedProduct.find({});
+    //await Product.aggregate([{ $sample: { size: 6 } }]);
+
     return products;
   },
 
@@ -118,6 +121,28 @@ const productService = {
       description,
     });
     return `SUCCESS`;
+  },
+  //추천 상품 저장 API
+  async createRecommadedProduct(ids) {
+    //기존 데이터 삭제 후
+    await RecommandedProduct.deleteMany({});
+    // 들어온 데이터 다시 저장
+    const products = await Product.find({ productId: { $in: ids } });
+    const recommandsProducts = products.map((product) => {
+      return new Product({
+        productId: product.productId,
+        productName: product.productName,
+        price: product.price,
+        discount: product.discount,
+        discountPrice: product.discountPrice,
+        startDate: product.startDate,
+        endDate: product.endDate,
+        imageUrl: product.imageUrl,
+      });
+    });
+    const result = await RecommandedProduct.insertMany(recommandsProducts);
+
+    return result;
   },
   //상품 삭제
   async deleteProduct(id) {

@@ -1,3 +1,4 @@
+const { Product } = require('../models');
 const { productService } = require('../services');
 const asyncHandler = require('../utils/async-handler');
 const Domain = 'https://ticketwantit.shop:5000/';
@@ -164,7 +165,17 @@ const productController = {
     });
     res.status(200).json(products);
   }),
+  postRecommendedProduct: asyncHandler(async (req, res) => {
+    const { productIds } = req.body;
+    if (productIds.length > 6) {
+      return res.status(400).json({
+        message: '상품을 6개 초과하여 등록할 수 없습니다. ',
+      });
+    }
+    const content = await productService.createRecommadedProduct(productIds);
 
+    res.status(200).json(content);
+  }),
   //ADMIN 상품 삭제
   delProduct: asyncHandler(async (req, res) => {
     const { productId } = req.query;

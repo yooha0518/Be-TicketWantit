@@ -21,6 +21,9 @@ router.get('/', productController.getAdminProduct);
 //ADMIN 상품 추가
 router.post('/add', upload.single('imageUrl'), productController.postProduct);
 
+//ADMIN MD's RECOMMENDS 추가 및 수정하기
+router.post('/recommended_product', productController.postRecommendedProduct);
+
 //ADMIN 상품 삭제
 router.delete('/delete', productController.delProduct);
 
