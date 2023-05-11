@@ -12,6 +12,5 @@ exports.createAccessJwt = (user) => {
 	};
 	const accessOptions = { algorithm: 'HS256', expiresIn: '1h' }; //토큰 만료시간(1시간)
 	const accessToken = jwt.sign(accessPayload, env.ACCESSSECRET, accessOptions);
-	console.log('토큰 만들기 완료');
 	return { accessToken };
 };

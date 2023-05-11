@@ -1,8 +1,6 @@
 const { User } = require('../models/index');
 
 module.exports = async (req, res, next) => {
-	console.log('authAdmin 미들웨어 실행');
-
 	const { shortId } = req.user;
 	const user = await User.findOne({ shortId });
 	if (!user.isAdmin) {

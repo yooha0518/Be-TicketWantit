@@ -99,6 +99,12 @@ const userService = {
 		return { message: '계정이 영구삭제 되었습니다.' };
 	},
 
+
+	//관리자 - 사용자 검색
+	async adminReadSearchUser(name) {
+		const userlist = await User.find({ name })
+		return userlist;
+	},
 	//관리자 - 사용자 전체 정보 조회
 	async adminReadUser(page) {
 		const total = await User.countDocuments({});

@@ -3,6 +3,9 @@ const adminUserRouter = Router();
 const { userController } = require('../controller/index');
 const { authAdmin } = require('../middlewares/index');
 
+//ADMIN 유저 검색
+adminUserRouter.get('/:name',authAdmin,userController.adminGetUser);
+
 //ADNIM 유저 전체 조회
 adminUserRouter.get('/', authAdmin, userController.adminGetUserlist);
 

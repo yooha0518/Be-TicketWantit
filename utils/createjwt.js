@@ -19,6 +19,5 @@ exports.setUserToken = (user) => {
 	const accessToken = jwt.sign(accessPayload, env.ACCESSSECRET, accessOptions);
 	const refreshToken = jwt.sign(refreshPayload,env.REFRESHSECRET,refreshOptions);
 	
-	console.log('토큰 만들기 완료');
 	return { accessToken, refreshToken };
 };
