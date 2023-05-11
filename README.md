@@ -82,7 +82,8 @@ https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-
 
 ## 프로젝트 구조
 ### 파일 구조
-<img src="https://github.com/SeongHo-C/FE-TicketWantIt/assets/83394485/15f09ec4-f4da-424c-9950-857734387298" width="800"/>
+![파일구조](https://github.com/yooha0518/Be-TicketWantit/assets/109330191/e60e06c7-c376-41c4-a4e0-8da9168bbc79)
+
 
 <br />
 
