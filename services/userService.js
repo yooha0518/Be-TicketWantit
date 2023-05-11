@@ -31,7 +31,7 @@ const userService = {
 	// 사용자 정보 수정
 	async updateUser(
 		shortId,
-		{ name, address, zipCode, phoneNumber, profileImage }
+		{ name, address, zipCode, phoneNumber, profileImage, state }
 	) {
 		//성공여부, 조건에 맞는 문서의 수, 새로 생성된 문서의 수, 새로 생성된 문서의 id값이 들어있음
 		const result = await User.updateOne(
@@ -42,6 +42,7 @@ const userService = {
 				zipCode,
 				phoneNumber,
 				profileImage,
+				state,
 			}
 		);
 		if (result.modifiedCount === 0) {
@@ -101,12 +102,10 @@ const userService = {
 	//관리자 - 사용자 전체 정보 조회
 	async adminReadUser(page) {
 		const total = await User.countDocuments({});
-		const userlist = await User.find({})
+		const userlist = await User.find({ isAdmin: false })
 			.sort({ name: 1 })
 			.skip(7 * (page - 1))
 			.limit(7);
-
-		console.log([userlist, { total: total }]);
 		return [userlist, { total: total }];
 	},
 };

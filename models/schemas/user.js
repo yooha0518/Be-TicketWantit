@@ -27,7 +27,7 @@ const UserSchema = new Schema(
 		},
 		zipCode: {
 			type: String,
-			required: false,
+			default: '',
 		},
 		profileImage: {
 			type: String,
