@@ -14,8 +14,11 @@ const categoryService = {
   },
   //카테고리 수정
   async updateCategory(id, category) {
-    await Category.updateOne({ categoryId: id }, { $set: category });
-    return `SUCCESS!`;
+    const content = await Category.updateOne(
+      { categoryId: id },
+      { $set: category }
+    );
+    return content;
   },
 
   //카테고리 삭제
