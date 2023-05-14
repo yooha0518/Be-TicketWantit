@@ -8,22 +8,20 @@ const jwtOptions = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const refreshJwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-	User.findOne({ shortId: payload.shortId })
-		.then((user) => {
-			if (user) {
-				console.log('user가 있습니다.');
-				return done(null, user);
-			} else {
-				console.log('user가 없습니다.');
-				return done(null, false);
-			}
-		})
-		.catch((err) => {
-			console.log('실패');
-			done(err, false);
-		});
-});
+const refreshJwtStrategy = new JwtStrategy(
+	jwtOptions,
+	async (payload, done) => {
+		try {
+			const user = await User.findOne(
+				{ shortId: payload.shortId },
+				{ refreshToken: 1, shortId: 1 }
+			);
 
+			return done(null, user);
+		} catch {
+			return done(err, false);
+		}
+	}
+);
 
 module.exports = refreshJwtStrategy;

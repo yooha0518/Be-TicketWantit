@@ -19,6 +19,9 @@ userRouter.delete('/', getUserFromJwt, userController.deleteUser);
 //사용자 비밀번호 초기화
 userRouter.post('/reset-password', userController.resetPassword);
 
+//사용자 비밀번호 변경
+userRouter.post('/change-password', getUserFromJwt, userController.putPassword);
+
 //사용자 프로필사진 추가
 userRouter.post(
 	'/profileImage',
@@ -32,9 +35,6 @@ userRouter.delete(
 	getUserFromJwt,
 	userController.deleteProfileImate
 );
-
-//사용자 비밀번호 변경
-userRouter.post('/change-password', getUserFromJwt, userController.putPassword);
 
 //이메일 본인인증
 userRouter.post('/emailAuth', userController.getUser);

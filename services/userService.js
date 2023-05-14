@@ -28,6 +28,24 @@ const userService = {
 		const user = await User.findOne({ email });
 		return user;
 	},
+	async getUserForToken(shortId) {
+		const user = await User.findOne(
+			{ shortId },
+			{
+				shortId: 1,
+				name: 1,
+				email: 1,
+				profileImage: 1,
+				isAdmin: 1,
+				isTempPassword: 1,
+			}
+		);
+		return user;
+	},
+	async getUserRefreshToken(shortId) {
+		const user = await User.findOne({ shortId }, 'refreshToken');
+		return user;
+	},
 	// 사용자 정보 수정
 	async updateUser(
 		shortId,
@@ -99,10 +117,9 @@ const userService = {
 		return { message: '계정이 영구삭제 되었습니다.' };
 	},
 
-
 	//관리자 - 사용자 검색
 	async adminReadSearchUser(name) {
-		const userlist = await User.find({ name })
+		const userlist = await User.find({ name });
 		return userlist;
 	},
 	//관리자 - 사용자 전체 정보 조회
