@@ -33,6 +33,10 @@ const UserSchema = new Schema(
 			type: String,
 			default: 'https://ticketwantit.shop:5000/defaultImage.png',
 		},
+		refreshToken: {
+			type: String,
+			select: false,
+		},
 		isAdmin: {
 			type: Boolean,
 			default: false,

@@ -8,20 +8,14 @@ const jwtOptions = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
-const accessJwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-	User.findOne({ shortId: payload.shortId })
-		.then((user) => {
-			if (user) {
-				return done(null, user);
-			} else {
-				console.log('user가 없습니다.');
-				return done(null, false);
-			}
-		})
-		.catch((err) => {
-			console.log('실패');
-			done(err, false);
-		});
+const accessJwtStrategy = new JwtStrategy(jwtOptions, async (payload, done) => {
+	try {
+		const user = await User.findOne({ shortId: payload.shortId });
+
+		return done(null, user);
+	} catch {
+		return done(err, false);
+	}
 });
 
 module.exports = accessJwtStrategy;

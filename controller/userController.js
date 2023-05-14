@@ -5,6 +5,7 @@ const hashPassword = require('../utils/hash-password');
 const generateRandomPassword = require('../utils/generateRandomPassword.js');
 const sendMail = require('../utils/sendMail');
 const { setAuthCodeToken } = require('../utils/setAuthcodeToken');
+const { getUserRefreshToken } = require('../services/userService');
 
 const userController = {
 	async postUser(req, res, next) {
@@ -172,7 +173,7 @@ const userController = {
 				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
 		}
 	},
-	async realDeleteUser(req, res, next) {
+	async realDeleteUser(req, res) {
 		try {
 			const shortId = req.params.shortId;
 			const user = await userService.realDeleteUser(shortId);
@@ -184,7 +185,7 @@ const userController = {
 				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
 		}
 	},
-	async authUser(req, res, next) {
+	async authUser(req, res) {
 		try {
 			const { email, password } = req.body;
 			const user = await userService.getUserFromEmail(email);
@@ -200,13 +201,19 @@ const userController = {
 				return res.status(400).json({ message: '비밀번호가 틀렸습니다.' });
 			}
 
-			res.send(setUserToken(user));
+			res.send(setUserToken(user, 0));
 		} catch (error) {
 			console.log(error);
 			return res
 				.status(500)
 				.json({ message: '서버의 userContrller에서 에러가 났습니다.' });
 		}
+	},
+	async createAccessToken(req, res) {
+		const { shortId } = req.user;
+
+		const userForToken = await userService.getUserForToken(shortId);
+		res.send(setUserToken(userForToken, 1));
 	},
 	async adminGetUser(req, res) {
 		try {

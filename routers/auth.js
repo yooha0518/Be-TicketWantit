@@ -3,13 +3,11 @@ const passport = require('passport');
 const { setUserToken } = require('../utils/createjwt');
 const refreshToken = require('../middlewares/getUserFromRefreshJwt');
 const authRouter = Router();
-const { createAccessJwt } = require('../utils/createAccessJwt');
 const { userController } = require('../controller');
 
+
 //access토큰 발급
-authRouter.get('/', refreshToken, (req, res) => {
-	res.send(createAccessJwt(req.user));
-});
+authRouter.get('/', refreshToken, userController.createAccessToken);
 
 // 로그인
 authRouter.post('/', userController.authUser);
