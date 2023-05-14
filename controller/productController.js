@@ -37,6 +37,9 @@ const productController = {
     const { sort, page } = req.query;
     const products = await productService.readProduct(sort, page);
     const content = productMapping(products);
+    if (!content) {
+      return res.status(404).json({ message: '등록된 상품이 없습니다.' });
+    }
     res.status(200).json(content);
   }),
   //상품 카테고리별
@@ -47,6 +50,11 @@ const productController = {
       sort,
       page
     );
+    if (!products) {
+      return res
+        .status(404)
+        .json({ message: '해당 카테고리에 등록된 상품이 없습니다.' });
+    }
     const content = productMapping(products);
     res.status(200).json(content);
   }),
@@ -57,6 +65,9 @@ const productController = {
       return res.status(204).json({ message: '검색어를 입력해주세요.' });
     }
     const result = await productService.searchProduct(keyword, sort, page);
+    if (!result) {
+      return res.status(404).json([]);
+    }
     const content = productMapping(result);
     res.status(200).json(content);
   }),
@@ -64,15 +75,14 @@ const productController = {
   //상품 상세
   getDetail: asyncHandler(async (req, res) => {
     const { productId } = req.query;
-    const result = await productService.readDetail(productId);
-    if (result.error) {
-      const {
-        error: { message, status },
-      } = result;
-      res.status(status).json({ message });
+    const content = await productService.readDetail(productId);
+    if (!content) {
+      return res.status(404).json({
+        message: '요청하신 상품 아이디는 등록된 상품이 없습니다.',
+      });
     }
 
-    res.status(200).json(result.products);
+    res.status(200).json(content);
   }),
   //NEW_ARRIVAlS
   getNewArrivals: asyncHandler(async (req, res) => {
@@ -83,6 +93,11 @@ const productController = {
   //MD
   getMDPick: asyncHandler(async (req, res) => {
     const products = await productService.readMDPick();
+    if (!products) {
+      return res
+        .status(404)
+        .json({ message: '추천 상품으로 등록된 상품이 없습니다.' });
+    }
     const content = productMapping(products);
     res.status(200).json(content);
   }),
@@ -91,6 +106,9 @@ const productController = {
   getAdminProduct: asyncHandler(async (req, res) => {
     const page = parseInt(req.query.page || 1);
     const result = await productService.adminReadProduct(page);
+    if (!result.resultPage) {
+      return res.status(404).json({ message: '등록된 상품이 없습니다.' });
+    }
     const content = result.resultPage.map(
       ({
         category,
@@ -164,11 +182,12 @@ const productController = {
     });
     res.status(200).json(products);
   }),
+  //md recommanded 상품 저장 API
   postRecommendedProduct: asyncHandler(async (req, res) => {
     const { productIds } = req.body;
     if (productIds.length > 6) {
       return res.status(400).json({
-        message: '상품을 6개 초과하여 등록할 수 없습니다. ',
+        message: '추천 상품은 6개 이하로 등록할 수 있습니다.',
       });
     }
     const content = await productService.createRecommadedProduct(productIds);
@@ -241,6 +260,11 @@ const productController = {
       speciesAge,
       description
     );
+    if (!content) {
+      return res.status(404).json({
+        message: '상품이 수정되지 않았습니다. 요청양식을 재확인 해주세요.',
+      });
+    }
     res.status(200).json(content);
   }),
   //ADMIN 상품 이미지 수정

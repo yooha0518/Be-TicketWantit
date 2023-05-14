@@ -23,7 +23,6 @@ const productService = {
     const currentPage = page || 1;
     const skip = (currentPage - 1) * pageSize;
     let query = {};
-    console.log(keyword, category, sort, page);
     if (keyword) {
       query = {
         productName: { $regex: new RegExp(`${keyword}`, 'i') },
@@ -51,25 +50,16 @@ const productService = {
   //상품 상세
   async readDetail(id) {
     const product = await Product.findOne({ productId: id });
-    if (!product) {
-      return {
-        error: {
-          message: `'${id}' 해당 상품 아이디는 존재하지 않습니다. 상품 아이디 재확인 부탁드립니다.`,
-          status: 404,
-        },
-      };
-    }
-    return { products: product };
+    return product;
   },
   //NEW_ARRIVAlS
   async readNewArrivals() {
-    const products = await Product.find().sort({ startDate: -1 }).limit(6);
+    const products = await Product.find().sort({ _id: -1 }).limit(6);
     return products;
   },
   //MD추천
   async readMDPick() {
     const products = await RecommandedProduct.find({});
-    //await Product.aggregate([{ $sample: { size: 6 } }]);
 
     return products;
   },
@@ -206,7 +196,7 @@ const productService = {
       speciesAge,
       description,
     };
-    // await Product.updateOne({ productId: id }, { $set: updateData });
+
     const options = { new: true };
 
     const content = await Product.findOneAndUpdate(
@@ -214,8 +204,6 @@ const productService = {
       updateData,
       options
     );
-
-    // await content.save();
 
     return content;
   },
