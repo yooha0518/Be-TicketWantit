@@ -97,7 +97,8 @@ https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-
 <br />
 
 ## 📝API 
-https://documenter.getpostman.com/view/24299810/2s93eU3uKv - 
+https://documenter.getpostman.com/view/24299810/2s93eU3uKv - Order API
+https://documenter.getpostman.com/view/23713484/2s93ecxWCz - Product API
 
 <br />
 
