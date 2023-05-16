@@ -1,4 +1,4 @@
-const { orderService } = require('../services');
+const { orderService } = require("../services");
 
 const orderController = {
   async postOrder(req, res, next) {
@@ -34,6 +34,7 @@ const orderController = {
   async getOrder(req, res, next) {
     //유저의 주문내역
     const userId = req.user.shortId;
+
     try {
       const orderList = await orderService.getOrder(userId); //db에서 받아온 값이 넘어옴
       if (orderList.length < 1) {
