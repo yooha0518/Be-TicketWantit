@@ -100,7 +100,7 @@ https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-
 <br />
 
 ## 프로젝트 회고
-https://www.notion.so/Ticket-Want-It-0d03ab2a8ef644c1913587fe383cc8e9 -
+https://www.notion.so/Ticket-Want-It-0d03ab2a8ef644c1913587fe383cc8e9 -유하영
 <br />
 
 ## 📝API 
