@@ -53,7 +53,9 @@ https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-
 
 
 <br />
+
 ## ⚙ 기술 스택
+
 ### Front-end
 <div>
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/HTMLCSS.png?raw=true" width="80">
