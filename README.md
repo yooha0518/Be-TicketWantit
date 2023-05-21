@@ -41,13 +41,18 @@
 4️⃣ 관리자 상품 및 카테고리 추가 , 수정, 삭제 및 주문정보 조회 및 상태 관리
 
 <br />
+*관리자 계정* <br />
+ID : admin@gmail.com <br />
+password: admin <br />
+<br />
 
 
 ### 👩🏻‍💻 데모 영상
 https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-bbfd-93055f5ebcc3
 
-<br />
 
+
+<br />
 ## ⚙ 기술 스택
 ### Front-end
 <div>
@@ -93,7 +98,7 @@ https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/b975d804-5844-4b5b-
 <br />
 
 ## 프로젝트 회고
-
+https://www.notion.so/Ticket-Want-It-0d03ab2a8ef644c1913587fe383cc8e9 -
 <br />
 
 ## 📝API 
