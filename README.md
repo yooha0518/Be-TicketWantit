@@ -4,7 +4,7 @@
 <img src="https://github.com/SeongHo-C/FE-TicketWantIt/assets/83394485/d6285bb3-bfa7-4269-a5db-a320ad7b8167" width="400"/>
 
 ### 티켓원잇 (one it, want it!)  
-[<img src="https://img.shields.io/badge/프로젝트 기간-2023.04.17~진행중-0090f6?style=flat&logoColor=white" />]()
+[<img src="https://img.shields.io/badge/프로젝트 기간-2023.04.17~2023.05.22-0090f6?style=flat&logoColor=white" />]()
 <br />
 [🧑🏻‍💻 사이트 바로가기](https://ticketwantit.shop/) 
 </div> 
